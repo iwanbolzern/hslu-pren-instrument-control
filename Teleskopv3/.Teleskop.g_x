@@ -1,0 +1,148 @@
+<CodeGenerationInfo>
+  <ToolchainSettings>
+    <option>
+      <name>PE_G_4PEx_ToolChain_CompilerCpp_SearchUserPaths</name>
+      <values lines_count="4">
+        <Line>"${ProjDirPath}/Static_Code/PDD"</Line>
+        <Line>"${ProjDirPath}/Static_Code/IO_Map"</Line>
+        <Line>"${ProjDirPath}/Sources"</Line>
+        <Line>"${ProjDirPath}/Generated_Code"</Line>
+      </values>
+    </option>
+    <option>
+      <name>PE_G_4PEx_ToolChain_Compiler_SearchUserPaths</name>
+      <values lines_count="4">
+        <Line>"${ProjDirPath}/Static_Code/PDD"</Line>
+        <Line>"${ProjDirPath}/Static_Code/IO_Map"</Line>
+        <Line>"${ProjDirPath}/Sources"</Line>
+        <Line>"${ProjDirPath}/Generated_Code"</Line>
+      </values>
+    </option>
+  </ToolchainSettings>
+  <GeneratedFilesList>
+    <GeneratedByPE>
+      <File Name="Generated_Code/BitIoLdd2.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031618" FileType="45637" CompNumb="22" />
+      <File Name="Static_Code/PDD/TSI_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880599" FileType="1048576" />
+      <File Name="Generated_Code/FRTOS1config.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031991" FileType="45637" CompNumb="13" />
+      <File Name="Documentation/doxygen/BitIoLdd1_component.txt" FileDate="2017-12-26, 16:13:29" FileAge="1514301209701" FileType="45637" CompNumb="19" />
+      <File Name="Generated_Code/UTIL1.h" FileDate="2017-12-29, 20:50:32" FileAge="1514577032037" FileType="45637" CompNumb="16" />
+      <File Name="Generated_Code/FreeRTOSConfig.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031693" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/BitIoLdd2.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031607" FileType="45637" CompNumb="22" />
+      <File Name="Static_Code/PDD/CMP_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880477" FileType="1048576" />
+      <File Name="Generated_Code/BitIoLdd1.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031655" FileType="45637" CompNumb="19" />
+      <File Name="Generated_Code/LED2config.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031582" FileType="45637" CompNumb="20" />
+      <File Name="Generated_Code/RxBuf.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031548" FileType="45637" CompNumb="24" />
+      <File Name="Generated_Code/UTIL1.c" FileDate="2017-12-29, 20:50:32" FileAge="1514577032029" FileType="45637" CompNumb="16" />
+      <File Name="Generated_Code/BitIoLdd1.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031645" FileType="45637" CompNumb="19" />
+      <File Name="Generated_Code/CS1.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031560" FileType="45637" CompNumb="25" />
+      <File Name="Generated_Code/PE_Error.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031516" FileType="45637" />
+      <File Name="Generated_Code/RxBuf.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031538" FileType="45637" CompNumb="24" />
+      <File Name="Static_Code/PDD/SPI_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880576" FileType="1048576" />
+      <File Name="Generated_Code/FreeRTOS_license.txt" FileDate="2017-12-29, 20:50:31" FileAge="1514577031754" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/heap_5.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031733" FileType="45637" CompNumb="13" />
+      <File Name="Static_Code/PDD/SIM_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880571" FileType="1048576" />
+      <File Name="Generated_Code/CS1.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031556" FileType="45637" CompNumb="25" />
+      <File Name="Static_Code/PDD/ADC_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880472" FileType="1048576" />
+      <File Name="Generated_Code/heap_useNewlib.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031742" FileType="45637" CompNumb="13" />
+      <File Name="Static_Code/PDD/DAC_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880486" FileType="1048576" />
+      <File Name="Generated_Code/portmacro.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031804" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/heap_4.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031724" FileType="45637" CompNumb="13" />
+      <File Name="Sources/main.c" FileDate="2017-12-29, 23:16:23" FileAge="1514585783831" FileType="128" />
+      <File Name="Generated_Code/heap_3.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031716" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/heap_useNewlib.txt" FileDate="2017-12-29, 20:50:31" FileAge="1514577031745" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/portasm.s" FileDate="2017-12-29, 20:50:31" FileAge="1514577031796" FileType="45637" CompNumb="13" />
+      <File Name="Static_Code/PDD/SAI_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880565" FileType="1048576" />
+      <File Name="Static_Code/PDD/DMA_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880497" FileType="1048576" />
+      <File Name="Generated_Code/queue.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031836" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/heap_2.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031712" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/IO_Map.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031508" FileType="45637" />
+      <File Name="Generated_Code/queue.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031826" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/tasks.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031876" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/readme_gdbBacktraceDebug.txt" FileDate="2017-12-29, 20:50:31" FileAge="1514577031984" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/heap_1.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031703" FileType="45637" CompNumb="13" />
+      <File Name="Static_Code/PDD/PDD_Types.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880466" FileType="1048576" CompNumb="1" />
+      <File Name="ProjectInfo.xml" FileDate="2017-12-29, 20:50:32" FileAge="1514577032878" FileType="45637" />
+      <File Name="Generated_Code/MCUC1.h" FileDate="2017-12-29, 20:50:32" FileAge="1514577032057" FileType="45637" CompNumb="15" />
+      <File Name="Generated_Code/FreeRTOS.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031683" FileType="45637" CompNumb="13" />
+      <File Name="Documentation/doxygen/pex.css" FileDate="2017-12-26, 16:08:00" FileAge="1514300880349" FileType="16384" CompNumb="1" />
+      <File Name="Generated_Code/UTIL1config.h" FileDate="2017-12-29, 20:50:32" FileAge="1514577032015" FileType="45637" CompNumb="16" />
+      <File Name="Generated_Code/MCUC1.c" FileDate="2017-12-29, 20:50:32" FileAge="1514577032046" FileType="45637" CompNumb="15" />
+      <File Name="Generated_Code/croutine.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031665" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/Vectors.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031448" FileType="45637" CompNumb="1" />
+      <File Name="Generated_Code/croutine.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031675" FileType="45637" CompNumb="13" />
+      <File Name="Static_Code/PDD/GPIO_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880509" FileType="1048576" />
+      <File Name="Generated_Code/LED2.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031589" FileType="45637" CompNumb="20" />
+      <File Name="Generated_Code/.gdbinit-FreeRTOS-helpers" FileDate="2017-12-29, 20:50:31" FileAge="1514577031987" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/event_groups.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031940" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/LED2.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031585" FileType="45637" CompNumb="20" />
+      <File Name="Generated_Code/LED1.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031630" FileType="45637" CompNumb="17" />
+      <File Name="Generated_Code/event_groups.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031906" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/LED1.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031626" FileType="45637" CompNumb="17" />
+      <File Name="Generated_Code/timers.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031886" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/port.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031779" FileType="45637" CompNumb="13" />
+      <File Name="Project_Settings/Startup_Code/startup.c" FileDate="2017-12-26, 16:08:00" FileAge="1514300880268" FileType="16384" CompNumb="1" />
+      <File Name="Generated_Code/semphr.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031847" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/timers.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031897" FileType="45637" CompNumb="13" />
+      <File Name="Documentation/Teleskop_SIGNALS.txt" FileDate="2017-12-29, 23:19:38" FileAge="1514585978188" FileType="3072" />
+      <File Name="Generated_Code/AS1.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031579" FileType="45637" CompNumb="23" />
+      <File Name="Generated_Code/AS1.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031570" FileType="45637" CompNumb="23" />
+      <File Name="Static_Code/PDD/PIT_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880548" FileType="1048576" />
+      <File Name="Sources/Events.h" FileDate="2017-12-26, 16:28:09" FileAge="1514302089580" FileType="131328" />
+      <File Name="Generated_Code/deprecated_definitions.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031814" FileType="45637" CompNumb="13" />
+      <File Name="Static_Code/PDD/UART0_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880604" FileType="1048576" />
+      <File Name="Static_Code/PDD/MCM_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880536" FileType="1048576" />
+      <File Name="Documentation/doxygen/AS1_component.txt" FileDate="2017-12-26, 16:24:22" FileAge="1514301862859" FileType="45637" CompNumb="23" />
+      <File Name="Static_Code/PDD/DMAMUX_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880491" FileType="1048576" />
+      <File Name="Sources/Events.c" FileDate="2017-12-26, 16:30:36" FileAge="1514302236239" FileType="131328" />
+      <File Name="Generated_Code/LED1config.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031621" FileType="45637" CompNumb="17" />
+      <File Name="Static_Code/PDD/I2C_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880514" FileType="1048576" />
+      <File Name="Generated_Code/FRTOS1.h" FileDate="2017-12-29, 20:50:32" FileAge="1514577032012" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/PE_Types.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031526" FileType="45637" />
+      <File Name="Documentation/doxygen/BitIoLdd2_component.txt" FileDate="2017-12-26, 16:13:29" FileAge="1514301209648" FileType="45637" CompNumb="22" />
+      <File Name="Static_Code/PDD/RTC_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880559" FileType="1048576" />
+      <File Name="Generated_Code/FRTOS1.c" FileDate="2017-12-29, 20:50:32" FileAge="1514577032002" FileType="45637" CompNumb="13" />
+      <File Name="Static_Code/PDD/MCG_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880531" FileType="1048576" />
+      <File Name="Static_Code/PDD/SysTick_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880582" FileType="1048576" />
+      <File Name="Generated_Code/portable.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031792" FileType="45637" CompNumb="13" />
+      <File Name="Static_Code/PDD/LCD_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880520" FileType="1048576" />
+      <File Name="Documentation/Teleskop_Settings.xml" FileDate="2017-12-29, 20:50:32" FileAge="1514577032169" FileType="3072" />
+      <File Name="Documentation/doxygen/Teleskop_project.txt" FileDate="2017-12-29, 20:50:31" FileAge="1514577031484" FileType="45637" CompNumb="1" />
+      <File Name="Generated_Code/mpu_wrappers.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031960" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/StackMacros.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031855" FileType="45637" CompNumb="13" />
+      <File Name="Documentation/Teleskop.txt" FileDate="2017-12-29, 20:50:32" FileAge="1514577032889" FileType="3072" />
+      <File Name="Documentation/doxygen/pex.doxyfile" FileDate="2017-12-29, 20:50:31" FileAge="1514577031480" FileType="45637" CompNumb="1" />
+      <File Name="Generated_Code/mpu_wrappers.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031980" FileType="45637" CompNumb="13" />
+      <File Name="Static_Code/PDD/OSC_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880542" FileType="1048576" />
+      <File Name="Static_Code/PDD/FTFA_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880504" FileType="1048576" />
+      <File Name="Generated_Code/projdefs.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031818" FileType="45637" CompNumb="13" />
+      <File Name="Static_Code/PDD/USB_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880615" FileType="1048576" />
+      <File Name="Static_Code/PDD/LPTMR_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880525" FileType="1048576" />
+      <File Name="Generated_Code/PE_Const.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031513" FileType="45637" />
+      <File Name="Documentation/doxygen/RoutingReport_component.txt" FileDate="2017-12-26, 16:08:00" FileAge="1514300880651" FileType="45637" CompNumb="1" />
+      <File Name="Generated_Code/portTicks.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031783" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/RxBufconfig.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031529" FileType="45637" CompNumb="24" />
+      <File Name="Generated_Code/LEDpin2.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031597" FileType="45637" CompNumb="21" />
+      <File Name="Generated_Code/PE_LDD.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031458" FileType="45637" CompNumb="1" />
+      <File Name="Static_Code/PDD/PORT_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880553" FileType="1048576" />
+      <File Name="Generated_Code/mpu_prototypes.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031970" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/LEDpin2.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031594" FileType="45637" CompNumb="21" />
+      <File Name="Project_Settings/Linker_Files/ProcessorExpert.ld" FileDate="2017-12-29, 20:50:31" FileAge="1514577031453" FileType="8" CompNumb="1" />
+      <File Name="Generated_Code/Cpu.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031504" FileType="45637" CompNumb="1" />
+      <File Name="Generated_Code/LEDpin1.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031637" FileType="45637" CompNumb="18" />
+      <File Name="Generated_Code/PE_LDD.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031468" FileType="45637" CompNumb="1" />
+      <File Name="Generated_Code/CS1config.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031552" FileType="45637" CompNumb="25" />
+      <File Name="Static_Code/IO_Map/MKL46Z4.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880463" FileType="1048576" CompNumb="1" />
+      <File Name="Generated_Code/Cpu.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031495" FileType="45637" CompNumb="1" />
+      <File Name="Generated_Code/LEDpin1.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031633" FileType="45637" CompNumb="18" />
+      <File Name="Generated_Code/list.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031763" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/list.c" FileDate="2017-12-29, 20:50:31" FileAge="1514577031771" FileType="45637" CompNumb="13" />
+      <File Name="Static_Code/PDD/COP_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880479" FileType="1048576" />
+      <File Name="Static_Code/PDD/TPM_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880587" FileType="1048576" />
+      <File Name="Generated_Code/freertos_tasks_c_additions.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031949" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/task.h" FileDate="2017-12-29, 20:50:31" FileAge="1514577031865" FileType="45637" CompNumb="13" />
+      <File Name="Generated_Code/MCUC1config.h" FileDate="2017-12-29, 20:50:32" FileAge="1514577032042" FileType="45637" CompNumb="15" />
+      <File Name="Static_Code/PDD/UART_PDD.h" FileDate="2017-12-26, 16:08:00" FileAge="1514300880610" FileType="1048576" />
+    </GeneratedByPE>
+  </GeneratedFilesList>
+  <CodeGenReference>5</CodeGenReference>
+</CodeGenerationInfo>
