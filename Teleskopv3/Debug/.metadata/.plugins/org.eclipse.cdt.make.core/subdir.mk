@@ -23,14 +23,14 @@ CPP_DEPS += \
 .metadata/.plugins/org.eclipse.cdt.make.core/%.o: ../.metadata/.plugins/org.eclipse.cdt.make.core/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross ARM C Compiler'
-	arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Static_Code/PDD" -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Static_Code/IO_Map" -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Sources" -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Generated_Code" -std=c99 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -c -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Static_Code/PDD" -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Static_Code/IO_Map" -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Sources" -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Generated_Code" -std=c99 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -c -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 
 .metadata/.plugins/org.eclipse.cdt.make.core/%.o: ../.metadata/.plugins/org.eclipse.cdt.make.core/%.cpp
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross ARM C++ Compiler'
-	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Static_Code/PDD" -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Static_Code/IO_Map" -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Sources" -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Generated_Code" -std=gnu++11 -fabi-version=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -c -o "$@" "$<"
+	arm-none-eabi-g++ -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Static_Code/PDD" -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Static_Code/IO_Map" -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Sources" -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Generated_Code" -std=gnu++11 -fabi-version=0 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -c -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

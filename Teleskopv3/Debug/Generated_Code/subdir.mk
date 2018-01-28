@@ -9,11 +9,15 @@ C_SRCS += \
 ../Generated_Code/Bit2.c \
 ../Generated_Code/Bit3.c \
 ../Generated_Code/Bit4.c \
+../Generated_Code/Bit5.c \
+../Generated_Code/Bit6.c \
 ../Generated_Code/BitIoLdd1.c \
 ../Generated_Code/BitIoLdd2.c \
 ../Generated_Code/BitIoLdd3.c \
 ../Generated_Code/BitIoLdd4.c \
+../Generated_Code/BitIoLdd5.c \
 ../Generated_Code/BitIoLdd6.c \
+../Generated_Code/BitIoLdd7.c \
 ../Generated_Code/CS1.c \
 ../Generated_Code/Cpu.c \
 ../Generated_Code/FRTOS1.c \
@@ -46,11 +50,15 @@ OBJS += \
 ./Generated_Code/Bit2.o \
 ./Generated_Code/Bit3.o \
 ./Generated_Code/Bit4.o \
+./Generated_Code/Bit5.o \
+./Generated_Code/Bit6.o \
 ./Generated_Code/BitIoLdd1.o \
 ./Generated_Code/BitIoLdd2.o \
 ./Generated_Code/BitIoLdd3.o \
 ./Generated_Code/BitIoLdd4.o \
+./Generated_Code/BitIoLdd5.o \
 ./Generated_Code/BitIoLdd6.o \
+./Generated_Code/BitIoLdd7.o \
 ./Generated_Code/CS1.o \
 ./Generated_Code/Cpu.o \
 ./Generated_Code/FRTOS1.o \
@@ -83,11 +91,15 @@ C_DEPS += \
 ./Generated_Code/Bit2.d \
 ./Generated_Code/Bit3.d \
 ./Generated_Code/Bit4.d \
+./Generated_Code/Bit5.d \
+./Generated_Code/Bit6.d \
 ./Generated_Code/BitIoLdd1.d \
 ./Generated_Code/BitIoLdd2.d \
 ./Generated_Code/BitIoLdd3.d \
 ./Generated_Code/BitIoLdd4.d \
+./Generated_Code/BitIoLdd5.d \
 ./Generated_Code/BitIoLdd6.d \
+./Generated_Code/BitIoLdd7.d \
 ./Generated_Code/CS1.d \
 ./Generated_Code/Cpu.d \
 ./Generated_Code/FRTOS1.d \
@@ -119,7 +131,7 @@ C_DEPS += \
 Generated_Code/%.o: ../Generated_Code/%.c
 	@echo 'Building file: $<'
 	@echo 'Invoking: Cross ARM C Compiler'
-	arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Static_Code/PDD" -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Static_Code/IO_Map" -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Sources" -I"C:/Users/El_Matador/Desktop/FreedomBoard/Kinetis_Design_Studio/Teleskopv3/Generated_Code" -std=c99 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -c -o "$@" "$<"
+	arm-none-eabi-gcc -mcpu=cortex-m0plus -mthumb -O0 -fmessage-length=0 -fsigned-char -ffunction-sections -fdata-sections  -g3 -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Static_Code/PDD" -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Static_Code/IO_Map" -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Sources" -I"C:/Users/El_Matador/Desktop/PREN/GitHub/Teleskopv3/Generated_Code" -std=c99 -MMD -MP -MF"$(@:%.o=%.d)" -MT"$@" -c -o "$@" "$<"
 	@echo 'Finished building: $<'
 	@echo ' '
 

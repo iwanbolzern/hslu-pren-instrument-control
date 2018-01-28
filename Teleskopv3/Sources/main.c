@@ -43,6 +43,10 @@
 #include "BitIoLdd1.h"
 #include "Bit1.h"
 #include "BitIoLdd6.h"
+#include "Bit5.h"
+#include "BitIoLdd5.h"
+#include "Bit6.h"
+#include "BitIoLdd7.h"
 #include "AS1.h"
 #include "RxBuf.h"
 #include "CS1.h"
@@ -71,6 +75,8 @@ static int param1;
 static int param2;
 static int param3;
 
+int sdfzusfp;
+
 void PICom(void *);
 void initializeASI(void*);
 void initializeTasks(void*);
@@ -87,7 +93,7 @@ int messageFlag = 0;
 int startup = 0;
 
 #define PI 3.141592654
-#define d 21.3 //[mm]						// für kürzeres Aus-/Einfahren muss d erhöht werden
+#define d 21.8 //[mm]						// für kürzeres Aus-/Einfahren muss d erhöht werden
 #define Umfang (d * PI);	//[mm]
 #define ONE_REVOLUTION 200
 #define TICKS_PER_MM ONE_REVOLUTION/Umfang // [mm]
@@ -118,6 +124,10 @@ const float Ticks_per_mm = TICKS_PER_MM
 ;
 speed_t sp;
 direction_t dir;
+
+int magnet_dir;
+int positive = 0;
+int negative = 0;
 
 void moveDistance(direction_t dir, int distance) {
 
@@ -187,15 +197,25 @@ static void move(void* pvParameters) {
 	switch (magnet) {
 
 	case 'p':
-		// support permanentMagnet;
+		Bit5_PutVal(TRUE);
+		Bit6_PutVal(FALSE);
+
+
 		break;
 	case 'n':
-		// turn magnetic field on the other side compared to case 's'
+		// turn magnetic field on the other side compared to case 'p
+		Bit5_PutVal(FALSE);
+		Bit6_PutVal(TRUE);
+
+
 		break;
 	case 'i':
-		// dont do anything with the magnet
+		Bit5_PutVal(FALSE);
+		Bit6_PutVal(FALSE);
 		break;
 	}
+
+	vTaskDelay(pdMS_TO_TICKS(1000));
 
 	switch (sensor) {
 
@@ -210,6 +230,11 @@ static void move(void* pvParameters) {
 
 	vTaskDelay(pdMS_TO_TICKS(1000));
 	moveDistance(REVERSE, up);
+
+	// Magnetpolung wieder auf idle
+	Bit5_PutVal(FALSE);
+	Bit6_PutVal(FALSE);
+
 	sendText(
 			"\n\n\n##################    Testlauf abgeschlossen      #########################");
 
