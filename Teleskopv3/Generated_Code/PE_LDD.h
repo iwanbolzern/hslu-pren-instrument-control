@@ -6,7 +6,7 @@
 **     Version     : Component 01.003, Driver 01.04, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-27, 17:48, # CodeGen: 9
+**     Date/Time   : 2018-02-23, 09:34, # CodeGen: 1
 **     Abstract    :
 **
 **     Settings    :
@@ -68,10 +68,6 @@
 #include "RxBuf.h"
 #include "CS1.h"
 #include "PPG1.h"
-#include "Bit2.h"
-#include "BitIoLdd2.h"
-#include "Bit3.h"
-#include "BitIoLdd3.h"
 #include "Bit4.h"
 #include "BitIoLdd4.h"
 #include "LED2.h"

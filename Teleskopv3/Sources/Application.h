@@ -25,8 +25,17 @@ enum valueMode {
 	DISTANCE = 1, LETTER = 2
 };
 void APP_Run(void);
-int getLength(void);
-int getCmd(void);
+
+
+int getLengthOfMessage(void);
+
+
+
+char getCmd(void);
+
+
+
+
 void initTele(void);
 void driveDistance(int,int,int);
 void driveJog(int,int);
@@ -34,6 +43,8 @@ void driveToEnd(int,int,int);
 void moveTele(int,int);
 void enableMagnet(int);
 void disableMagnet(void);
+
+
 int getData8(void);
 int getData16(void);
 void sendText(char[]);
@@ -42,6 +53,8 @@ void sendMenu(void);
 int getValue(mode_t);
 void sendHeader(void);
 void emptyBuffer(void);
+
+
 
 int getDecimal(unsigned int );
 #endif /* SOURCES_APPLICATION_H_ */

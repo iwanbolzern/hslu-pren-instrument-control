@@ -25,6 +25,9 @@ static void SendString(const unsigned char *str, UART_Desc *desc) {
 	}
 }
 
+
+
+
 static void Init(void) {
 	/* initialize struct fields */
 	deviceData.handle = AS1_Init(&deviceData);
@@ -38,6 +41,9 @@ static void Init(void) {
 			sizeof(deviceData.rxChar)) != ERR_OK) {
 	} /* initial kick off for receiving data */
 }
+
+
+
 
 int hexTodec(unsigned int hex) {
 
@@ -150,38 +156,114 @@ int getData16() {
 
 }
 
-int getLength(void) {
 
-	int l;
-	int value16e0 = 0;
-	int value16e1 = 0;
-	int xCounter = 2;
-	int dataLength = 0;
-	int counterUntilLength = 6;
 
-	unsigned char ch;
 
-	while (counterUntilLength > 0) { // Datengrösse ist sowieso nie grösser als 255 Byte (0xFF)
 
-		(void) RxBuf_Get(&ch);
-		vTaskDelay(pdMS_TO_TICKS(10));
-		counterUntilLength = counterUntilLength - 1;
-	}
+/*
+ ** ===================================================================
 
-	(void) RxBuf_Get(&ch);
+ **     Description :
+ **
+ **        Liest die Längenangabe der Message
+ **
+ **
+ **     Parameters  : Nothing
+ **
+ **
+ **     Returns     : Länge der Message als int
 
-	value16e1 = 16 * hexTodec(ch);
+ ** ===================================================================
+ */
+int getLengthOfMessage(void) {
+int temp= 0;
+int value16e1 = 0;
+int value16e0 = 0;
+char ch = 0;
 
-	(void) RxBuf_Get(&ch);
+(void) RxBuf_Get(&ch);
+temp = ch;
+value16e1 = 16 * temp;
+(void) RxBuf_Get(&ch);
+temp = ch;
+value16e0 = temp;
 
-	value16e0 = hexTodec(ch);
-
-	dataLength = value16e1 + value16e0;
-	//SendChar(dataLength, &deviceData);
-
-	return dataLength;
+	return value16e1 + value16e0;
 
 }
+
+
+
+/*
+ ** ===================================================================
+
+ **     Description :
+ **
+ **        Liest das Kommando ID
+ **
+ **
+ **     Parameters  : Nothing
+ **
+ **
+ **     Returns     : Kommando-ID
+
+ ** ===================================================================
+ */
+
+
+char getCmd(void){
+
+char ch = 0;
+
+(void) RxBuf_Get(&ch);
+
+return ch;
+
+}
+
+
+
+void initTele(void){
+
+
+
+}
+void driveDistance(int distance,int speed,int direction){
+
+}
+void driveJog(int speed,int direction){
+
+}
+void driveToEnd(int predDistance,int speed,int direction){
+
+}
+void moveTele(int distance,int direction){
+
+}
+void enableMagnet(int direction){
+
+}
+void disableMagnet(void){
+
+}
+
+void APP_Run(void){
+
+	Init();
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 void sendText(char text[]) {
 
@@ -189,35 +271,7 @@ void sendText(char text[]) {
 
 }
 
-int getCmd(void) {
 
-	int cmd = 0;
-	int counterUntilCmd = 2;
-	int value16e0 = 0;
-	int value16e1 = 0;
-	unsigned char ch;
-
-	while (counterUntilCmd > 0) {
-		vTaskDelay(pdMS_TO_TICKS(10));
-		(void) RxBuf_Get(&ch);
-		counterUntilCmd = counterUntilCmd - 1;
-
-	}
-
-	(void) RxBuf_Get(&ch);
-
-	value16e1 = 16 * hexTodec(ch);
-
-	(void) RxBuf_Get(&ch);
-
-	value16e0 = hexTodec(ch);
-
-	cmd = value16e1 + value16e0;
-
-	//(void) RxBuf_Get(&ch); 		// braucht es, damit man 0 Elemente hat !!!!!!!!!!!!!
-	return cmd;
-
-}
 
 void emptyBuffer(void) {
 
@@ -310,13 +364,10 @@ void sendHeader(void) {
 void sendMenu(void) {
 
 	sendText(
-			"\n\nDie Parameter müssen nacheinander eingegeben und mit Enter bestätigt werden.. \n\n");
+			"\n\nsjdasjdlkjdlkasjdklda\n\n");
 
 
-	sendText("Mit \"x\" kann die Eingabe abgebrochen werden \n\n");
-}
-
-void APP_Run(void) {
-	Init();
 
 }
+
+

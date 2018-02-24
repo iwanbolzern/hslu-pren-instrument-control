@@ -7,7 +7,7 @@
 **     Version     : Component 01.015, Driver 01.03, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-21, 13:27, # CodeGen: 5
+**     Date/Time   : 2018-02-23, 08:54, # CodeGen: 0
 **     Abstract    :
 **          This component implements a programmable pulse generator that
 **          generates signal with variable duty and variable cycle (period).

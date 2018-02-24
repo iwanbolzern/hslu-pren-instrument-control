@@ -32,10 +32,6 @@
 #include "FRTOS1.h"
 #include "MCUC1.h"
 #include "UTIL1.h"
-#include "Bit2.h"
-#include "BitIoLdd2.h"
-#include "Bit3.h"
-#include "BitIoLdd3.h"
 #include "Bit4.h"
 #include "BitIoLdd4.h"
 #include "LED2.h"
@@ -60,22 +56,40 @@
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
 
-enum states {
-	STARTUP, START, DOWN, UP, MAGNET, SENSOR, EXECUTE
+
+
+enum commandos {
+	WaitForCom, InitTele, DriveDistance, DriveJog, DriveToEnd, MoveTele, EnableMagnet, DisableMagnet
 };
 
-typedef enum states states_t;
+ typedef enum commandos cmd_t;
+
+
+
+cmd_t commando;
+static cmd_t cmd;		// Kommando byte
+static int param1;		// Parameter 1 vom IM mitgegeben
+static int param2;		// Parameter 2 vom IM mitgegeben
+
+
+
+
+
+
+
+
+
 
 mode_t mode;
-states_t state;
+
 int counter_flag;
-static int cmd;
-static int dataLength;
+
+static int length;			// Länge der Message
 static int param1;
 static int param2;
 static int param3;
 
-int sdfzusfp;
+
 
 void PICom(void *);
 void initializeASI(void*);
@@ -174,16 +188,40 @@ int runden(float x) {
 	return (int) (x - 0.5);
 }
 
-/* User includes (#include below this line is not maintained by Processor Expert) */
+/*
+ ** ===================================================================
 
+ **     Description :
+ **
+ **        Die Asynchrone Verbindung (UART) und die Statemachine
+ **        werden hier gestarte
+ **
+ **
+ **     Parameters  :
+ **     	*pvParameters	: Pointer, wird einfach entgegengenommen
+ **
+ **     Returns     : Nothing
+
+ ** ===================================================================
+ */
 void initialize(void *pvParameters) {
 	(void) pvParameters;
-	APP_Run();
-	statemachine();
+
+	APP_Run();		// Initialisieren der UART Verbindung
+	statemachine();		// Statemachin wird gestartet
+
 	for (;;) {
 	}
 
 }
+
+
+
+
+
+
+
+
 static void move(void* pvParameters) {
 
 	(void) pvParameters;
@@ -200,13 +238,11 @@ static void move(void* pvParameters) {
 		Bit5_PutVal(TRUE);
 		Bit6_PutVal(FALSE);
 
-
 		break;
 	case 'n':
 		// turn magnetic field on the other side compared to case 'p
 		Bit5_PutVal(FALSE);
 		Bit6_PutVal(TRUE);
-
 
 		break;
 	case 'i':
@@ -244,117 +280,60 @@ static void move(void* pvParameters) {
 
 }
 
+
+
+
+/*
+ ** ===================================================================
+
+ **     Description :
+ **
+ **        Statemachine, welche die entsprechenden Methoden aufruft,
+ **        respektive Tasks generiert für die Methoden
+ **
+ **
+ **     Parameters  : Nothing
+ **
+ **
+ **     Returns     : Nothing
+
+ ** ===================================================================
+ */
+
+
+
+
+
 void statemachine() {
 
 	for (;;) {
 
-		switch (state) {
+		switch (commando) {
 
-		case STARTUP:
 
-			if (startup == 0) {
-				sendHeader();
-				startup = 1;
 
-			}
-			sendMenu();
-			sendText("\n\nAusfahren [mm]:   FORMAT \"dddd\"\n\n");
-			state = DOWN;
-			vTaskDelay(pdMS_TO_TICKS(5));
-			break;
+		case WaitForCom:
 
-		case START:
-
-			state = DOWN;
-			vTaskDelay(pdMS_TO_TICKS(5));
-			break;
-		case DOWN:
 
 			if (messageReceived) {
 				messageFlag = 1;
-				dist_down = getValue(DISTANCE);
-				if (dist_down == -1) {
-					emptyBuffer();
-					state = START;
-					messageFlag = 0;
-				} else {
-					state = UP;
-					messageFlag = 0;
-					sendText("\n\nEinfahren [mm]:   FORMAT \"dddd\"\n\n");
-					vTaskDelay(pdMS_TO_TICKS(5));
-				}
-			}
-
-			break;
-		case UP:
-
-			if (messageReceived) {
-				messageFlag = 1;
-				dist_up = getValue(DISTANCE);
-
-				if (dist_up == -1) {
-					emptyBuffer();
-					state = START;
-					messageFlag = 0;
-				} else {
-
-					state = MAGNET;
-					messageFlag = 0;
-					sendText(
-							"\n\nMagnetpolung:\nPOSITIV         --> [p]\nNEGATIV       --> [n]\nIDLE                 --> [i] \n\n");
-					vTaskDelay(pdMS_TO_TICKS(5));
-				}
-			}
-
-			break;
-		case MAGNET:
-
-			if (messageReceived) {
-				messageFlag = 1;
-				magnet = getValue(LETTER);
-
-				if (magnet == -1) {
-					emptyBuffer();
-					state = START;
-					messageFlag = 0;
-				} else {
-					state = SENSOR;
-					messageFlag = 0;
-					sendText(
-							"\n\nSensor:\nEIN                --> [e]\nAUS              --> [a]\n\n");
-					vTaskDelay(pdMS_TO_TICKS(5));
-				}
-			}
-
-			break;
-
-		case SENSOR:
-
-			if (messageReceived) {
-				messageFlag = 1;
-				sensor = getValue(LETTER);
-
-				if (sensor == -1) {
-					emptyBuffer();
-					state = START;
-					messageFlag = 0;
-				}
-				state = EXECUTE;
+				(void) getMessage();
+				commando = cmd;
 				messageFlag = 0;
-				vTaskDelay(pdMS_TO_TICKS(5));
+
 			}
+
+			vTaskDelay(pdMS_TO_TICKS(5));	// muss noch evaluiert werden ob notwendig
+
 			break;
 
-		case EXECUTE:
 
-			sendText(
-					"\n\n\n##################    Es wird getestet....  ################################");
 
-			counter = 0;
-// Init Magnet, Sensor and Stepper
+		case InitTele:
+
 			if (FRTOS1_xTaskCreate(
-					move, /* pointer to the task */
-					(signed portCHAR *)"moves the teleskoper", /* task name for kernel awareness debugging */
+					initTele, /* pointer to the task */
+					(signed portCHAR *)"Initialisierungsprozess", /* task name for kernel awareness debugging */
 					configMINIMAL_STACK_SIZE, /* task stack size */
 					(void*)NULL, /* optional task startup argument */
 					tskIDLE_PRIORITY, /* initial priority */
@@ -363,13 +342,283 @@ void statemachine() {
 				for (;;) {
 				}; /* Out of heap memory? */
 			}
-			state = START;
+
+			commando = WaitForCom;
 
 			break;
+
+
+
+		case DriveDistance:
+
+			if (FRTOS1_xTaskCreate(
+					driveDistance, /* pointer to the task */
+					(signed portCHAR *)"DriveDistance", /* task name for kernel awareness debugging */
+					configMINIMAL_STACK_SIZE, /* task stack size */
+					(void*)NULL, /* optional task startup argument */
+					tskIDLE_PRIORITY, /* initial priority */
+					(xTaskHandle*)NULL /* optional task handle to create */
+			) != pdPASS) {
+				for (;;) {
+				}; /* Out of heap memory? */
+			}
+
+			commando = WaitForCom;
+
+			break;
+
+
+
+		case DriveJog:
+
+			if (FRTOS1_xTaskCreate(
+					driveJog, /* pointer to the task */
+					(signed portCHAR *)"DriveJog", /* task name for kernel awareness debugging */
+					configMINIMAL_STACK_SIZE, /* task stack size */
+					(void*)NULL, /* optional task startup argument */
+					tskIDLE_PRIORITY, /* initial priority */
+					(xTaskHandle*)NULL /* optional task handle to create */
+			) != pdPASS) {
+				for (;;) {
+				}; /* Out of heap memory? */
+			}
+
+			commando = WaitForCom;
+
+			break;
+
+
+
+
+		case DriveToEnd:
+
+			if (FRTOS1_xTaskCreate(
+					driveToEnd, /* pointer to the task */
+					(signed portCHAR *)"DriveToEnd", /* task name for kernel awareness debugging */
+					configMINIMAL_STACK_SIZE, /* task stack size */
+					(void*)NULL, /* optional task startup argument */
+					tskIDLE_PRIORITY, /* initial priority */
+					(xTaskHandle*)NULL /* optional task handle to create */
+			) != pdPASS) {
+				for (;;) {
+				}; /* Out of heap memory? */
+			}
+
+			commando = WaitForCom;
+
+			break;
+
+
+
+		case MoveTele:
+
+			if (FRTOS1_xTaskCreate(
+					moveTele, /* pointer to the task */
+					(signed portCHAR *)"MoveTele", /* task name for kernel awareness debugging */
+					configMINIMAL_STACK_SIZE, /* task stack size */
+					(void*)NULL, /* optional task startup argument */
+					tskIDLE_PRIORITY, /* initial priority */
+					(xTaskHandle*)NULL /* optional task handle to create */
+			) != pdPASS) {
+				for (;;) {
+				}; /* Out of heap memory? */
+			}
+
+			commando = WaitForCom;
+
+			break;
+
+		case EnableMagnet:
+
+			if (FRTOS1_xTaskCreate(
+					enableMagnet, /* pointer to the task */
+					(signed portCHAR *)"EnableMagnet", /* task name for kernel awareness debugging */
+					configMINIMAL_STACK_SIZE, /* task stack size */
+					(void*)NULL, /* optional task startup argument */
+					tskIDLE_PRIORITY, /* initial priority */
+					(xTaskHandle*)NULL /* optional task handle to create */
+			) != pdPASS) {
+				for (;;) {
+				}; /* Out of heap memory? */
+			}
+
+			commando = WaitForCom;
+
+			break;
+
+
+		case DisableMagnet:
+
+			if (FRTOS1_xTaskCreate(
+					disableMagnet, /* pointer to the task */
+					(signed portCHAR *)"DisableMagnet", /* task name for kernel awareness debugging */
+					configMINIMAL_STACK_SIZE, /* task stack size */
+					(void*)NULL, /* optional task startup argument */
+					tskIDLE_PRIORITY, /* initial priority */
+					(xTaskHandle*)NULL /* optional task handle to create */
+			) != pdPASS) {
+				for (;;) {
+				}; /* Out of heap memory? */
+			}
+
+			commando = WaitForCom;
+
+			break;
+
+
+
+
+
 		}
 	}
 
 }
+
+
+
+
+/*
+ ** ===================================================================
+
+ **     Description :
+ **
+ **        Liest die Kommando-ID und die Parameter aus
+ **
+ **
+ **     Parameters  : Nothing
+ **
+ **
+ **     Returns     : Nothing
+
+ ** ===================================================================
+ */
+
+
+void getMessage(){
+
+char c = 0;
+length = getLengthOfMessage();
+c = getCmd();
+
+
+
+switch(c){
+
+case 1:
+
+	cmd = InitTele;
+	break;
+
+case 2:
+
+	cmd = DriveDistance;
+	// param1, param2 und param3 bestimmen
+	break;
+
+case 3:
+
+	cmd = DriveJog;
+	// param1 und param2 bestimmen
+	break;
+
+case 4:
+
+	cmd = DriveToEnd;
+	// param1, param2 und oaram3 bestimmen
+	break;
+
+case 5:
+
+	cmd = MoveTele;
+	// param1 und param2 bestimmen
+	break;
+
+case 6:
+
+	cmd = EnableMagnet;
+	// param1 bestimmen
+	break;
+
+case 7:
+
+	cmd = DisableMagnet;
+	break;
+}
+
+
+
+
+	//if( length = ...){
+
+	//cmd =
+   // param1 = ...
+//	param2 = ...
+	//}
+//	else if(length = ..){
+//		cmd = ..
+//		param1 = ...
+
+//	}
+
+//	else {
+//		cmd = ...
+//	}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/*
+ ** ===================================================================
+
+ **     Description :
+ **
+ **        Methode, welche im 5ms abfragt ob eine Message vom IM
+ **        gesendet wurde.
+ **
+ **
+ **
+ **
+ **
+ **     Parameters  :
+ **     	*pvParameters	: Pointer, wird einfach entgegengenommen
+ **     	messageReceived : Flag das gesetzt wird sobald eine Message
+ **     				      empfangen wurde
+ **     	messageFlag		: wird in der Statemachine generiert sobald
+ **     				      begonne wurde die Nachricht zu entschlüsseln
+ **     				      Wurde die nachricht entgegengenommen und
+ **     				      ausgewertet, wird das Flag wieder auf 0
+ **     				      gesetzt und das messageReceived Flag kann
+ **     				      wieder den Wert 1 annehmen sobald eine Nachricht
+ **     				      generiert wird vom IM
+ **
+ **     Returns     : Nothing
+ ** ===================================================================
+ */
 
 void PICom(void *pvParameters) {
 	(void) pvParameters;
@@ -388,8 +637,38 @@ void PICom(void *pvParameters) {
 	}
 }
 
+
+
+
+/*
+ ** ===================================================================
+
+ **     Description :
+ **
+ **        Methode, welche die Tasks erstellt, die am Anfng benötigt
+ **        werden.
+ **        - initialize :	Task, welcher die notwendigen Komponenten
+ **        						initialisiert.
+ **
+ **        - PiCommuniction:Task für die permanente Abfrage ob eine
+ **        					Nachricht vom IM empfangen wurde
+ **
+ **
+ **     Parameters  :
+ **     	*pvParameters	: Pointer, wird einfach entgegengenommen
+ **
+ **     Returns     : Nothing
+ **
+ **
+ **     Hinweis: Weitere Tasks könne hier generiert werden, zB zum senden
+ **     	     der Encoder-Werte
+ ** ===================================================================
+ */
+
 void initializeTasks(void* pvParameters) {
 	(void) pvParameters;
+
+	/* Initialisierungstask*/
 
 	if (FRTOS1_xTaskCreate(
 			initialize, /* pointer to the task */
@@ -402,6 +681,12 @@ void initializeTasks(void* pvParameters) {
 		for (;;) {
 		}; /* Out of heap memory? */
 	}
+
+
+
+	/* Task erstellen, welcher permanent den Empfangsbuffer abfragt*/
+
+
 
 	if (FRTOS1_xTaskCreate(
 			PICom, /* pointer to the task */
@@ -420,6 +705,10 @@ void initializeTasks(void* pvParameters) {
 	}
 
 }
+
+
+
+
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)

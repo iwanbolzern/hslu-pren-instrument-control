@@ -8,7 +8,7 @@
 **     Repository  : Kinetis
 **     Datasheet   : KL46P121M48SF4RM, Rev.2, Dec 2012
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-01-27, 17:48, # CodeGen: 9
+**     Date/Time   : 2018-02-23, 09:34, # CodeGen: 1
 **     Abstract    :
 **
 **     Settings    :
@@ -490,10 +490,6 @@
 #include "RxBuf.h"
 #include "CS1.h"
 #include "PPG1.h"
-#include "Bit2.h"
-#include "BitIoLdd2.h"
-#include "Bit3.h"
-#include "BitIoLdd3.h"
 #include "Bit4.h"
 #include "BitIoLdd4.h"
 #include "LED2.h"
@@ -1781,10 +1777,6 @@ void PE_low_level_init(void)
   /* ### CriticalSection "CS1" init code ... */
   /* ### RingBuffer "RxBuf" init code ... */
   RxBuf_Init();
-  /* ### BitIO_LDD "BitIoLdd2" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
-  (void)BitIoLdd2_Init(NULL);
-  /* ### BitIO_LDD "BitIoLdd3" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
-  (void)BitIoLdd3_Init(NULL);
   /* ### BitIO_LDD "BitIoLdd4" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
   (void)BitIoLdd4_Init(NULL);
   /* ### BitIO_LDD "BitIoLdd1" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
