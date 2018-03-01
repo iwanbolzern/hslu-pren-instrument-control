@@ -25,9 +25,6 @@ static void SendString(const unsigned char *str, UART_Desc *desc) {
 	}
 }
 
-
-
-
 static void Init(void) {
 	/* initialize struct fields */
 	deviceData.handle = AS1_Init(&deviceData);
@@ -41,9 +38,6 @@ static void Init(void) {
 			sizeof(deviceData.rxChar)) != ERR_OK) {
 	} /* initial kick off for receiving data */
 }
-
-
-
 
 int hexTodec(unsigned int hex) {
 
@@ -156,10 +150,6 @@ int getData16() {
 
 }
 
-
-
-
-
 /*
  ** ===================================================================
 
@@ -176,23 +166,21 @@ int getData16() {
  ** ===================================================================
  */
 int getLengthOfMessage(void) {
-int temp= 0;
-int value16e1 = 0;
-int value16e0 = 0;
-char ch = 0;
+	int temp = 0;
+	int value16e1 = 0;
+	int value16e0 = 0;
+	char ch = 0;
 
-(void) RxBuf_Get(&ch);
-temp = ch;
-value16e1 = 16 * temp;
-(void) RxBuf_Get(&ch);
-temp = ch;
-value16e0 = temp;
+	(void) RxBuf_Get(&ch);
+	temp = ch;
+	value16e1 = 16 * temp;
+	(void) RxBuf_Get(&ch);
+	temp = ch;
+	value16e0 = temp;
 
 	return value16e1 + value16e0;
 
 }
-
-
 
 /*
  ** ===================================================================
@@ -210,68 +198,85 @@ value16e0 = temp;
  ** ===================================================================
  */
 
+char getCmd(void) {
 
-char getCmd(void){
+	char ch = 0;
 
-char ch = 0;
+	(void) RxBuf_Get(&ch);
 
-(void) RxBuf_Get(&ch);
-
-return ch;
-
-}
-
-
-
-void initTele(void){
-
-
-
-}
-void driveDistance(int distance,int speed,int direction){
-
-}
-void driveJog(int speed,int direction){
-
-}
-void driveToEnd(int predDistance,int speed,int direction){
-
-}
-void moveTele(int distance,int direction){
-
-}
-void enableMagnet(int direction){
-
-}
-void disableMagnet(void){
+	return ch;
 
 }
 
-void APP_Run(void){
+int get2Bytes(void) {
+
+	unsigned char ch1 = 0;
+	unsigned char ch2 = 0;
+	int temp1 = 0;
+	int temp2 = 0;
+	int temp3 = 0;
+	int value16e2 = 256;
+	int result = 0;
+
+	(void) RxBuf_Get(&ch1);
+
+	temp1 = ch1;
+
+	(void) RxBuf_Get(&ch2);
+
+
+
+	temp3 = temp1 * value16e2;
+
+	temp2 = ch2;
+	result = temp3 + temp2;
+
+	return result;
+
+}
+
+char get1Byte(void) {
+
+	unsigned char ch = 0;
+
+	(void) RxBuf_Get(&ch);
+
+	return ch;
+}
+
+void initTele(void) {
+
+}
+void driveDistance(int distance, int speed, int direction) {
+
+}
+void driveJog(int speed, int direction) {
+
+}
+void driveToEnd(int predDistance, int speed, int direction) {
+
+}
+void moveTele(int distance, int direction) {
+
+}
+void enableMagnet(int direction) {
+
+}
+void disableMagnet(void) {
+
+}
+
+void APP_Run(void) {
 
 	Init();
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
 
 void sendText(char text[]) {
 
 	SendString((unsigned char*) text, &deviceData);
 
 }
-
-
 
 void emptyBuffer(void) {
 
@@ -363,11 +368,7 @@ void sendHeader(void) {
 
 void sendMenu(void) {
 
-	sendText(
-			"\n\nsjdasjdlkjdlkasjdklda\n\n");
-
-
+	sendText("\n\nsjdasjdlkjdlkasjdklda\n\n");
 
 }
-
 

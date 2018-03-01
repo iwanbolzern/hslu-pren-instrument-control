@@ -56,40 +56,30 @@
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
 
-
-
 enum commandos {
-	WaitForCom, InitTele, DriveDistance, DriveJog, DriveToEnd, MoveTele, EnableMagnet, DisableMagnet
+	WaitForCom,
+	InitTele,
+	DriveDistance,
+	DriveJog,
+	DriveToEnd,
+	MoveTele,
+	EnableMagnet,
+	DisableMagnet
 };
 
- typedef enum commandos cmd_t;
-
-
+typedef enum commandos cmd_t;
 
 cmd_t commando;
 static cmd_t cmd;		// Kommando byte
 static int param1;		// Parameter 1 vom IM mitgegeben
 static int param2;		// Parameter 2 vom IM mitgegeben
-
-
-
-
-
-
-
-
-
+static int param3;		// Parameter 3 vom IM mitgegeben
 
 mode_t mode;
 
 int counter_flag;
 
 static int length;			// Länge der Message
-static int param1;
-static int param2;
-static int param3;
-
-
 
 void PICom(void *);
 void initializeASI(void*);
@@ -215,13 +205,6 @@ void initialize(void *pvParameters) {
 
 }
 
-
-
-
-
-
-
-
 static void move(void* pvParameters) {
 
 	(void) pvParameters;
@@ -280,9 +263,6 @@ static void move(void* pvParameters) {
 
 }
 
-
-
-
 /*
  ** ===================================================================
 
@@ -300,34 +280,24 @@ static void move(void* pvParameters) {
  ** ===================================================================
  */
 
-
-
-
-
 void statemachine() {
 
 	for (;;) {
 
 		switch (commando) {
 
-
-
 		case WaitForCom:
 
-
 			if (messageReceived) {
-				messageFlag = 1;
-				(void) getMessage();
+				getMessage();
 				commando = cmd;
 				messageFlag = 0;
 
 			}
 
-			vTaskDelay(pdMS_TO_TICKS(5));	// muss noch evaluiert werden ob notwendig
+			vTaskDelay(pdMS_TO_TICKS(5));// muss noch evaluiert werden ob notwendig
 
 			break;
-
-
 
 		case InitTele:
 
@@ -347,8 +317,6 @@ void statemachine() {
 
 			break;
 
-
-
 		case DriveDistance:
 
 			if (FRTOS1_xTaskCreate(
@@ -366,8 +334,6 @@ void statemachine() {
 			commando = WaitForCom;
 
 			break;
-
-
 
 		case DriveJog:
 
@@ -387,9 +353,6 @@ void statemachine() {
 
 			break;
 
-
-
-
 		case DriveToEnd:
 
 			if (FRTOS1_xTaskCreate(
@@ -407,8 +370,6 @@ void statemachine() {
 			commando = WaitForCom;
 
 			break;
-
-
 
 		case MoveTele:
 
@@ -446,7 +407,6 @@ void statemachine() {
 
 			break;
 
-
 		case DisableMagnet:
 
 			if (FRTOS1_xTaskCreate(
@@ -465,17 +425,10 @@ void statemachine() {
 
 			break;
 
-
-
-
-
 		}
 	}
 
 }
-
-
-
 
 /*
  ** ===================================================================
@@ -493,104 +446,67 @@ void statemachine() {
  ** ===================================================================
  */
 
+void getMessage() {
 
-void getMessage(){
+	char c = 0;
+	length = getLengthOfMessage();
+	c = getCmd();
 
-char c = 0;
-length = getLengthOfMessage();
-c = getCmd();
+	switch (c) {
 
+	case 1:
 
+		cmd = InitTele;
+		break;
 
-switch(c){
+	case 2:
 
-case 1:
+		cmd = DriveDistance;
+		param1 = get2Bytes();		// Distance
+		param2 = get1Byte();		// speed
+		param3 = get1Byte();		// direction
 
-	cmd = InitTele;
-	break;
+		break;
 
-case 2:
+	case 3:
 
-	cmd = DriveDistance;
-	// param1, param2 und param3 bestimmen
-	break;
+		cmd = DriveJog;
+		param1 = get1Byte();		//speed
+		param2 = get1Byte();		//direction
 
-case 3:
+		break;
 
-	cmd = DriveJog;
-	// param1 und param2 bestimmen
-	break;
+	case 4:
 
-case 4:
+		cmd = DriveToEnd;
+		param1 = get2Bytes();		//predicted distance
+		param2 = get1Byte();		//speed
+		param3 = get1Byte();		//direction
 
-	cmd = DriveToEnd;
-	// param1, param2 und oaram3 bestimmen
-	break;
+		break;
 
-case 5:
+	case 5:
 
-	cmd = MoveTele;
-	// param1 und param2 bestimmen
-	break;
+		cmd = MoveTele;
+		param1 = get2Bytes();		//distance
+		param2 = get1Byte();		//direction
 
-case 6:
+		break;
 
-	cmd = EnableMagnet;
-	// param1 bestimmen
-	break;
+	case 6:
 
-case 7:
+		cmd = EnableMagnet;
+		param1 = get1Byte();		//direction
 
-	cmd = DisableMagnet;
-	break;
-}
+		break;
 
+	case 7:
 
-
-
-	//if( length = ...){
-
-	//cmd =
-   // param1 = ...
-//	param2 = ...
-	//}
-//	else if(length = ..){
-//		cmd = ..
-//		param1 = ...
-
-//	}
-
-//	else {
-//		cmd = ...
-//	}
-
-
-
-
+		cmd = DisableMagnet;
+		break;
+	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 /*
  ** ===================================================================
@@ -637,9 +553,6 @@ void PICom(void *pvParameters) {
 	}
 }
 
-
-
-
 /*
  ** ===================================================================
 
@@ -682,11 +595,7 @@ void initializeTasks(void* pvParameters) {
 		}; /* Out of heap memory? */
 	}
 
-
-
 	/* Task erstellen, welcher permanent den Empfangsbuffer abfragt*/
-
-
 
 	if (FRTOS1_xTaskCreate(
 			PICom, /* pointer to the task */
@@ -705,10 +614,6 @@ void initializeTasks(void* pvParameters) {
 	}
 
 }
-
-
-
-
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
@@ -736,12 +641,13 @@ int main(void)
 	}
 
 	/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
-  /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
-  #ifdef PEX_RTOS_START
-    PEX_RTOS_START();                  /* Startup of the selected RTOS. Macro is defined by the RTOS component. */
-  #endif
-  /*** End of RTOS startup code.  ***/
-  /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
-  for(;;){}
-  /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
+	/*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
+#ifdef PEX_RTOS_START
+	PEX_RTOS_START(); /* Startup of the selected RTOS. Macro is defined by the RTOS component. */
+#endif
+	/*** End of RTOS startup code.  ***/
+	/*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
+	for (;;) {
+	}
+	/*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
 }

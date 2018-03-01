@@ -32,8 +32,8 @@ int getLengthOfMessage(void);
 
 
 char getCmd(void);
-
-
+int get2Bytes(void);
+char get1Byte(void);
 
 
 void initTele(void);
