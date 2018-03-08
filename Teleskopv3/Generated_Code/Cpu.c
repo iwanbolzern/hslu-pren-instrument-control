@@ -8,7 +8,7 @@
 **     Repository  : Kinetis
 **     Datasheet   : KL46P121M48SF4RM, Rev.2, Dec 2012
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-02-23, 09:34, # CodeGen: 1
+**     Date/Time   : 2018-03-02, 10:49, # CodeGen: 6
 **     Abstract    :
 **
 **     Settings    :
@@ -495,12 +495,21 @@
 #include "LED2.h"
 #include "LEDpin2.h"
 #include "BitIoLdd1.h"
-#include "Bit1.h"
-#include "BitIoLdd6.h"
 #include "Bit5.h"
 #include "BitIoLdd5.h"
 #include "Bit6.h"
 #include "BitIoLdd7.h"
+#include "LED1.h"
+#include "LEDpin1.h"
+#include "BitIoLdd2.h"
+#include "PWM1.h"
+#include "PwmLdd1.h"
+#include "TU1.h"
+#include "GPIO1.h"
+#include "IN1.h"
+#include "BitIoLdd3.h"
+#include "IN2.h"
+#include "BitIoLdd6.h"
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
@@ -1783,12 +1792,20 @@ void PE_low_level_init(void)
   (void)BitIoLdd1_Init(NULL);
   /* ### LED "LED2" init code ... */
   LED2_Init(); /* initialize LED driver */
-  /* ### BitIO_LDD "BitIoLdd6" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
-  (void)BitIoLdd6_Init(NULL);
   /* ### BitIO_LDD "BitIoLdd5" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
   (void)BitIoLdd5_Init(NULL);
   /* ### BitIO_LDD "BitIoLdd7" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
   (void)BitIoLdd7_Init(NULL);
+  /* ### BitIO_LDD "BitIoLdd2" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
+  (void)BitIoLdd2_Init(NULL);
+  /* ### LED "LED1" init code ... */
+  LED1_Init(); /* initialize LED driver */
+  /* ### PWM_LDD "PwmLdd1" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
+  (void)PwmLdd1_Init(NULL);
+  /* ### BitIO_LDD "BitIoLdd3" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
+  (void)BitIoLdd3_Init(NULL);
+  /* ### BitIO_LDD "BitIoLdd6" component auto initialization. Auto initialization feature can be disabled by component property "Auto initialization". */
+  (void)BitIoLdd6_Init(NULL);
 }
   /* Flash configuration field */
   __attribute__ ((section (".cfmconfig"))) const uint8_t _cfm[0x10] = {

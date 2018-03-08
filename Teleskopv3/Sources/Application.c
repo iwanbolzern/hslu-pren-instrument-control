@@ -10,6 +10,68 @@
 #include "AS1.h"
 
 UART_Desc deviceData;
+int param1;
+int param2;
+int param3;
+
+int counter;
+
+/* User Variables from Nico*/
+#define  GEAR_RATIO 70										// Getriebeübersetzung
+#define  N_TICKS_ENCODER 16									// (Ticks / Revolution)
+#define  ONE_Revolution  (GEAR_RATIO * N_TICKS_ENCODER)		// eine Umdrehung -> 1120 Ticks (70 * 16)
+
+#define  Stop 65535
+#define  Fast_Decay 0
+#define  MeanSpeed 30000
+#define	 GEAR 42.7										//Durchmesser Antriebsrad mm
+#define  PI 3.141592654
+#define  CIRCUMFERENCE_GEAR (GEAR*PI)
+#define  TICK_DISTANCE (CIRCUMFERENCE_GEAR / ONE_Revolution)
+
+LDD_TDeviceData* MyGPIOPtr;
+
+int counter_regulate = 0;
+int startSpeed;
+float v = 1.0;
+float x = 0.3;
+int nTicks;
+int firstRunFlag = 1;
+
+const int ONE_REV = ONE_Revolution;
+const int MAX_SPEED = 0;
+const int MEAN_SPEED = MeanSpeed;
+const int MIN_SPEED = 0xffff;
+const int STOP = Stop;
+const int FAST_DECAY = Fast_Decay;
+
+enum direction {
+	FORWARD = 0, REVERSE = 1, FAST_STOP = 2
+};
+
+enum speedMode {
+	IDLE = 0, SLOW = 1, MEDIUM = 2, FAST = 3
+};
+
+float  quarterPipeArray [] = {0.3,0.2,0.1,0.05,0.05};
+int arrayIndex = 0;
+
+
+
+
+typedef enum speedMode speedMode_t;
+typedef enum direction direction_t;
+direction_t dir;
+speedMode_t spMod;
+
+// Method Declarations
+void setDirection(direction_t);
+int calculateTicksToDrive(int);
+void rollout_slow(int, int, direction_t);
+void rollout_medium(int, int, direction_t);
+void rollout_fast(int, int, direction_t);
+
+void drive(direction_t, int, int);
 
 static void SendChar(unsigned char ch, UART_Desc *desc) {
 	desc->isSent = FALSE; /* this will be set to 1 once the block has been sent */
@@ -64,90 +126,14 @@ int getDecimal(unsigned int value) {
 
 }
 
-/*
- * Methode, welche die nöchsten 8 Bits ausliest
- */
-int getData8() {
+int calculateTicksToDrive(int distance) {
 
-	int counter = 2;
-	int value16e0 = 0;
-	int value16e1 = 0;
-	unsigned char ch;
+	int l = 0;
 
-	while (counter > 0) { // Datengrösse ist sowieso nie grösser als 255 Byte (0xFF)
+	l = (distance / (0.121));
 
-		(void) RxBuf_Get(&ch);
-		vTaskDelay(pdMS_TO_TICKS(10));
-		counter = counter - 1;
-	}
-
-	(void) RxBuf_Get(&ch);
-
-	value16e1 = 16 * hexTodec(ch);
-
-	(void) RxBuf_Get(&ch);
-
-	value16e0 = hexTodec(ch);
-
-	return (value16e1 + value16e0);
-
-	//SendChar(dataLength, &deviceData);
-
-}
-
-void readOne() {
-
-	unsigned char ch;
-	(void) RxBuf_Get(&ch);
-
-}
-
-int getData16() {
-
-	int counter = 2;
-	int value16e0 = 0;
-	int value16e1 = 0;
-	int value16e2 = 0;
-	int value16e3 = 0;
-
-	unsigned char ch;
-
-	while (counter > 0) { // Datengrösse ist sowieso nie grösser als 255 Byte (0xFF)
-
-		(void) RxBuf_Get(&ch);
-		vTaskDelay(pdMS_TO_TICKS(10));
-		counter = counter - 1;
-	}
-
-	(void) RxBuf_Get(&ch);
-
-	value16e3 = 0x1000 * hexTodec(ch);				// 0x1000 = 16^3
-
-	(void) RxBuf_Get(&ch);
-
-	value16e2 = 0x100 * hexTodec(ch);			// 0x100 = 16^2
-
-	counter = 2;
-
-	while (counter > 0) { // Datengrösse ist sowieso nie grösser als 255 Byte (0xFF)
-
-		(void) RxBuf_Get(&ch);
-		vTaskDelay(pdMS_TO_TICKS(10));
-		counter = counter - 1;
-	}
-
-	(void) RxBuf_Get(&ch);
-
-	value16e1 = 0x10 * hexTodec(ch);				// 0x10 = 16^1
-
-	(void) RxBuf_Get(&ch);
-
-	value16e0 = 0x1 * hexTodec(ch);			// 0x1 = 16^0
-
-	return (value16e3 + value16e2 + value16e1 + value16e0);
-
-	//SendChar(dataLength, &deviceData);
-
+	return l;
+//return (uint8)(distance/TICK_DISTANCE);
 }
 
 /*
@@ -208,6 +194,22 @@ char getCmd(void) {
 
 }
 
+/*
+ ** ===================================================================
+
+ **     Description :
+ **
+ **     Liest das Kommando ID
+ **
+ **
+ **     Parameters  : Nothing
+ **
+ **
+ **     Returns     : 2 Bytes aus dem RxBuffer
+
+ ** ===================================================================
+ */
+
 int get2Bytes(void) {
 
 	unsigned char ch1 = 0;
@@ -224,8 +226,6 @@ int get2Bytes(void) {
 
 	(void) RxBuf_Get(&ch2);
 
-
-
 	temp3 = temp1 * value16e2;
 
 	temp2 = ch2;
@@ -234,6 +234,314 @@ int get2Bytes(void) {
 	return result;
 
 }
+
+
+
+
+
+void rollOut(float x, float v){
+	int speedWasSet = 0;
+
+	while (counter < nTicks){
+
+		while (counter < (nTicks * x)){
+
+
+			if(!speedWasSet){
+				LED1_Neg();
+				PWM1_SetRatio16(startSpeed * v);
+				speedWasSet = 1;
+			}
+
+		}
+
+
+		x = x+0.1;
+		v = v+0.15;
+
+
+		if((startSpeed * v ) < (MIN_SPEED * 0.9)){
+			rollOut(x,v);
+		}
+
+	}
+
+
+
+
+}
+
+
+
+
+
+void drive(direction_t direction, int ticks, int speed) {
+	PWM1_Enable();
+	setDirection(direction);
+	vTaskDelay(pdMS_TO_TICKS(10));
+	int internTicks = ticks;
+	counter = 0;
+	int newSpeed = 0;
+	int internSpeed = (1 - ((float) speed / 100)) * MIN_SPEED;
+
+	newSpeed = internSpeed;
+
+	int ticksToGo = ticks;
+
+	//Try Nico
+	startSpeed = internSpeed;
+	nTicks = ticks;
+
+
+	LED1_On();				// Debug
+
+
+
+	rollOut(x,v);
+
+
+// Fast STop initialisierung
+	setDirection(REVERSE);
+	PWM1_SetRatio16(0xffff*0.3);
+	vTaskDelay(pdMS_TO_TICKS(30));
+	setDirection(FAST_STOP);
+
+//
+
+}
+
+
+
+
+
+
+
+
+
+
+
+void rollout_slow(int speed, int ticks, direction_t direction){
+
+	int initialSpeed = speed;
+	int ticksToGo = ticks;
+	int flag = 0;
+	float speedFactor = 1.0;
+	float ticksToGoFactor = 0.3;
+	int fullSpeedFlag = 0;
+	int noMoreSpeedIncreaseFlag = 0;
+
+
+
+	while (counter < ticksToGo) {
+
+			while (counter < (ticksToGo * ticksToGoFactor)) {
+
+				if (flag == 0) {
+					PWM1_SetRatio16(initialSpeed * speedFactor);
+					flag = 1;
+				}
+
+			}
+
+
+			flag = 0;
+
+			if ((speedFactor * initialSpeed) > MIN_SPEED*0.8) {
+
+				PWM1_SetRatio16(MIN_SPEED*0.9);
+				noMoreSpeedIncreaseFlag = 1;
+
+				speedFactor = 0;
+
+			} else {
+
+				if (noMoreSpeedIncreaseFlag == 0) {
+					speedFactor = speedFactor + 0.15;
+					ticksToGoFactor = ticksToGoFactor + 0.1;
+				}
+
+			}
+
+
+
+			vTaskDelay(pdMS_TO_TICKS(10));
+		}
+
+
+
+
+
+		setDirection(FAST_STOP);
+
+		speedFactor = speedFactor * 100;
+		ticksToGoFactor = ticksToGoFactor * 100;
+		vTaskDelay(pdMS_TO_TICKS(3000));
+		int k = 878;
+
+
+}
+
+void rollout_medium(int speed, int ticks, direction_t direction) {
+
+	int initialSpeed = speed;
+	int ticksToGo = ticks;
+	int flag = 0;
+	float speedFactor = 1.0;
+	float ticksToGoFactor = 0.3;
+	int fullSpeedFlag = 0;
+	int noMoreSpeedIncreaseFlag = 0;
+
+
+
+
+
+
+
+	while (counter < ticksToGo) {
+
+			while (counter < (ticksToGo * ticksToGoFactor)) {
+
+				if (flag == 0) {
+					PWM1_SetRatio16(initialSpeed * speedFactor);
+					flag = 1;
+				}
+
+			}
+
+
+			flag = 0;
+
+			if ((speedFactor * initialSpeed) > MIN_SPEED*0.8) {
+
+				PWM1_SetRatio16(MIN_SPEED*0.9);
+				noMoreSpeedIncreaseFlag = 1;
+
+				speedFactor = 0;
+
+			} else {
+
+				if (noMoreSpeedIncreaseFlag == 0) {
+					speedFactor = speedFactor + 0.15;
+					ticksToGoFactor = ticksToGoFactor + 0.1;
+				}
+
+			}
+
+
+
+			vTaskDelay(pdMS_TO_TICKS(1));
+		}
+
+
+
+
+
+		setDirection(FAST_STOP);
+
+		speedFactor = speedFactor * 100;
+		ticksToGoFactor = ticksToGoFactor * 100;
+		vTaskDelay(pdMS_TO_TICKS(3000));
+		int k = 878;
+
+
+}
+
+
+void rollout_fast(int speed, int ticks, direction_t direction){
+
+	int initialSpeed = speed;
+	int ticksToGo = ticks;
+	int flag = 0;
+	float speedFactor = 1.0;
+	float ticksToGoFactor = 0.3;
+	int fullSpeedFlag = 0;
+	int noMoreSpeedIncreaseFlag = 0;
+
+
+
+
+
+
+
+	while (counter < ticksToGo) {
+
+			while (counter < (ticksToGo * ticksToGoFactor)) {
+
+				if (flag == 0) {
+					PWM1_SetRatio16(initialSpeed * speedFactor);
+					flag = 1;
+				}
+
+			}
+
+
+			flag = 0;
+
+			if ((speedFactor * initialSpeed) > MIN_SPEED*0.8) {
+
+				PWM1_SetRatio16(MIN_SPEED*0.9);
+				noMoreSpeedIncreaseFlag = 1;
+
+				speedFactor = 0;
+
+			} else {
+
+				if (noMoreSpeedIncreaseFlag == 0) {
+					speedFactor = speedFactor + 0.15;
+					ticksToGoFactor = ticksToGoFactor + 0.1;
+				}
+
+			}
+
+
+
+			vTaskDelay(pdMS_TO_TICKS(1));
+		}
+
+
+
+
+
+		setDirection(FAST_STOP);
+
+		speedFactor = speedFactor * 100;
+		ticksToGoFactor = ticksToGoFactor * 100;
+		vTaskDelay(pdMS_TO_TICKS(3000));
+		int k = 878;
+
+
+}
+
+
+void setDirection(direction_t dir) {
+	if (dir == FORWARD) {
+		IN1_PutVal(FALSE);
+		IN2_PutVal(TRUE);
+	} else if (dir == REVERSE) {
+		IN1_PutVal(TRUE);
+		IN2_PutVal(FALSE);
+	} else if (dir == FAST_STOP) {
+		IN1_PutVal(TRUE);
+		IN2_PutVal(TRUE);
+	}
+
+}
+
+/*
+ ** ===================================================================
+
+ **     Description :
+ **
+ **     Liest das Kommando ID
+ **
+ **
+ **     Parameters  : Nothing
+ **
+ **
+ **     Returns     : 1 Bytes aus dem RxBuffer
+
+ ** ===================================================================
+ */
 
 char get1Byte(void) {
 
@@ -244,26 +552,71 @@ char get1Byte(void) {
 	return ch;
 }
 
-void initTele(void) {
+void initTele(void *pvParameters) {
+
+	(void) pvParameters;
+}
+
+void driveDistance(void *pvParameters) {
+
+	(void) pvParameters;
+
+	MyGPIOPtr = GPIO1_Init(NULL);
+	int distance = param1;
+	int speed = param2;
+	direction_t (direction) = param3;
+	int ticks;
+
+	ticks = calculateTicksToDrive(distance);
+	drive(direction, ticks, speed);
+
+	vTaskDelete(NULL);
 
 }
-void driveDistance(int distance, int speed, int direction) {
+
+void driveJog(void *pvParameters) {
+
+	(void) pvParameters;
+
+	int speed = param1;
+	int direction = param2;
 
 }
-void driveJog(int speed, int direction) {
+
+void driveToEnd(void *pvParameters) {
+
+	(void) pvParameters;
+	int distance = param1;
+	int speed = param2;
+	int direction = param3;
+
+	for (;;) {
+
+		LED2_Neg();
+		vTaskDelay(pdMS_TO_TICKS(500));
+
+	}
 
 }
-void driveToEnd(int predDistance, int speed, int direction) {
+
+void moveTele(void *pvParameters) {
+
+	(void) pvParameters;
+	int distance = param1;
+	int direction = param2;
 
 }
-void moveTele(int distance, int direction) {
+
+void enableMagnet(void *pvParameters) {
+
+	(void) pvParameters;
+	int direction = param1;
 
 }
-void enableMagnet(int direction) {
 
-}
-void disableMagnet(void) {
+void disableMagnet(void *pvParameters) {
 
+	(void) pvParameters;
 }
 
 void APP_Run(void) {
@@ -288,6 +641,7 @@ void emptyBuffer(void) {
 	}
 
 }
+
 int getValue(mode_t modus) {
 
 	unsigned char ch;

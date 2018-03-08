@@ -293,6 +293,56 @@ void PPG1_OnEnd(LDD_TUserData *UserDataPtr) {
 
 }
 
+/*
+** ===================================================================
+**     Event       :  GPIO1_OnPortEvent (module Events)
+**
+**     Component   :  GPIO1 [GPIO_LDD]
+*/
+/*!
+**     @brief
+**         Called if defined event on any pin of the port occured.
+**         OnPortEvent event and GPIO interrupt must be enabled. See
+**         SetEventMask() and GetEventMask() methods. This event is
+**         enabled if [Interrupt service/event] is Enabled and disabled
+**         if [Interrupt service/event] is Disabled.
+**     @param
+**         UserDataPtr     - Pointer to RTOS device
+**                           data structure pointer.
+*/
+/* ===================================================================*/
+LDD_TDeviceData* MyGPIOPtr;
+int counter;
+extern int counter_regulate;
+
+
+//extern enum direction {REVERSE = 0, FORWARD = 1, NO_ROTATION = 2};
+
+void GPIO1_OnPortEvent(LDD_TUserData *UserDataPtr)
+{
+
+
+	int u = 24;
+
+	if(GPIO1_GetFieldValue(MyGPIOPtr,InputB)){
+
+		// Motor dreht vorwärts
+
+
+
+		counter = counter -1;
+
+	}
+	else{
+		// Motor dreht rückwärts
+		counter = counter +1;
+
+
+	}
+
+
+}
+
 /* END Events */
 
 #ifdef __cplusplus

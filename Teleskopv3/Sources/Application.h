@@ -19,16 +19,20 @@ typedef struct {
   uint8_t (*rxPutFct)(uint8_t); /* callback to put received character into buffer */
 } UART_Desc;
 
+extern int param1;
+extern int param2;
+extern int param3;
+extern LDD_TDeviceData* MyGPIOPtr;
 
 typedef enum valueMode mode_t;
 enum valueMode {
 	DISTANCE = 1, LETTER = 2
 };
-void APP_Run(void);
+void APP_Run();
 
 
 int getLengthOfMessage(void);
-
+extern int counter;
 
 
 char getCmd(void);
@@ -36,13 +40,13 @@ int get2Bytes(void);
 char get1Byte(void);
 
 
-void initTele(void);
-void driveDistance(int,int,int);
-void driveJog(int,int);
-void driveToEnd(int,int,int);
-void moveTele(int,int);
-void enableMagnet(int);
-void disableMagnet(void);
+void initTele(void *);
+void driveDistance(void*);
+void driveJog(void*);
+void driveToEnd(void*);
+void moveTele(void*);
+void enableMagnet(void*);
+void disableMagnet(void*);
 
 
 int getData8(void);
@@ -53,6 +57,8 @@ void sendMenu(void);
 int getValue(mode_t);
 void sendHeader(void);
 void emptyBuffer(void);
+
+
 
 
 

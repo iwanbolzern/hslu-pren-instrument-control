@@ -7,7 +7,7 @@
 **     Version     : Component 01.549, Driver 01.00, CPU db: 3.00.000
 **     Repository  : My Components
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-02-23, 08:54, # CodeGen: 0
+**     Date/Time   : 2018-03-02, 09:59, # CodeGen: 5
 **     Abstract    :
 **          This component implements the FreeRTOS Realtime Operating System
 **     Settings    :
@@ -96,6 +96,7 @@
 **     Contents    :
 **         xTaskCreate                          - portBASE_TYPE FRTOS1_xTaskCreate(pdTASK_CODE pvTaskCode, const portCHAR *...
 **         xTaskCreateStatic                    - TaskHandle_t FRTOS1_xTaskCreateStatic(pdTASK_CODE pvTaskCode, const portCHAR...
+**         vTaskDelete                          - void FRTOS1_vTaskDelete(xTaskHandle pxTask);
 **         vTaskStartScheduler                  - void FRTOS1_vTaskStartScheduler(void);
 **         vTaskSuspend                         - void FRTOS1_vTaskSuspend(xTaskHandle pxTaskToSuspend);
 **         vTaskSuspendAll                      - void FRTOS1_vTaskSuspendAll(void);
@@ -298,6 +299,35 @@
 */
 /*
 portBASE_TYPE FRTOS1_xTaskCreate(pdTASK_CODE pvTaskCode, const portCHAR * const pcName, unsigned portSHORT usStackDepth, void *pvParameters, unsigned portBASE_TYPE uxPriority, xTaskHandle *pvCreatedTask)
+{
+  *** Implemented as macro in the header file FRTOS1.h
+}
+*/
+
+/*
+** ===================================================================
+**     Method      :  FRTOS1_vTaskDelete (component FreeRTOS)
+**     Description :
+**         Remove a task from the RTOS real time kernels management.
+**         The task being deleted will be removed from all ready,
+**         blocked, suspended and event lists.
+**         NOTE: The idle task is responsible for freeing the kernel
+**         allocated memory from tasks that have been deleted. It is
+**         therefore important that the idle task is not starved of
+**         microcontroller processing time if your application makes
+**         any calls to vTaskDelete (). Memory allocated by the task
+**         code is not automatically freed, and should be freed before
+**         the task is deleted.
+**     Parameters  :
+**         NAME            - DESCRIPTION
+**         pxTask          - The handle of the task to be deleted.
+**                           Passing NULL will cause the calling task to
+**                           be deleted.
+**     Returns     : Nothing
+** ===================================================================
+*/
+/*
+void FRTOS1_vTaskDelete(xTaskHandle pxTask)
 {
   *** Implemented as macro in the header file FRTOS1.h
 }

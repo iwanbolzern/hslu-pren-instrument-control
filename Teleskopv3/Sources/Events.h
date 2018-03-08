@@ -41,12 +41,21 @@
 #include "LED2.h"
 #include "LEDpin2.h"
 #include "BitIoLdd1.h"
-#include "Bit1.h"
-#include "BitIoLdd6.h"
 #include "Bit5.h"
 #include "BitIoLdd5.h"
 #include "Bit6.h"
 #include "BitIoLdd7.h"
+#include "LED1.h"
+#include "LEDpin1.h"
+#include "BitIoLdd2.h"
+#include "PWM1.h"
+#include "PwmLdd1.h"
+#include "TU1.h"
+#include "GPIO1.h"
+#include "IN1.h"
+#include "BitIoLdd3.h"
+#include "IN2.h"
+#include "BitIoLdd6.h"
 #include "AS1.h"
 #include "RxBuf.h"
 #include "CS1.h"
@@ -192,6 +201,26 @@ void AS1_OnBlockSent(LDD_TUserData *UserDataPtr);
 */
 /* ===================================================================*/
 void PPG1_OnEnd(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  GPIO1_OnPortEvent (module Events)
+**
+**     Component   :  GPIO1 [GPIO_LDD]
+*/
+/*!
+**     @brief
+**         Called if defined event on any pin of the port occured.
+**         OnPortEvent event and GPIO interrupt must be enabled. See
+**         SetEventMask() and GetEventMask() methods. This event is
+**         enabled if [Interrupt service/event] is Enabled and disabled
+**         if [Interrupt service/event] is Disabled.
+**     @param
+**         UserDataPtr     - Pointer to RTOS device
+**                           data structure pointer.
+*/
+/* ===================================================================*/
+void GPIO1_OnPortEvent(LDD_TUserData *UserDataPtr);
 
 /* END Events */
 

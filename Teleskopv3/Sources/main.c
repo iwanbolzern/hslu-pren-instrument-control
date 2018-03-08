@@ -37,17 +37,28 @@
 #include "LED2.h"
 #include "LEDpin2.h"
 #include "BitIoLdd1.h"
-#include "Bit1.h"
-#include "BitIoLdd6.h"
 #include "Bit5.h"
 #include "BitIoLdd5.h"
 #include "Bit6.h"
 #include "BitIoLdd7.h"
+#include "LED1.h"
+#include "LEDpin1.h"
+#include "BitIoLdd2.h"
+#include "PWM1.h"
+#include "PwmLdd1.h"
+#include "TU1.h"
+#include "GPIO1.h"
+#include "IN1.h"
+#include "BitIoLdd3.h"
+#include "IN2.h"
+#include "BitIoLdd6.h"
 #include "AS1.h"
 #include "RxBuf.h"
 #include "CS1.h"
 #include "PPG1.h"
+
 /* Including shared modules, which are used for whole project */
+
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
@@ -71,9 +82,9 @@ typedef enum commandos cmd_t;
 
 cmd_t commando;
 static cmd_t cmd;		// Kommando byte
-static int param1;		// Parameter 1 vom IM mitgegeben
-static int param2;		// Parameter 2 vom IM mitgegeben
-static int param3;		// Parameter 3 vom IM mitgegeben
+int  param1;		// Parameter 1 vom IM mitgegeben
+int  param2;		// Parameter 2 vom IM mitgegeben
+int  param3;		// Parameter 3 vom IM mitgegeben
 
 mode_t mode;
 
@@ -96,11 +107,29 @@ static int messageReceived = 0;
 int messageFlag = 0;
 int startup = 0;
 
-#define PI 3.141592654
+
+LDD_TDeviceData* MyGPIOPtr;
+LDD_TDeviceData *MyPPG1Ptr;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 #define d 21.8 //[mm]						// für kürzeres Aus-/Einfahren muss d erhöht werden
-#define Umfang (d * PI);	//[mm]
+
 #define ONE_REVOLUTION 200
-#define TICKS_PER_MM ONE_REVOLUTION/Umfang // [mm]
+
 
 enum speed {
 	INITIAL, ULTRASLOW, VERYSLOW, SLOW, MEDIUM, FAST, VERYFAST, ULTRAFAST
@@ -108,68 +137,85 @@ enum speed {
 
 typedef enum speed speed_t;
 
-enum direction {
-	REVERSE, FORWARD
-};
 
-typedef enum direction direction_t;
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
-LDD_TDeviceData *MyPPG1Ptr;
-int counter = 0;
+
+
+
+
+
+
+
+
 int end_value = 2000;
 int nTicks = 0;
 int tickFlag;
 speed_t selectSpeedMode(int);
 int runden(float);
-void moveDistance(direction_t, int);
+//void moveDistance(direction_t, int);
 int startUp();
-const float Ticks_per_mm = TICKS_PER_MM
-;
+
+
 speed_t sp;
-direction_t dir;
+//direction_t dir;
 
 int magnet_dir;
 int positive = 0;
 int negative = 0;
 
-void moveDistance(direction_t dir, int distance) {
+
+
+
+
+//void moveDistance(direction_t dir, int distance) {
 
 	/*
 	 * Variable temp: beinhaltet die Anzahl Ticks, die zu erreichen sind bis das Ziel erreicht wurde
 	 */
-	counter = 0;
+//	counter = 0;
 
-	float tick = Ticks_per_mm * distance;
-	nTicks = runden(tick);
+//	float tick = Ticks_per_mm * distance;
+//	nTicks = runden(tick);
 
 	/*
 	 * gemäss dem Wert von "dir" wird entschiden ob vorwärts oder
 	 * Rückwärts fahren
 	 */
-	if (dir == FORWARD) {
-		Bit1_PutVal(TRUE);
+//	if (dir == FORWARD) {
+//		Bit1_PutVal(TRUE);
 
-	}
+//	}
 
-	else {
-		Bit1_PutVal(FALSE);
-	}
+//	else {
+//		Bit1_PutVal(FALSE);
+//	}
 
-	if (nTicks != 0) {
-		MyPPG1Ptr = PPG1_Init(NULL);
-		PPG1_SelectPeriod(MyPPG1Ptr, 6);
+//	if (nTicks != 0) {
+//		MyPPG1Ptr = PPG1_Init(NULL);
+//		PPG1_SelectPeriod(MyPPG1Ptr, 6);
 
-		while (tickFlag != 1) {
-			vTaskDelay(pdMS_TO_TICKS(1));
+//		while (tickFlag != 1) {
+//			vTaskDelay(pdMS_TO_TICKS(1));
 
-		}
+//		}
 
-		tickFlag = 0;
-		PPG1_Disable(MyPPG1Ptr);
-	}
+//		tickFlag = 0;
+//		PPG1_Disable(MyPPG1Ptr);
+//	}
 
-}
+//}
+
+//Method Implementations
+
+
+
+
+
+
+
+
+
 
 int runden(float x) {
 	if (x > 0)
@@ -200,6 +246,7 @@ void initialize(void *pvParameters) {
 	APP_Run();		// Initialisieren der UART Verbindung
 	statemachine();		// Statemachin wird gestartet
 
+
 	for (;;) {
 	}
 
@@ -213,7 +260,7 @@ static void move(void* pvParameters) {
 	up = dist_up;
 	down = dist_down;
 
-	moveDistance(FORWARD, down);
+	//moveDistance(FORWARD, down);
 
 	switch (magnet) {
 
@@ -248,7 +295,7 @@ static void move(void* pvParameters) {
 	}
 
 	vTaskDelay(pdMS_TO_TICKS(1000));
-	moveDistance(REVERSE, up);
+	//moveDistance(REVERSE, up);
 
 	// Magnetpolung wieder auf idle
 	Bit5_PutVal(FALSE);
@@ -609,6 +656,11 @@ void initializeTasks(void* pvParameters) {
 		}; /* Out of heap memory? */
 	}
 
+
+
+
+	//MyGPIOPtr = GPIO1_Init(NULL);
+
 	for (;;) {
 
 	}
@@ -641,13 +693,12 @@ int main(void)
 	}
 
 	/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
-	/*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
-#ifdef PEX_RTOS_START
-	PEX_RTOS_START(); /* Startup of the selected RTOS. Macro is defined by the RTOS component. */
-#endif
-	/*** End of RTOS startup code.  ***/
-	/*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
-	for (;;) {
-	}
-	/*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
+  /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/
+  #ifdef PEX_RTOS_START
+    PEX_RTOS_START();                  /* Startup of the selected RTOS. Macro is defined by the RTOS component. */
+  #endif
+  /*** End of RTOS startup code.  ***/
+  /*** Processor Expert end of main routine. DON'T MODIFY THIS CODE!!! ***/
+  for(;;){}
+  /*** Processor Expert end of main routine. DON'T WRITE CODE BELOW!!! ***/
 }

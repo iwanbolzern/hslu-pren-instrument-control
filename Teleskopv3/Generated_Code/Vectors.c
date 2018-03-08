@@ -6,7 +6,7 @@
 **     Version     : Component 01.003, Driver 01.04, CPU db: 3.00.000
 **     Repository  : Kinetis
 **     Compiler    : GNU C Compiler
-**     Date/Time   : 2018-02-24, 19:58, # CodeGen: 3
+**     Date/Time   : 2018-03-02, 10:49, # CodeGen: 6
 **     Abstract    :
 **
 **     Settings    :
@@ -67,12 +67,21 @@
   #include "LED2.h"
   #include "LEDpin2.h"
   #include "BitIoLdd1.h"
-  #include "Bit1.h"
-  #include "BitIoLdd6.h"
   #include "Bit5.h"
   #include "BitIoLdd5.h"
   #include "Bit6.h"
   #include "BitIoLdd7.h"
+  #include "LED1.h"
+  #include "LEDpin1.h"
+  #include "BitIoLdd2.h"
+  #include "PWM1.h"
+  #include "PwmLdd1.h"
+  #include "TU1.h"
+  #include "GPIO1.h"
+  #include "IN1.h"
+  #include "BitIoLdd3.h"
+  #include "IN2.h"
+  #include "BitIoLdd6.h"
   #include "Events.h"
 
 
@@ -138,7 +147,7 @@
     (tIsrFunc)&Cpu_Interrupt,          /* 0x2B  0x000000AC   -   ivINT_MCG                     unused by PE */
     (tIsrFunc)&Cpu_Interrupt,          /* 0x2C  0x000000B0   -   ivINT_LPTimer                 unused by PE */
     (tIsrFunc)&Cpu_Interrupt,          /* 0x2D  0x000000B4   -   ivINT_LCD                     unused by PE */
-    (tIsrFunc)&Cpu_Interrupt,          /* 0x2E  0x000000B8   -   ivINT_PORTA                   unused by PE */
+    (tIsrFunc)&GPIO1_Interrupt,        /* 0x2E  0x000000B8   2   ivINT_PORTA                   used by PE */
     (tIsrFunc)&Cpu_Interrupt           /* 0x2F  0x000000BC   -   ivINT_PORTC_PORTD             unused by PE */
     }
   };
