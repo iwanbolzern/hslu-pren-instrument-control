@@ -29,14 +29,14 @@ queue_t *queue_create();
  * @param q : A valid pointer to a queue_t structure
  * @param val : The value to store in the tail of the queue
  */
-void push(queue_t *q, void *val);
+void queue_push(queue_t *q, void *val);
 
 /**
  * @brief Remove fist inserted value from the queue
  * @param q : A valid pointer to a queue_t structure
  * @return The value previously stored in the tail of the queue
  */
-void* pop(queue_t *q);
+void* queue_try_pop(queue_t *q);
 
 /**
  * @brief Return the total count of items in the queue

@@ -7,7 +7,7 @@
 
 #include "Application.h"
 #include "RxBuf.h"
-#include "queue.h"
+#include "utils/queue.h"
 #include "AS1.h"
 
 #include <stdint.h>
@@ -138,7 +138,7 @@ static void Init(void) {
 
 
 void insert(char* no) {
-	queue_push_left(positionUpdateQueue, no);
+	queue_push(positionUpdateQueue, no);
 }
 
 
@@ -147,10 +147,9 @@ void insert(char* no) {
  */
 void posUpdate(void* pvParameters) {
 	for (;;) {
-		if (queue_count(positionUpdateQueue) <= 0)
-			continue;
+		char* ch;
+		while ((ch = queue_try_pop(positionUpdateQueue)) == NULL) { };
 
-		char* ch = (char*) queue_pop_right(positionUpdateQueue);
 		SendChar(*ch, &deviceData);
 		free(ch);
 	}

@@ -12,7 +12,7 @@ queue_t* queue_create(void) {
 	queue->right = NULL;
 }
 
-void push(queue_t* queue, void* value) {
+void queue_push(queue_t* queue, void* value) {
 	queueEntry_t* entry = malloc(sizeof(queueEntry_t));
 	entry->previous = NULL;
 	entry->value = value;
@@ -32,7 +32,7 @@ void push(queue_t* queue, void* value) {
 	xSemaphoreGive(queue->pushMutex);
 }
 
-void* try_pop(queue_t* queue) {
+void* queue_try_pop(queue_t* queue) {
 	void* value = NULL;
 
 	while(xSemaphoreTake(queue->popMutex, ( TickType_t ) 10 ) != pdTRUE) { };
