@@ -28,53 +28,31 @@ static void SendString(const unsigned char *str, UART_Desc *desc) {
 }
 
 int getLengthOfMessage(void) {
-	int temp = 0;
-	int value16e1 = 0;
-	int value16e0 = 0;
-	char ch = 0;
-
-	(void) RxBuf_Get(&ch);
-	temp = ch;
-	value16e1 = 16 * temp;
-	(void) RxBuf_Get(&ch);
-	temp = ch;
-	value16e0 = temp;
-
-	return value16e1 + value16e0;
-
+	return get2Bytes();
 }
 
 char getCmd(void) {
+	return get1Byte();
+}
 
+char get1Byte(void) {
 	char ch = 0;
-
 	(void) RxBuf_Get(&ch);
-
 	return ch;
-
 }
 
 int get2Bytes(void) {
-
 	unsigned char ch1 = 0;
-	unsigned char ch2 = 0;
-	int temp1 = 0;
-	int temp2 = 0;
-	int temp3 = 0;
-	int value16e2 = 256;
 	int result = 0;
 
+	// first byte and shift
 	(void) RxBuf_Get(&ch1);
+	result = ch1;
+	result << 8;
 
-	temp1 = ch1;
-
-	(void) RxBuf_Get(&ch2);
-
-	temp3 = temp1 * value16e2;
-
-	temp2 = ch2;
-	result = temp3 + temp2;
+	// second byte and shift
+	(void) RxBuf_Get(&ch);
+	result = result | ch;
 
 	return result;
-
 }
