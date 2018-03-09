@@ -308,8 +308,6 @@ int pos_update_forward_counter;
 int pos_update_reverse_counter;
 int pos_update_forward_flag;
 int pos_update_reverse_flag;
-Queue *pQ;
-NODE *pN;
 extern int counter_regulate;
 int queue_error;
 int count_to_ten = 0;
@@ -320,37 +318,30 @@ int insertFlag;
 void GPIO1_OnPortEvent(LDD_TUserData *UserDataPtr) {
 
 	if (GPIO1_GetFieldValue(MyGPIOPtr, InputB)) {		// Motor dreht vorwärts
-
 		counter = counter - 1;
 		count_to_ten = count_to_ten - 1;
 
-	} else {											// Motor dreht rückwärts
+		if (count_to_ten == 9) {
+			char cn = 1;
 
+			/* We have not woken a task at the start of the ISR. */
+			BaseType_t  xHigherPriorityTaskWoken = pdFALSE;
+			xQueueSendFromISR(positionUpdateQueue, &cn, &xHigherPriorityTaskWoken);
+			count_to_ten = 0;
+		}
+	} else {											// Motor dreht rückwärts
 		counter = counter + 1;
 		count_to_ten = count_to_ten + 1;
 
+		if(count_to_ten == -9) {
+			char cn = -1;
+
+			/* We have not woken a task at the start of the ISR. */
+			BaseType_t  xHigherPriorityTaskWoken = pdFALSE;
+			xQueueSendFromISR(positionUpdateQueue, &cn, &xHigherPriorityTaskWoken);
+			count_to_ten = 0;
+		}
 	}
-
-
-	if (count_to_ten = 9) {
-		insertFlag = 1;
-		char* positionUpdate = (char*) malloc(sizeof(char));
-		insert(1);
-		insertFlag = 0;
-
-		count_to_ten = 0;
-	}
-
-
-
-	else if(count_to_ten = -9){
-		insertFlag = 1;
-		insert(-1);
-		insertFlag = 0;
-
-		count_to_ten = 0;
-	}
-
 }
 
 /* END Events */

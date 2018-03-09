@@ -75,7 +75,7 @@ direction_t dir;
 speedMode_t spMod;
 
 // QUEUE
-queue_t* positionUpdateQueue;
+QueueHandle_t positionUpdateQueue;
 void del();
 
 // Method Declarations
@@ -102,7 +102,7 @@ static void SendString(const unsigned char *str, UART_Desc *desc) {
 }
 
 static void Init(void) {
-	positionUpdateQueue = queue_create();
+	positionUpdateQueue = xQueueCreate(100, sizeof(char));
 
 	/* initialize struct fields */
 	deviceData.handle = AS1_Init(&deviceData);
@@ -117,40 +117,15 @@ static void Init(void) {
 	} /* initial kick off for receiving data */
 }
 
-/*
- ** ===================================================================
-
- **     Description :
- **
- **        Schreibt -1 f�r R�ckw�rts drehen und 1 f�r vorw�rts
- **        in die queue.
- **
- **        Die Aufl�sung betr�gt 0.968mm / insert
- **
- **
- **     Parameters  : -1 --> R�ckw�rts
- **     			   1 --> Vorw�rts
- **
- **     Returns     :
-
- ** ===================================================================
- */
-
-
-void insert(char* no) {
-	queue_push(positionUpdateQueue, no);
-}
-
-
 /**
  * sendet die Positionsupdates an das IM
  */
 void posUpdate(void* pvParameters) {
 	for (;;) {
-		char* ch;
-		while ((ch = queue_try_pop(positionUpdateQueue)) == NULL) { };
+		char ch;
+		while(!xQueueReceive(positionUpdateQueue, &ch, (TickType_t)10)) { };
 
-		SendChar(*ch, &deviceData);
+		SendChar(ch, &deviceData);
 		free(ch);
 	}
 }
