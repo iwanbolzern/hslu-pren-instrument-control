@@ -117,7 +117,6 @@ static void Init(void) {
 	} /* initial kick off for receiving data */
 }
 
-
 /*
  ** ===================================================================
 
@@ -136,7 +135,6 @@ static void Init(void) {
 
  ** ===================================================================
  */
-
 
 void insert(char no) {
 
@@ -158,8 +156,9 @@ void insert(char no) {
 
 	//vTaskDelay(pdMS_TO_TICKS(1));
 	//}
-
 }
+
+
 
 
 /*
