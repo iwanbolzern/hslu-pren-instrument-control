@@ -39,7 +39,7 @@ char getCmd(void);
 int get2Bytes(void);
 char get1Byte(void);
 
-void insert(char);
+void insert(char*);
 void initTele(void *);
 void driveDistance(void*);
 void driveJog(void*);

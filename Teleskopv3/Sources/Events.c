@@ -334,6 +334,7 @@ void GPIO1_OnPortEvent(LDD_TUserData *UserDataPtr) {
 
 	if (count_to_ten = 9) {
 		insertFlag = 1;
+		char* positionUpdate = (char*) malloc(sizeof(char));
 		insert(1);
 		insertFlag = 0;
 

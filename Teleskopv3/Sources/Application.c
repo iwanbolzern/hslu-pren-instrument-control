@@ -7,6 +7,7 @@
 
 #include "Application.h"
 #include "RxBuf.h"
+#include "queue.h"
 #include "AS1.h"
 
 #include <stdint.h>
@@ -21,7 +22,7 @@ int param3;
 int counter;
 
 /* User Variables from Nico*/
-#define  GEAR_RATIO 70										// Getriebeübersetzung
+#define  GEAR_RATIO 70										// Getriebeï¿½bersetzung
 #define  N_TICKS_ENCODER 16									// (Ticks / Revolution)
 #define  ONE_Revolution  (GEAR_RATIO * N_TICKS_ENCODER)		// eine Umdrehung -> 1120 Ticks (70 * 16)
 
@@ -74,10 +75,7 @@ direction_t dir;
 speedMode_t spMod;
 
 // QUEUE
-int front = -1;
-int rear = -1;
-int q[SIZE];
-int insertFlag;
+queue_t* positionUpdateQueue;
 void del();
 
 // Method Declarations
@@ -104,6 +102,8 @@ static void SendString(const unsigned char *str, UART_Desc *desc) {
 }
 
 static void Init(void) {
+	positionUpdateQueue = queue_create();
+
 	/* initialize struct fields */
 	deviceData.handle = AS1_Init(&deviceData);
 	deviceData.isSent = FALSE;
@@ -122,118 +122,38 @@ static void Init(void) {
 
  **     Description :
  **
- **        Schreibt -1 für Rückwärts drehen und 1 für vorwärts
+ **        Schreibt -1 fï¿½r Rï¿½ckwï¿½rts drehen und 1 fï¿½r vorwï¿½rts
  **        in die queue.
  **
- **        Die Auflösung beträgt 0.968mm / insert
+ **        Die Auflï¿½sung betrï¿½gt 0.968mm / insert
  **
  **
- **     Parameters  : -1 --> Rückwärts
- **     			   1 --> Vorwärts
+ **     Parameters  : -1 --> Rï¿½ckwï¿½rts
+ **     			   1 --> Vorwï¿½rts
  **
  **     Returns     :
 
  ** ===================================================================
  */
 
-void insert(char no) {
 
-	char c = 0;
-	//while (TRUE) {
-	if (rear < SIZE - 1) {
-
-		insertFlag = 1;			//
-
-		q[++rear] = no;
-
-		insertFlag = 0;			//
-
-		if (front == -1)
-			front = 0; // front=front+1;
-	} else {
-		sendText("\n Queue overflow");
-	}
-
-	//vTaskDelay(pdMS_TO_TICKS(1));
-	//}
+void insert(char* no) {
+	queue_push_left(positionUpdateQueue, no);
 }
 
 
-
-
-/*
- ** ===================================================================
-
- **     Description :
- **
- **				sendet die Positionsupdates an das IM
- **
- **
- **
- **     Parameters  :
- **
- **     Returns     :
-
- ** ===================================================================
+/**
+ * sendet die Positionsupdates an das IM
  */
-
 void posUpdate(void* pvParameters) {
-	(void) pvParameters;
-	char ch;
-
 	for (;;) {
-
-		if (front == -1) {
+		if (queue_count(positionUpdateQueue) <= 0)
 			continue;
 
-		}
-
-		else {
-
-			if (insertFlag != 1) {
-
-				ch = q[front];
-				SendChar(ch, &deviceData);
-			}
-		}
-
-		if (front == rear) {
-			front = -1;
-			rear = -1;
-		}
-
-		else {
-			front = front + 1;
-
-		}
-
+		char* ch = (char*) queue_pop_right(positionUpdateQueue);
+		SendChar(*ch, &deviceData);
+		free(ch);
 	}
-
-}
-
-int hexTodec(unsigned int hex) {
-
-	switch (hex) {
-	case 'A':
-	case 'B':
-	case 'C':
-	case 'D':
-	case 'E':
-	case 'F':
-		return hex - 55;
-		break;
-
-	default:
-		return hex - 48;
-
-	}
-
-}
-
-int getDecimal(unsigned int value) {
-
-	return value - 0x30;
-
 }
 
 int calculateTicksToDrive(int distance) {
@@ -251,13 +171,13 @@ int calculateTicksToDrive(int distance) {
 
  **     Description :
  **
- **        Liest die Längenangabe der Message
+ **        Liest die Lï¿½ngenangabe der Message
  **
  **
  **     Parameters  : Nothing
  **
  **
- **     Returns     : Länge der Message als int
+ **     Returns     : Lï¿½nge der Message als int
 
  ** ===================================================================
  */
