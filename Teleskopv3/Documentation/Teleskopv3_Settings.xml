@@ -142,7 +142,7 @@
     <Compiler v="GNU C Compiler" />
     <CompilerProperties>
       <Compiler v="GNU C Compiler" />
-      <enumgroup name="Unhandled vectors" v="One handler for all">
+      <enumgroup name="Unhandled vectors" v="Own handler for every">
         <Unhandled_int_code>
           <StrgList><![CDATA[/* This code can be changed using the CPU component property "Build Options / Unhandled int code" */
 PE_DEBUGHALT();
@@ -1496,6 +1496,22 @@ PE_DEBUGHALT();
       <NegVal v="don&amp;apos;t generate code" />
       <ConnectPin v="don&amp;apos;t generate code" />
       <GetRawVal v="don&amp;apos;t generate code" />
+    </Methods>
+    <Events>
+      <EmptySection_DummyValue />
+    </Events>
+  </Bean>
+  <Bean name="HF1" type="HardFault">
+    <Enabled v="Y" />
+    <Properties>
+      <Component_name v="HF1" />
+      <SDK v="MCUC1" />
+      <Disable_write_buffer v="no" />
+    </Properties>
+    <Methods>
+      <HardFaultHandler v="generate code" />
+      <Deinit v="generate code" />
+      <Init v="generate code" />
     </Methods>
     <Events>
       <EmptySection_DummyValue />

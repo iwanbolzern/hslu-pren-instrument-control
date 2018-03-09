@@ -52,6 +52,7 @@
 #include "BitIoLdd3.h"
 #include "IN2.h"
 #include "BitIoLdd6.h"
+#include "HF1.h"
 #include "AS1.h"
 #include "RxBuf.h"
 #include "CS1.h"
@@ -245,6 +246,8 @@ void initialize(void *pvParameters) {
 
 	APP_Run();		// Initialisieren der UART Verbindung
 	statemachine();		// Statemachin wird gestartet
+
+
 
 
 	for (;;) {
@@ -600,6 +603,12 @@ void PICom(void *pvParameters) {
 	}
 }
 
+
+
+
+
+
+
 /*
  ** ===================================================================
 
@@ -655,6 +664,26 @@ void initializeTasks(void* pvParameters) {
 		for (;;) {
 		}; /* Out of heap memory? */
 	}
+
+
+	if (FRTOS1_xTaskCreate(
+			posUpdate, /* pointer to the task */
+			(signed portCHAR *)"PiCommunication", /* task name for kernel awareness debugging */
+			configMINIMAL_STACK_SIZE, /* task stack size */
+			(void*)NULL, /* optional task startup argument */
+			tskIDLE_PRIORITY, /* initial priority */
+			(xTaskHandle*)NULL /* optional task handle to create */
+	) != pdPASS) {
+		for (;;) {
+		}; /* Out of heap memory? */
+	}
+
+
+
+
+//insert(5);
+
+
 
 
 

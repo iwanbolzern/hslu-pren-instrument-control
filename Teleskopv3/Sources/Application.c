@@ -9,6 +9,10 @@
 #include "RxBuf.h"
 #include "AS1.h"
 
+#include <stdint.h>
+
+#include <stdlib.h>
+
 UART_Desc deviceData;
 int param1;
 int param2;
@@ -29,6 +33,8 @@ int counter;
 #define  CIRCUMFERENCE_GEAR (GEAR*PI)
 #define  TICK_DISTANCE (CIRCUMFERENCE_GEAR / ONE_Revolution)
 
+#define SIZE 1000
+
 LDD_TDeviceData* MyGPIOPtr;
 
 int counter_regulate = 0;
@@ -45,6 +51,12 @@ const int MIN_SPEED = 0xffff;
 const int STOP = Stop;
 const int FAST_DECAY = Fast_Decay;
 
+int pos_update_forward_counter;
+int pos_update_reverse_counter;
+int pos_update_forward_flag;
+int pos_update_reverse_flag;
+int pos_ready_flag;
+
 enum direction {
 	FORWARD = 0, REVERSE = 1, FAST_STOP = 2
 };
@@ -53,16 +65,20 @@ enum speedMode {
 	IDLE = 0, SLOW = 1, MEDIUM = 2, FAST = 3
 };
 
-float  quarterPipeArray [] = {0.3,0.2,0.1,0.05,0.05};
+float quarterPipeArray[] = { 0.3, 0.2, 0.1, 0.05, 0.05 };
 int arrayIndex = 0;
-
-
-
 
 typedef enum speedMode speedMode_t;
 typedef enum direction direction_t;
 direction_t dir;
 speedMode_t spMod;
+
+// QUEUE
+int front = -1;
+int rear = -1;
+int q[SIZE];
+int insertFlag;
+void del();
 
 // Method Declarations
 void setDirection(direction_t);
@@ -99,6 +115,101 @@ static void Init(void) {
 	while (AS1_ReceiveBlock(deviceData.handle, (LDD_TData *) &deviceData.rxChar,
 			sizeof(deviceData.rxChar)) != ERR_OK) {
 	} /* initial kick off for receiving data */
+}
+
+
+/*
+ ** ===================================================================
+
+ **     Description :
+ **
+ **        Schreibt -1 für Rückwärts drehen und 1 für vorwärts
+ **        in die queue.
+ **
+ **        Die Auflösung beträgt 0.968mm / insert
+ **
+ **
+ **     Parameters  : -1 --> Rückwärts
+ **     			   1 --> Vorwärts
+ **
+ **     Returns     :
+
+ ** ===================================================================
+ */
+
+
+void insert(char no) {
+
+	char c = 0;
+	//while (TRUE) {
+	if (rear < SIZE - 1) {
+
+		insertFlag = 1;			//
+
+		q[++rear] = no;
+
+		insertFlag = 0;			//
+
+		if (front == -1)
+			front = 0; // front=front+1;
+	} else {
+		sendText("\n Queue overflow");
+	}
+
+	//vTaskDelay(pdMS_TO_TICKS(1));
+	//}
+
+}
+
+
+/*
+ ** ===================================================================
+
+ **     Description :
+ **
+ **				sendet die Positionsupdates an das IM
+ **
+ **
+ **
+ **     Parameters  :
+ **
+ **     Returns     :
+
+ ** ===================================================================
+ */
+
+void posUpdate(void* pvParameters) {
+	(void) pvParameters;
+	char ch;
+
+	for (;;) {
+
+		if (front == -1) {
+			continue;
+
+		}
+
+		else {
+
+			if (insertFlag != 1) {
+
+				ch = q[front];
+				SendChar(ch, &deviceData);
+			}
+		}
+
+		if (front == rear) {
+			front = -1;
+			rear = -1;
+		}
+
+		else {
+			front = front + 1;
+
+		}
+
+	}
+
 }
 
 int hexTodec(unsigned int hex) {
@@ -235,19 +346,14 @@ int get2Bytes(void) {
 
 }
 
-
-
-
-
-void rollOut(float x, float v){
+void rollOut(float x, float v) {
 	int speedWasSet = 0;
 
-	while (counter < nTicks){
+	while (counter < nTicks) {
 
-		while (counter < (nTicks * x)){
+		while (counter < (nTicks * x)) {
 
-
-			if(!speedWasSet){
+			if (!speedWasSet) {
 				LED1_Neg();
 				PWM1_SetRatio16(startSpeed * v);
 				speedWasSet = 1;
@@ -255,25 +361,16 @@ void rollOut(float x, float v){
 
 		}
 
+		x = x + 0.1;
+		v = v + 0.15;
 
-		x = x+0.1;
-		v = v+0.15;
-
-
-		if((startSpeed * v ) < (MIN_SPEED * 0.9)){
-			rollOut(x,v);
+		if ((startSpeed * v) < (MIN_SPEED * 0.9)) {
+			rollOut(x, v);
 		}
 
 	}
 
-
-
-
 }
-
-
-
-
 
 void drive(direction_t direction, int ticks, int speed) {
 	PWM1_Enable();
@@ -288,21 +385,17 @@ void drive(direction_t direction, int ticks, int speed) {
 
 	int ticksToGo = ticks;
 
-	//Try Nico
+//Try Nico
 	startSpeed = internSpeed;
 	nTicks = ticks;
 
-
 	LED1_On();				// Debug
 
-
-
-	rollOut(x,v);
-
+	rollOut(x, v);
 
 // Fast STop initialisierung
 	setDirection(REVERSE);
-	PWM1_SetRatio16(0xffff*0.3);
+	PWM1_SetRatio16(0xffff * 0.3);
 	vTaskDelay(pdMS_TO_TICKS(30));
 	setDirection(FAST_STOP);
 
@@ -310,17 +403,7 @@ void drive(direction_t direction, int ticks, int speed) {
 
 }
 
-
-
-
-
-
-
-
-
-
-
-void rollout_slow(int speed, int ticks, direction_t direction){
+void rollout_slow(int speed, int ticks, direction_t direction) {
 
 	int initialSpeed = speed;
 	int ticksToGo = ticks;
@@ -330,54 +413,44 @@ void rollout_slow(int speed, int ticks, direction_t direction){
 	int fullSpeedFlag = 0;
 	int noMoreSpeedIncreaseFlag = 0;
 
-
-
 	while (counter < ticksToGo) {
 
-			while (counter < (ticksToGo * ticksToGoFactor)) {
+		while (counter < (ticksToGo * ticksToGoFactor)) {
 
-				if (flag == 0) {
-					PWM1_SetRatio16(initialSpeed * speedFactor);
-					flag = 1;
-				}
-
+			if (flag == 0) {
+				PWM1_SetRatio16(initialSpeed * speedFactor);
+				flag = 1;
 			}
 
-
-			flag = 0;
-
-			if ((speedFactor * initialSpeed) > MIN_SPEED*0.8) {
-
-				PWM1_SetRatio16(MIN_SPEED*0.9);
-				noMoreSpeedIncreaseFlag = 1;
-
-				speedFactor = 0;
-
-			} else {
-
-				if (noMoreSpeedIncreaseFlag == 0) {
-					speedFactor = speedFactor + 0.15;
-					ticksToGoFactor = ticksToGoFactor + 0.1;
-				}
-
-			}
-
-
-
-			vTaskDelay(pdMS_TO_TICKS(10));
 		}
 
+		flag = 0;
 
+		if ((speedFactor * initialSpeed) > MIN_SPEED * 0.8) {
 
+			PWM1_SetRatio16(MIN_SPEED * 0.9);
+			noMoreSpeedIncreaseFlag = 1;
 
+			speedFactor = 0;
 
-		setDirection(FAST_STOP);
+		} else {
 
-		speedFactor = speedFactor * 100;
-		ticksToGoFactor = ticksToGoFactor * 100;
-		vTaskDelay(pdMS_TO_TICKS(3000));
-		int k = 878;
+			if (noMoreSpeedIncreaseFlag == 0) {
+				speedFactor = speedFactor + 0.15;
+				ticksToGoFactor = ticksToGoFactor + 0.1;
+			}
 
+		}
+
+		vTaskDelay(pdMS_TO_TICKS(10));
+	}
+
+	setDirection(FAST_STOP);
+
+	speedFactor = speedFactor * 100;
+	ticksToGoFactor = ticksToGoFactor * 100;
+	vTaskDelay(pdMS_TO_TICKS(3000));
+	int k = 878;
 
 }
 
@@ -391,63 +464,48 @@ void rollout_medium(int speed, int ticks, direction_t direction) {
 	int fullSpeedFlag = 0;
 	int noMoreSpeedIncreaseFlag = 0;
 
-
-
-
-
-
-
 	while (counter < ticksToGo) {
 
-			while (counter < (ticksToGo * ticksToGoFactor)) {
+		while (counter < (ticksToGo * ticksToGoFactor)) {
 
-				if (flag == 0) {
-					PWM1_SetRatio16(initialSpeed * speedFactor);
-					flag = 1;
-				}
-
+			if (flag == 0) {
+				PWM1_SetRatio16(initialSpeed * speedFactor);
+				flag = 1;
 			}
 
-
-			flag = 0;
-
-			if ((speedFactor * initialSpeed) > MIN_SPEED*0.8) {
-
-				PWM1_SetRatio16(MIN_SPEED*0.9);
-				noMoreSpeedIncreaseFlag = 1;
-
-				speedFactor = 0;
-
-			} else {
-
-				if (noMoreSpeedIncreaseFlag == 0) {
-					speedFactor = speedFactor + 0.15;
-					ticksToGoFactor = ticksToGoFactor + 0.1;
-				}
-
-			}
-
-
-
-			vTaskDelay(pdMS_TO_TICKS(1));
 		}
 
+		flag = 0;
 
+		if ((speedFactor * initialSpeed) > MIN_SPEED * 0.8) {
 
+			PWM1_SetRatio16(MIN_SPEED * 0.9);
+			noMoreSpeedIncreaseFlag = 1;
 
+			speedFactor = 0;
 
-		setDirection(FAST_STOP);
+		} else {
 
-		speedFactor = speedFactor * 100;
-		ticksToGoFactor = ticksToGoFactor * 100;
-		vTaskDelay(pdMS_TO_TICKS(3000));
-		int k = 878;
+			if (noMoreSpeedIncreaseFlag == 0) {
+				speedFactor = speedFactor + 0.15;
+				ticksToGoFactor = ticksToGoFactor + 0.1;
+			}
 
+		}
+
+		vTaskDelay(pdMS_TO_TICKS(1));
+	}
+
+	setDirection(FAST_STOP);
+
+	speedFactor = speedFactor * 100;
+	ticksToGoFactor = ticksToGoFactor * 100;
+	vTaskDelay(pdMS_TO_TICKS(3000));
+	int k = 878;
 
 }
 
-
-void rollout_fast(int speed, int ticks, direction_t direction){
+void rollout_fast(int speed, int ticks, direction_t direction) {
 
 	int initialSpeed = speed;
 	int ticksToGo = ticks;
@@ -457,72 +515,60 @@ void rollout_fast(int speed, int ticks, direction_t direction){
 	int fullSpeedFlag = 0;
 	int noMoreSpeedIncreaseFlag = 0;
 
-
-
-
-
-
-
 	while (counter < ticksToGo) {
 
-			while (counter < (ticksToGo * ticksToGoFactor)) {
+		while (counter < (ticksToGo * ticksToGoFactor)) {
 
-				if (flag == 0) {
-					PWM1_SetRatio16(initialSpeed * speedFactor);
-					flag = 1;
-				}
-
+			if (flag == 0) {
+				PWM1_SetRatio16(initialSpeed * speedFactor);
+				flag = 1;
 			}
 
-
-			flag = 0;
-
-			if ((speedFactor * initialSpeed) > MIN_SPEED*0.8) {
-
-				PWM1_SetRatio16(MIN_SPEED*0.9);
-				noMoreSpeedIncreaseFlag = 1;
-
-				speedFactor = 0;
-
-			} else {
-
-				if (noMoreSpeedIncreaseFlag == 0) {
-					speedFactor = speedFactor + 0.15;
-					ticksToGoFactor = ticksToGoFactor + 0.1;
-				}
-
-			}
-
-
-
-			vTaskDelay(pdMS_TO_TICKS(1));
 		}
 
+		flag = 0;
 
+		if ((speedFactor * initialSpeed) > MIN_SPEED * 0.8) {
 
+			PWM1_SetRatio16(MIN_SPEED * 0.9);
+			noMoreSpeedIncreaseFlag = 1;
 
+			speedFactor = 0;
 
-		setDirection(FAST_STOP);
+		} else {
 
-		speedFactor = speedFactor * 100;
-		ticksToGoFactor = ticksToGoFactor * 100;
-		vTaskDelay(pdMS_TO_TICKS(3000));
-		int k = 878;
+			if (noMoreSpeedIncreaseFlag == 0) {
+				speedFactor = speedFactor + 0.15;
+				ticksToGoFactor = ticksToGoFactor + 0.1;
+			}
 
+		}
+
+		vTaskDelay(pdMS_TO_TICKS(1));
+	}
+
+	setDirection(FAST_STOP);
+
+	speedFactor = speedFactor * 100;
+	ticksToGoFactor = ticksToGoFactor * 100;
+	vTaskDelay(pdMS_TO_TICKS(3000));
+	int k = 878;
 
 }
 
-
-void setDirection(direction_t dir) {
-	if (dir == FORWARD) {
+void setDirection(direction_t d) {
+	if (d == FORWARD) {
 		IN1_PutVal(FALSE);
 		IN2_PutVal(TRUE);
-	} else if (dir == REVERSE) {
+		dir = FORWARD;
+	} else if (d == REVERSE) {
 		IN1_PutVal(TRUE);
 		IN2_PutVal(FALSE);
-	} else if (dir == FAST_STOP) {
+		dir = REVERSE;
+	} else if (d == FAST_STOP) {
 		IN1_PutVal(TRUE);
 		IN2_PutVal(TRUE);
+		dir = FAST_STOP;
 	}
 
 }
@@ -703,7 +749,7 @@ int getValue(mode_t modus) {
 		}
 	}
 
-	// zum /0 aus dem Buffer nehmen
+// zum /0 aus dem Buffer nehmen
 
 }
 

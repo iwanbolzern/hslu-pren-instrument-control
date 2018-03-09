@@ -142,7 +142,7 @@
     <Compiler v="GNU C Compiler" />
     <CompilerProperties>
       <Compiler v="GNU C Compiler" />
-      <enumgroup name="Unhandled vectors" v="One handler for all">
+      <enumgroup name="Unhandled vectors" v="Own handler for every">
         <Unhandled_int_code>
           <StrgList><![CDATA[/* This code can be changed using the CPU component property "Build Options / Unhandled int code" */
 PE_DEBUGHALT();
@@ -1134,8 +1134,8 @@ PE_DEBUGHALT();
       <Output_pin v="LCD_P59/ADC0_DP0/ADC0_SE0/PTE20/TPM1_CH0/UART0_TX" />
       <Counter v="TPM1_CNT" />
       <boolgroup name="Interrupt service/event" v="Disabled" />
-      <Period v="3.125095 ms" />
-      <Starting_pulse_width v="1.5 ms" />
+      <Period v="5 ms" />
+      <Starting_pulse_width v="2.5 ms" />
       <Initial_polarity v="low" />
       <Same_period_in_modes v="no" />
       <Component_uses_entire_timer v="no" />
@@ -1158,8 +1158,8 @@ PE_DEBUGHALT();
             <Output_pin v="LCD_P59/ADC0_DP0/ADC0_SE0/PTE20/TPM1_CH0/UART0_TX" />
             <Counter v="TPM1_CNT" />
             <boolgroup name="Interrupt service/event" v="Disabled" />
-            <Period v="3.125095 ms" />
-            <Starting_pulse_width v="1.5 ms" />
+            <Period v="5 ms" />
+            <Starting_pulse_width v="2.5 ms" />
             <Initial_polarity v="low" />
             <group name="Initialization">
               <Enabled_in_init__code v="yes" />
@@ -1235,14 +1235,14 @@ PE_DEBUGHALT();
       </enumgroup>
       <enumgroup name="Counter restart" v="On-match">
         <Period_device v="TPM1_MOD" />
-        <Period v="3.125095 ms" />
+        <Period v="5 ms" />
         <boolgroup name="Interrupt" v="Disabled" />
       </enumgroup>
       <list name="Channel list" v="1">
         <group name="Channel 0">
           <enumgroup name="Mode" v="Compare">
             <Compare v="TPM1_C0V" />
-            <Offset v="1.5 ms" />
+            <Offset v="2.5 ms" />
             <enumgroup name="Output on compare" v="Set">
               <Output_on_overrun v="Clear" />
               <Initial_state v="Low" />

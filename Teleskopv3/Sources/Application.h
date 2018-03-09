@@ -39,7 +39,7 @@ char getCmd(void);
 int get2Bytes(void);
 char get1Byte(void);
 
-
+void insert(char);
 void initTele(void *);
 void driveDistance(void*);
 void driveJog(void*);
@@ -47,6 +47,40 @@ void driveToEnd(void*);
 void moveTele(void*);
 void enableMagnet(void*);
 void disableMagnet(void*);
+
+
+void posUpdate(void*);
+void enqueue(void);
+
+typedef struct {
+    char info;
+} DATA;
+
+
+typedef struct Node_t {
+	DATA data;
+	struct Node_t *prev;
+} NODE;
+
+
+
+/* the HEAD of the Queue, hold the amount of node's that are in the queue*/
+typedef struct Queue {
+	NODE *head;
+	NODE *tail;
+	int size;
+	int limit;
+} Queue;
+
+
+Queue *ConstructQueue(int);
+void DestructQueue(Queue *);
+int Enqueue(Queue *, NODE *);
+NODE *Dequeue(Queue *);
+int isEmpty(Queue* );
+
+extern Queue *pQ;
+extern NODE *pN;
 
 
 int getData8(void);

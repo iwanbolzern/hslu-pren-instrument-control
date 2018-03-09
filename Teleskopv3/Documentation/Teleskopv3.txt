@@ -776,6 +776,11 @@ Module "IN2"       (component BitIO)
    - IN2_SetVal -Sets (to one) the output value. It is equivalent to the [PutVal(TRUE)]. This method is available only if the 
                 direction = _[output]_ or _[input/output]_.
 
+Module "HF1"       (component HardFault)
+   - HF1_HardFaultHandler -Hard Fault Handler
+   - HF1_Deinit -Deinitializes the driver
+   - HF1_Init -Initializes the driver
+
 Module "Cpu"       (component MKL46Z256LL4)
    - Cpu_SetClockConfiguration -Calling of this method will cause the clock configuration change and reconfiguration of all 
                 components according to the requested clock configuration setting.

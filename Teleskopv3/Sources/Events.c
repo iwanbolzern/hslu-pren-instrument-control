@@ -226,60 +226,50 @@ void AS1_OnBlockSent(LDD_TUserData *UserDataPtr) {
  */
 /* ===================================================================*/
 
-
-
-
-
 void PPG1_OnEnd(LDD_TUserData *UserDataPtr) {
-
-
-
-
-
 
 	/*
 
-	if ((nTicks == 10)) {
-		PPG1_SelectPeriod(MyPPG1Ptr, 0);
-	}
+	 if ((nTicks == 10)) {
+	 PPG1_SelectPeriod(MyPPG1Ptr, 0);
+	 }
 
-	else if ((counter == 10) || (nTicks == 100)) {
-		PPG1_SelectPeriod(MyPPG1Ptr, MODE_HYPERSLOW);
-	}
+	 else if ((counter == 10) || (nTicks == 100)) {
+	 PPG1_SelectPeriod(MyPPG1Ptr, MODE_HYPERSLOW);
+	 }
 
-	else if ((counter == 100) || (nTicks == 200)) {
-		PPG1_SelectPeriod(MyPPG1Ptr, MODE_ULTRASLOW);
-	}
+	 else if ((counter == 100) || (nTicks == 200)) {
+	 PPG1_SelectPeriod(MyPPG1Ptr, MODE_ULTRASLOW);
+	 }
 
-	else if ((counter == 200) || (nTicks == 400)) {
-		PPG1_SelectPeriod(MyPPG1Ptr, MODE_VERYSLOW);
-	}
+	 else if ((counter == 200) || (nTicks == 400)) {
+	 PPG1_SelectPeriod(MyPPG1Ptr, MODE_VERYSLOW);
+	 }
 
-	else if ((counter == 400) || (nTicks == 700)) {
-		PPG1_SelectPeriod(MyPPG1Ptr, MODE_SLOW);
-	}
+	 else if ((counter == 400) || (nTicks == 700)) {
+	 PPG1_SelectPeriod(MyPPG1Ptr, MODE_SLOW);
+	 }
 
-	else if ((counter == 700) || (nTicks == 900)) {
-		PPG1_SelectPeriod(MyPPG1Ptr, MODE_MEDIUM);
-	}
+	 else if ((counter == 700) || (nTicks == 900)) {
+	 PPG1_SelectPeriod(MyPPG1Ptr, MODE_MEDIUM);
+	 }
 
-	else if ((counter == 900) || (nTicks == 1500)) {
-		PPG1_SelectPeriod(MyPPG1Ptr, MODE_FAST);
-	}
+	 else if ((counter == 900) || (nTicks == 1500)) {
+	 PPG1_SelectPeriod(MyPPG1Ptr, MODE_FAST);
+	 }
 
-	else if ((counter == 1500) || (nTicks == 2000)) {
-		PPG1_SelectPeriod(MyPPG1Ptr, MODE_VERYFAST);
-	}
+	 else if ((counter == 1500) || (nTicks == 2000)) {
+	 PPG1_SelectPeriod(MyPPG1Ptr, MODE_VERYFAST);
+	 }
 
-	else if ((counter == 2000) || (nTicks == 3000)) {
-		PPG1_SelectPeriod(MyPPG1Ptr, MODE_ULTRAFAST);
-	}
+	 else if ((counter == 2000) || (nTicks == 3000)) {
+	 PPG1_SelectPeriod(MyPPG1Ptr, MODE_ULTRAFAST);
+	 }
 
-	else if (counter == 3000)  {
-		PPG1_SelectPeriod(MyPPG1Ptr, MODE_HYPERFAST);
-	}
-*/
-
+	 else if (counter == 3000)  {
+	 PPG1_SelectPeriod(MyPPG1Ptr, MODE_HYPERFAST);
+	 }
+	 */
 
 	LED2_Neg();
 	counter = counter + 1;
@@ -287,6 +277,7 @@ void PPG1_OnEnd(LDD_TUserData *UserDataPtr) {
 
 	if (nTicks == 0) {
 		tickFlag = 1;
+
 		//PPG1_SelectPeriod(MyPPG1Ptr, 1);
 
 	}
@@ -294,52 +285,70 @@ void PPG1_OnEnd(LDD_TUserData *UserDataPtr) {
 }
 
 /*
-** ===================================================================
-**     Event       :  GPIO1_OnPortEvent (module Events)
-**
-**     Component   :  GPIO1 [GPIO_LDD]
-*/
+ ** ===================================================================
+ **     Event       :  GPIO1_OnPortEvent (module Events)
+ **
+ **     Component   :  GPIO1 [GPIO_LDD]
+ */
 /*!
-**     @brief
-**         Called if defined event on any pin of the port occured.
-**         OnPortEvent event and GPIO interrupt must be enabled. See
-**         SetEventMask() and GetEventMask() methods. This event is
-**         enabled if [Interrupt service/event] is Enabled and disabled
-**         if [Interrupt service/event] is Disabled.
-**     @param
-**         UserDataPtr     - Pointer to RTOS device
-**                           data structure pointer.
-*/
+ **     @brief
+ **         Called if defined event on any pin of the port occured.
+ **         OnPortEvent event and GPIO interrupt must be enabled. See
+ **         SetEventMask() and GetEventMask() methods. This event is
+ **         enabled if [Interrupt service/event] is Enabled and disabled
+ **         if [Interrupt service/event] is Disabled.
+ **     @param
+ **         UserDataPtr     - Pointer to RTOS device
+ **                           data structure pointer.
+ */
 /* ===================================================================*/
 LDD_TDeviceData* MyGPIOPtr;
 int counter;
+int pos_update_forward_counter;
+int pos_update_reverse_counter;
+int pos_update_forward_flag;
+int pos_update_reverse_flag;
+Queue *pQ;
+NODE *pN;
 extern int counter_regulate;
-
+int queue_error;
+int count_to_ten = 0;
+int insertFlag;
 
 //extern enum direction {REVERSE = 0, FORWARD = 1, NO_ROTATION = 2};
 
-void GPIO1_OnPortEvent(LDD_TUserData *UserDataPtr)
-{
+void GPIO1_OnPortEvent(LDD_TUserData *UserDataPtr) {
 
+	if (GPIO1_GetFieldValue(MyGPIOPtr, InputB)) {		// Motor dreht vorwärts
 
-	int u = 24;
+		counter = counter - 1;
+		count_to_ten = count_to_ten - 1;
 
-	if(GPIO1_GetFieldValue(MyGPIOPtr,InputB)){
+	} else {											// Motor dreht rückwärts
 
-		// Motor dreht vorwärts
-
-
-
-		counter = counter -1;
-
-	}
-	else{
-		// Motor dreht rückwärts
-		counter = counter +1;
-
+		counter = counter + 1;
+		count_to_ten = count_to_ten + 1;
 
 	}
 
+
+	if (count_to_ten = 9) {
+		insertFlag = 1;
+		insert(1);
+		insertFlag = 0;
+
+		count_to_ten = 0;
+	}
+
+
+
+	else if(count_to_ten = -9){
+		insertFlag = 1;
+		insert(-1);
+		insertFlag = 0;
+
+		count_to_ten = 0;
+	}
 
 }
 

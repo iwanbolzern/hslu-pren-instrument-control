@@ -56,12 +56,24 @@
 #include "BitIoLdd3.h"
 #include "IN2.h"
 #include "BitIoLdd6.h"
+#include "HF1.h"
 #include "AS1.h"
 #include "RxBuf.h"
 #include "CS1.h"
 #include "PPG1.h"
 
 extern int counter;
+extern int pos_update_forward_counter;
+extern int pos_update_reverse_counter;
+extern int pos_update_forward_flag;
+extern int pos_update_reverse_flag;
+extern int pos_ready_flag;
+extern int insertFlag;
+
+
+
+
+
 extern LDD_TDeviceData *MyPPG1Ptr;
 extern int counter_flag;
 extern int nTicks;
