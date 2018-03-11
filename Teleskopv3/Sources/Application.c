@@ -75,7 +75,7 @@ direction_t dir;
 speedMode_t spMod;
 
 // QUEUE
-queue_t* positionUpdateQueue;
+//queue_t* positionUpdateQueue;
 void del();
 
 // Method Declarations
@@ -102,7 +102,7 @@ static void SendString(const unsigned char *str, UART_Desc *desc) {
 }
 
 static void Init(void) {
-	positionUpdateQueue = queue_create();
+	//positionUpdateQueue = queue_create();
 
 	/* initialize struct fields */
 	deviceData.handle = AS1_Init(&deviceData);
@@ -137,8 +137,9 @@ static void Init(void) {
  */
 
 
+
 void insert(char* no) {
-	queue_push_left(positionUpdateQueue, no);
+	//queue_push_left(positionUpdateQueue, no);
 }
 
 
@@ -146,7 +147,7 @@ void insert(char* no) {
  * sendet die Positionsupdates an das IM
  */
 void posUpdate(void* pvParameters) {
-	for (;;) {
+	/*for (;;) {
 		if (queue_count(positionUpdateQueue) <= 0)
 			continue;
 
@@ -154,6 +155,7 @@ void posUpdate(void* pvParameters) {
 		SendChar(*ch, &deviceData);
 		free(ch);
 	}
+	*/
 }
 
 int calculateTicksToDrive(int distance) {
