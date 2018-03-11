@@ -39,7 +39,6 @@ char getCmd(void);
 int get2Bytes(void);
 char get1Byte(void);
 
-void insert(char*);
 void initTele(void *);
 void driveDistance(void*);
 void driveJog(void*);
@@ -82,6 +81,7 @@ int isEmpty(Queue* );
 extern Queue *pQ;
 extern NODE *pN;
 
+extern QueueHandle_t positionUpdateQueue;
 
 int getData8(void);
 int getData16(void);
