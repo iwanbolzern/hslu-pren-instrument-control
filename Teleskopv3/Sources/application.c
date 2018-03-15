@@ -75,7 +75,11 @@ direction_t dir;
 speedMode_t spMod;
 
 // QUEUE
+<<<<<<< HEAD
+//queue_t* positionUpdateQueue;
+=======
 QueueHandle_t positionUpdateQueue;
+>>>>>>> 48c1d850bb5520a47ca69d3deaa7b7f85ebbeba6
 void del();
 
 // Method Declarations
@@ -102,7 +106,11 @@ static void SendString(const unsigned char *str, UART_Desc *desc) {
 }
 
 static void Init(void) {
+<<<<<<< HEAD
+	//positionUpdateQueue = queue_create();
+=======
 	positionUpdateQueue = xQueueCreate(100, sizeof(char));
+>>>>>>> 48c1d850bb5520a47ca69d3deaa7b7f85ebbeba6
 
 	/* initialize struct fields */
 	deviceData.handle = AS1_Init(&deviceData);
@@ -117,17 +125,53 @@ static void Init(void) {
 	} /* initial kick off for receiving data */
 }
 
+<<<<<<< HEAD
+/*
+ ** ===================================================================
+
+ **     Description :
+ **
+ **        Schreibt -1 f�r R�ckw�rts drehen und 1 f�r vorw�rts
+ **        in die queue.
+ **
+ **        Die Aufl�sung betr�gt 0.968mm / insert
+ **
+ **
+ **     Parameters  : -1 --> R�ckw�rts
+ **     			   1 --> Vorw�rts
+ **
+ **     Returns     :
+
+ ** ===================================================================
+ */
+
+
+
+void insert(char* no) {
+	//queue_push_left(positionUpdateQueue, no);
+}
+
+
+=======
+>>>>>>> 48c1d850bb5520a47ca69d3deaa7b7f85ebbeba6
 /**
  * sendet die Positionsupdates an das IM
  */
 void posUpdate(void* pvParameters) {
+<<<<<<< HEAD
+	/*for (;;) {
+		if (queue_count(positionUpdateQueue) <= 0)
+			continue;
+=======
 	for (;;) {
 		char ch;
 		while(!xQueueReceive(positionUpdateQueue, &ch, (TickType_t)10)) { };
+>>>>>>> 48c1d850bb5520a47ca69d3deaa7b7f85ebbeba6
 
 		SendChar(ch, &deviceData);
 		free(ch);
 	}
+	*/
 }
 
 int calculateTicksToDrive(int distance) {
