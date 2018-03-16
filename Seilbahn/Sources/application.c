@@ -6,6 +6,7 @@
  */
 
 #include "application.h"
+#include "FRTOS1.h"
 
 typedef enum applicationState applicationState_t;
 enum applicationState {

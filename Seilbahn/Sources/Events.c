@@ -284,7 +284,7 @@ void PPG1_OnEnd(LDD_TUserData *UserDataPtr)
 **                           as the parameter of Init method.
 */
 /* ===================================================================*/
-void AS1_OnBlockReceived(LDD_TUserData *UserDataPtr)										//TODO
+void AS1_OnBlockReceived(LDD_TUserData *UserDataPtr)
 {
 	UART_Desc *ptr = (UART_Desc*) UserDataPtr;
 
@@ -309,12 +309,14 @@ void AS1_OnBlockReceived(LDD_TUserData *UserDataPtr)										//TODO
 **                           as the parameter of Init method.
 */
 /* ===================================================================*/
-void AS1_OnBlockSent(LDD_TUserData *UserDataPtr)											//TODO
+void AS1_OnBlockSent(LDD_TUserData *UserDataPtr)
 {
 	UART_Desc *ptr = (UART_Desc*) UserDataPtr;
 
 	ptr->isSent = TRUE; /* set flag so sender knows we have finished */
 }
+
+
 
 
 /* END Events */

@@ -130,7 +130,7 @@ void driveTelescope(void * pvParameter) {
 			setDirectionTelescope(0x00);		//einfahren
 
 			if (PPG1_Enable(MyPPG1Ptr) == ERR_OK) {			// Error handling
-				PPG1_SelectPeriod(MyPPG1Ptr, MODE_ULTRASLOW);
+		//		PPG1_SelectPeriod(MyPPG1Ptr, MODE_ULTRASLOW);
 			}
 
 			// drive Slowly (Einfahren)
@@ -150,7 +150,7 @@ void driveTelescope(void * pvParameter) {
 
 
 			if (PPG1_Enable(MyPPG1Ptr)== ERR_OK) {			// Error handling
-				PPG1_SelectPeriod(MyPPG1Ptr, MODE_MEDIUM);
+		//		PPG1_SelectPeriod(MyPPG1Ptr, MODE_MEDIUM);
 
 			}
 			else{

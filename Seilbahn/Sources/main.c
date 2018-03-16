@@ -1,39 +1,9 @@
-/* ###################################################################
- **     Filename    : main.c
- **     Project     : Seilbahn
- **     Processor   : MKL46Z256VLL4
- **     Version     : Driver 01.01
- **     Compiler    : GNU C Compiler
- **     Date/Time   : 2018-03-11, 16:57, # CodeGen: 0
- **     Abstract    :
- **         Main module.
- **         This module contains user's application code.
- **     Settings    :
- **     Contents    :
- **         No public methods
- **
- ** ###################################################################*/
-/*!
- ** @file main.c
- ** @version 01.01
- ** @brief
- **         Main module.
- **         This module contains user's application code.
- */
-/*!
- **  @addtogroup main_module main module documentation
- **  @{
- */
-/* MODULE main */
-
-/* Including needed modules to compile this module/procedure */
 #include "application.h"
 #include "drive.h"
 #include "driveTelescope.h"
 #include "Communication.h"
 #include "custom_queue.h"
-
-
+#include "magnet.h"
 
 #include "Cpu.h"
 #include "Events.h"
@@ -73,6 +43,7 @@ QueueHandle_t xPosQueue;
 QueueHandle_t zPosQueue;
 
 QueueHandle_t endMoveTeleQueue;
+QueueHandle_t magnetCmdQueue;
 
 
 
@@ -97,6 +68,7 @@ int main(void)
 	zPosQueue =  queue_create(MAXQUEUESIZE);
 	commandQueue = queue_create(MAXQUEUESIZE);
 	endMoveTeleQueue = queue_create(MAXQUEUESIZE);
+	magnetCmdQueue = queue_create(MAXQUEUESIZE);
 
 
 
@@ -148,6 +120,18 @@ int main(void)
 		for (;;) {
 		}; /* Out of heap memory? */
 	}
+
+	if (FRTOS1_xTaskCreate(
+				magnetHandler, /* pointer to the task */
+				(signed portCHAR *) "Magnet Task", /* task name for kernel awareness debugging */
+				configMINIMAL_STACK_SIZE, /* task stack size */
+				(void*) NULL, /* optional task startup argument */
+				tskIDLE_PRIORITY + 1, /* initial priority */
+				(xTaskHandle*) NULL /* optional task handle to create */
+		) != pdPASS) {
+			for (;;) {
+			}; /* Out of heap memory? */
+		}
 
 	/*** Don't write any code pass this line, or it will be deleted during code generation. ***/
   /*** RTOS startup code. Macro PEX_RTOS_START is defined by the RTOS component. DON'T MODIFY THIS CODE!!! ***/

@@ -12,10 +12,7 @@
 #include "queue.h"
 
 
-typedef enum {
-	IDLE, GET_POS, READ_FROM_IM, SEND_POS_TO_IM, ERROR, REPORT_TO_IM
-} state_t;
-state_t state = IDLE;
+
 
 UART_Desc deviceData;
 
@@ -69,6 +66,10 @@ void sendReport(char cmd) {
 void communication(void* pvParameter) {
 
 	(void) pvParameter;
+	typedef enum {
+		IDLE, GET_POS, READ_FROM_IM, SEND_POS_TO_IM, ERROR, REPORT_TO_IM
+	} state_t;
+	state_t state = IDLE;
 
 	Init();		// Initialisierung von der asynchronverbindung
 

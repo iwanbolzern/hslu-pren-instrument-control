@@ -31,7 +31,7 @@ char queue_read(QueueHandle_t queue) {
 // example usage to wait until something is available char test; while((test = queue_readFromISR(queue)) == -1) { }
 char queue_readFromISR(QueueHandle_t queue) {
 	char value;
-	if(xQueueReceive(queue, &value, NULL) == pdTRUE)
+	if(xQueueReceiveFromISR(queue, &value, NULL) == pdTRUE)
 		return value;
 	return -1;
 }

@@ -9,6 +9,7 @@
 #include "PWM1.h"
 #include "IN1.h"
 #include "IN2.h"
+#include "FRTOS1.h"
 
 #define  GEAR_RATIO 70										// Getriebeuebersetzung
 #define  N_TICKS_ENCODER 16									// (Ticks / Revolution)
