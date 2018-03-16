@@ -29,6 +29,7 @@
 #include "Cpu.h"
 #include "Events.h"
 #include "PE_Types.h"
+#include "drive.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -40,6 +41,7 @@ extern "C" {
 
 int counterTelescope;
 int nTicks;
+direction_t direction;
 char directionTelescope;
 LDD_TDeviceData *MyPPG1Ptr;
 int counterFlag;
@@ -211,7 +213,7 @@ void Cpu_OnPendableService(void)
 void GPIO1_OnPortEvent(LDD_TUserData *UserDataPtr)
 {
 
-	if(directionTelescope == 1){
+	if(direction == 0){
 		driveCounter += 1;
 		if(driveCounter%8 == 0){
 			queue_writeFromISR(xPosQueue,1);

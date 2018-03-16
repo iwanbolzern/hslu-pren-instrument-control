@@ -35,8 +35,8 @@ int i = 0;
 //Variables for use in driveDistance and rollOut Method
 int driveCounter = 0;
 LDD_TDeviceData* MyGPIOPtr;
-float x = 0.3;
-float v = 1;
+int x = 30;
+int v = 100;
 int internTicks;
 int internSpeed;
 direction_t direction;
@@ -44,12 +44,12 @@ direction_t direction;
 int endSwitch = 0;
 
 int calculateTicksToDrive(int distance) {
-	int l = (distance / (0.121));
+	int l = (distance / (0.12));
 	return l;
 }
 
 int calculateSpeed(int speed){
-	return (1 - ((float) speed / 100)) * MIN_SPEED;
+	return ((speed * MIN_SPEED)/100);
 }
 
 void setDirection(direction_t d) {
@@ -72,22 +72,23 @@ void setDirection(direction_t d) {
 void driveDistance(float x, float v) {
 	int speedWasSet = 0;
 	while (driveCounter < internTicks) {
-		while (driveCounter < (internTicks * x)) {
+		while (driveCounter < ((internTicks * x)/100)) {
 			if (!speedWasSet) {
-				PWM1_SetRatio16(internSpeed * v);
+				PWM1_SetRatio16((internSpeed * v)/100);
 				speedWasSet = 1;
 			}
 		}
-		x = x + 0.1;
-		v = v + 0.15;
-		if ((internSpeed * v) < (MIN_SPEED * 0.9)) {
+		x = x + 10;
+		v = v + 15;
+		if (((internSpeed * v)/100) < ((MIN_SPEED * 90)/100)) {
 			driveDistance(x, v);
 		}
 	}
+	PWM1_SetRatio16(Stop);
 // Fast Stop initialisierung
-	setDirection(REVERSE);
-	PWM1_SetRatio16(0xffff * 0.3);
-	setDirection(FAST_STOP);
+//	setDirection(REVERSE);
+//	PWM1_SetRatio16(0xffff * 0.3);
+//	setDirection(FAST_STOP);
 }
 
 void driveToEnd(){
@@ -113,6 +114,7 @@ driveCounter = 0;
 }
 
 void drive(void* pvParameter){
+	MyGPIOPtr = GPIO1_Init(NULL);
 	PWM1_SetRatio16(STOP);
 	PWM1_Enable();
 	for(;;){
@@ -122,30 +124,31 @@ void drive(void* pvParameter){
 			for(i; i < commandByte[1]; i++){						//Alle restlichen zum Kommande gehörenden Bytes werden in das commandByte Array abgelegt
 				commandByte[i+2] = queue_read(driveQueue);
 			}
-		}
+		// Hier habe ich versucht, dass es nach einem Abarbeiten des DriveDistances auch aufhört und nicht anhand des Array wieder auslöst   }
 		//Interpretierung und Aufbereitung der Parameter für DriveDistance und DriveToEnd
-		if(commandByte[2] != 3){
-			int distance = commandByte[3]+commandByte[4];
-			int speedFromIm = commandByte[5];
-			int speed = calculateSpeed(speedFromIm);
-			int ticksToDrive = 	calculateTicksToDrive(distance);
-			direction = commandByte[6];
-			setDirection(direction);
-			internTicks = ticksToDrive;
-			internSpeed = speed;
-			driveCounter = 0;
-		}
-		if(commandByte[2] == 2){
-			driveDistance(x,v);
-			vTaskDelay(pdMS_TO_TICKS(20));
-		}
-		if(commandByte[2] == 4){
-			driveToEnd();
-			vTaskDelay(pdMS_TO_TICKS(20));
-		}
-		else{
-			driveJog();
-			vTaskDelay(pdMS_TO_TICKS(20));
+			if(commandByte[2] != 3){
+				int distance = commandByte[3]+commandByte[4];
+				int speedFromIm = commandByte[5];
+				int speed = calculateSpeed(speedFromIm);
+				int ticksToDrive = 	calculateTicksToDrive(distance);
+				direction = commandByte[6];
+				setDirection(direction);
+				internTicks = ticksToDrive;
+				internSpeed = speed;
+				driveCounter = 0;
+			}
+			if(commandByte[2] == 2){
+				driveDistance(x,v);
+				vTaskDelay(pdMS_TO_TICKS(20));
+			}
+			else if(commandByte[2] == 4){
+				driveToEnd();
+				vTaskDelay(pdMS_TO_TICKS(20));
+			}
+			else{
+				driveJog();
+				vTaskDelay(pdMS_TO_TICKS(20));
+			}
 		}
 	}
 }
