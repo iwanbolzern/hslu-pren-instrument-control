@@ -46,6 +46,7 @@ int counterFlag;
 int driveCounter;
 QueueHandle_t zPosQueue;
 QueueHandle_t xPosQueue;
+QueueHandle_t endMoveTeleQueue;
 /*
 ** ===================================================================
 **     Event       :  Cpu_OnNMIINT (module Events)
@@ -252,13 +253,17 @@ void PPG1_OnEnd(LDD_TUserData *UserDataPtr)
 {
 	counterTelescope++;
 	nTicks--;
-	if (counterTelescope % 3){
+	if ((counterTelescope % 3) == 0){
 
 		if (directionTelescope == 0) {
 			queue_writeFromISR(zPosQueue, 0xff);	// 0xff --> -1 (einfahren)TODO: Ask IWAN
 		} else {
 			queue_writeFromISR(zPosQueue, 0x01);	// 0x01 --> 1 (ausfahren)
 		}
+	}
+
+	if(nTicks == 0){
+		queue_writeFromISR(endMoveTeleQueue,0x01);
 	}
 
 }

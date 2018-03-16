@@ -11,8 +11,9 @@
 #include "custom_queue.h"
 #include "queue.h"
 
+
 typedef enum {
-	IDLE, GET_POS, READ_FROM_IM, SEND_POS_TO_IM, ERROR
+	IDLE, GET_POS, READ_FROM_IM, SEND_POS_TO_IM, ERROR, REPORT_TO_IM
 } state_t;
 state_t state = IDLE;
 
@@ -46,6 +47,25 @@ static void Init(void) {
 	} /* initial kick off for receiving data */
 }
 
+void sendPositionUpdate(char x, char z) {
+
+	SendChar(0x00, &deviceData);
+	SendChar(0x05, &deviceData);
+	SendChar(0x0b, &deviceData);
+	SendChar(0x00, &deviceData);
+	SendChar(x, &deviceData);
+	SendChar(0x00, &deviceData);
+	SendChar(z, &deviceData);
+}
+
+void sendReport(char cmd) {
+
+	SendChar(0x00, &deviceData);
+	SendChar(0x01, &deviceData);
+	SendChar(0x0a, &deviceData);
+
+}
+
 void communication(void* pvParameter) {
 
 	(void) pvParameter;
@@ -65,9 +85,18 @@ void communication(void* pvParameter) {
 			if (!(queue_isEmpty(xPosQueue) && (queue_isEmpty(zPosQueue)))) { // es wurde min. in eine der beiden Queues geschrieben
 
 				state = SEND_POS_TO_IM;
-			} else if (RxBuf_NofElements() != 0) {
+			}
+
+			else if (RxBuf_NofElements() != 0) {
 				state = READ_FROM_IM;
-			} else {
+			}
+
+			else if (!(queue_isEmpty(endMoveTeleQueue))) {
+
+				state = REPORT_TO_IM;
+			}
+
+			else {
 				vTaskDelay(pdMS_TO_TICKS(20));				// 50 Hz
 			}
 			break;
@@ -79,20 +108,31 @@ void communication(void* pvParameter) {
 				if (queue_isEmpty(xPosQueue)) {	// xQueue ist leer, dh der Eintrag ist in der zQueue
 					xPos = '0';
 					zPos = queue_read(zPosQueue);
-					SendChar(xPos, &deviceData);
-					SendChar(zPos, &deviceData);
+
 				} else if (queue_isEmpty(zPosQueue)) {// zQueue ist leer, dh der Eintrag ist in der xQueue
 					zPos = '0';
 					xPos = queue_read(xPosQueue);
-					SendChar(xPos, &deviceData);
-					SendChar(zPos, &deviceData);
-				} else {					// beide Queues haben einen Eintrag
+
+				} else {				// beide Queues haben einen Eintrag
 					zPos = queue_read(zPosQueue);
 					xPos = queue_read(xPosQueue);
-					SendChar(xPos, &deviceData);
-					SendChar(zPos, &deviceData);
+
 				}
+
+				sendPositionUpdate(xPos, zPos);
 			}
+			state = IDLE;
+			break;
+
+		case REPORT_TO_IM:
+
+			if (!(queue_isEmpty(endMoveTeleQueue))) {
+
+				char end =  queue_read(endMoveTeleQueue);
+				sendReport(0x0a);
+
+			}
+
 			state = IDLE;
 			break;
 

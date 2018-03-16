@@ -72,7 +72,7 @@ QueueHandle_t commandQueue;
 QueueHandle_t xPosQueue;
 QueueHandle_t zPosQueue;
 
-
+QueueHandle_t endMoveTeleQueue;
 
 
 
@@ -96,7 +96,7 @@ int main(void)
 	xPosQueue =  queue_create(MAXQUEUESIZE);
 	zPosQueue =  queue_create(MAXQUEUESIZE);
 	commandQueue = queue_create(MAXQUEUESIZE);
-
+	endMoveTeleQueue = queue_create(MAXQUEUESIZE);
 
 
 

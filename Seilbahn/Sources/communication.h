@@ -29,6 +29,7 @@ typedef struct {
 extern QueueHandle_t commandQueue;
 extern QueueHandle_t xPosQueue;
 extern QueueHandle_t zPosQueue;
+extern QueueHandle_t endMoveTeleQueue;
 
 
 

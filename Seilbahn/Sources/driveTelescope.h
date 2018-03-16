@@ -17,6 +17,7 @@ void driveTelescope(void*);
 
 extern QueueHandle_t driveTelescopeQueue;
 extern QueueHandle_t zPosQueue;
+extern QueueHandle_t endMoveTeleQueue;
 extern int counterTelescope;
 extern int nTicks;
 extern int counterFlag;

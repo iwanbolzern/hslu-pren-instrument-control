@@ -105,11 +105,6 @@ void driveTelescope(void * pvParameter) {
 				distance = (queue_read(driveTelescopeQueue))*256 + queue_read(driveTelescopeQueue);
 
 
-				/*
-				distance = ((queue_read(driveTelescopeQueue) * 0xff)
-						+ (queue_read(driveTelescopeQueue)));
-
-*/
 				nTicks = getTicksToGo(distance);
 
 				directionTelescope = queue_read(driveTelescopeQueue);
@@ -165,6 +160,8 @@ void driveTelescope(void * pvParameter) {
 
 
 
+
+
 			// je nach nTicks eine entsprechende Geschwindigkeit festlegen oder einfach immer die selbe geschwindigkeit
 
 			state = MEASURE;
@@ -174,22 +171,6 @@ void driveTelescope(void * pvParameter) {
 
 			counterFlag == 0;
 			while (nTicks > 0) {
-/*
-				counter_old = counterTelescope;					// TODO: Bessere Implementierung
-
-				if (((counterTelescope % 3) == 0)&&(counter_old != counterTelescope)) {					//counterTelescope % 3) == 0	--> 3 Ticks = 0.9896mm
-
-					counter_old = counterTelescope;
-
-					if (direction == 0) {
-						queue_write(zPosQueue, 0xff);	// 0xff --> -1 (einfahren)TODO: Ask IWAN
-					} else {
-						queue_write(zPosQueue, 0x01);	// 0x01 --> 1 (ausfahren)
-					}
-
-				}
-*/
-				//counter_old = counterTelescope;
 
 				vTaskDelay(pdMS_TO_TICKS(5));			//200Hz
 			}

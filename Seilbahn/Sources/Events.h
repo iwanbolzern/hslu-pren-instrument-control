@@ -60,6 +60,7 @@ extern "C" {
 
 extern LDD_TDeviceData *MyPPG1Ptr;
 extern QueueHandle_t zPosQueue;
+extern QueueHandle_t endMoveTeleQueue;
 /*
 ** ===================================================================
 **     Event       :  Cpu_OnNMIINT (module Events)
