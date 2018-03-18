@@ -85,30 +85,31 @@ void handleInitTele(char* cmdStream) {
 
 void handleDriveDistance(char* cmdStream) {
 	//Wenn driveDistance oder driveToEnd werden 4 Bytes in die driveQueue geschrieben
-	for (int i = 0; i < 4; i++) {
-		queue_write(driveQueue, cmdStream[i]);
-	}
+	queue_write(driveQueue, cmdStream[0]); // Distance 2 Bytes
+	queue_write(driveQueue, cmdStream[1]);
+	queue_write(driveQueue, cmdStream[2]); // speed
+	queue_write(driveQueue, cmdStream[3]); // direction
 }
 
 void handleDriveJog(char* cmdStream) {
 	//Wenn driveJog werden 2 Bytes in die driveQueue geschrieben
-	for (int i = 0; i < 2; i++) {
-		queue_write(driveQueue, cmdStream[i]);
-	}
+	queue_write(driveQueue, cmdStream[0]); // speed
+	queue_write(driveQueue, cmdStream[1]); // direction
 }
 
 void handleDriveToEnd(char* cmdStream) {
 	//Wenn driveDistance oder driveToEnd werden 4 Bytes in die driveQueue geschrieben
-	for (int i = 0; i < 4; i++) {
-		queue_write(driveQueue, cmdStream[i]);
-	}
+	queue_write(driveQueue, cmdStream[0]); // predicted distance 2 Bytes
+	queue_write(driveQueue, cmdStream[1]);
+	queue_write(driveQueue, cmdStream[2]); // speed
+	queue_write(driveQueue, cmdStream[3]); // direction
 }
 
 void handleMoveTele(char* cmdStream) {
 	//Wenn MoveTele werden 3 Bytes in die driveTelescopeQueue geschrieben
-	for (int i = 0; i < 3; i++) {
-		queue_write(driveTelescopeQueue, cmdStream[i]);
-	}
+	queue_write(driveTelescopeQueue, cmdStream[0]); // drive distance 2 Bytes
+	queue_write(driveTelescopeQueue, cmdStream[1]);
+	queue_write(driveTelescopeQueue, cmdStream[2]); // direction
 }
 
 void handleEnableMagnet(char* cmdStream) {
