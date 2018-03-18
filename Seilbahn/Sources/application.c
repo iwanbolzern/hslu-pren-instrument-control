@@ -34,7 +34,7 @@ void application(void* pvParameter) {
 			char cmdSize = queue_read(commandQueue);
 			char* cmdStream = getCmdStream(cmdSize);
 
-			switch(cmdStream[0]) { // you ned ++ to skip command byte
+			switch(cmdStream[0]) { // you need ++ to skip command byte
 				case INIT_TELE:
 					handleInitTele(++cmdStream);
 					break;
@@ -67,7 +67,7 @@ void application(void* pvParameter) {
 
 char* getCmdStream(char size) {
 	// wait until queue has all bytes
-	while(queue_size(commandQueue) <= size) {
+	while(queue_size(commandQueue) < size) {
 		vTaskDelay(pdMS_TO_TICKS(10));
 	}
 
