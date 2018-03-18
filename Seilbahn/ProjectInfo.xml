@@ -55,6 +55,8 @@
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd2.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd3.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd4.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd5.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\CS1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Cpu.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\FRTOS1.c</PathName>
@@ -62,6 +64,8 @@
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\IN1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\IN2.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\MCUC1.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Magnet1.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Magnet2.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PE_LDD.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PPG1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PWM1.c</PathName>
@@ -101,6 +105,8 @@
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd2.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd3.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd4.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd5.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\CS1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\CS1config.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Cpu.h</PathName>
@@ -114,6 +120,8 @@
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\IO_Map.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\MCUC1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\MCUC1config.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Magnet1.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Magnet2.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PE_Const.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PE_Error.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PE_LDD.h</PathName>

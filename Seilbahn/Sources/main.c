@@ -25,6 +25,10 @@
 #include "TU1.h"
 #include "Bit1.h"
 #include "BitIoLdd3.h"
+#include "Magnet1.h"
+#include "BitIoLdd4.h"
+#include "Magnet2.h"
+#include "BitIoLdd5.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"

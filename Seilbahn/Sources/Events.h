@@ -50,6 +50,10 @@
 #include "TU1.h"
 #include "Bit1.h"
 #include "BitIoLdd3.h"
+#include "Magnet1.h"
+#include "BitIoLdd4.h"
+#include "Magnet2.h"
+#include "BitIoLdd5.h"
 #include "custom_queue.h"
 #include "queue.h"
 
