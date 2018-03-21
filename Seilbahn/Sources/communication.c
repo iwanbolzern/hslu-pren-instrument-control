@@ -24,7 +24,6 @@ static void SendChar(unsigned char ch, UART_Desc *desc) {
 }
 
 static void Init(void) {
-
 	deviceData.handle = AS1_Init(&deviceData);
 	deviceData.isSent = FALSE;
 	deviceData.rxChar = '\0';

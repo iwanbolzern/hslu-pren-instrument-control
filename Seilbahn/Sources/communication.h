@@ -27,7 +27,8 @@ typedef struct {
 typedef enum endCmd_ {
 	END_INIT_TELE = 8,
 	END_DRIVE_DISTANCE = 9,
-	END_MOVE_TELE = 10
+	END_MOVE_TELE = 10,
+	END_RUN = 12
 } endCmd_t;
 
 extern QueueHandle_t commandQueue;

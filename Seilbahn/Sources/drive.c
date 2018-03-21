@@ -73,6 +73,7 @@ void drive(void* pvParameter){
 			case DRIVE_TO_END:
 				prepareForBoundedDrive(appCmdStream);
 				driveToEnd();
+				queue_write(endQueue, END_RUN);
 				vTaskDelay(pdMS_TO_TICKS(20));
 				break;
 			}
