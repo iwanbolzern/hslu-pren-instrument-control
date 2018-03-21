@@ -24,12 +24,16 @@ typedef struct {
   uint8_t (*rxPutFct)(uint8_t); /* callback to put received character into buffer */
 } UART_Desc;
 
-
+typedef enum endCmd_ {
+	END_INIT_TELE = 8,
+	END_DRIVE_DISTANCE = 9,
+	END_MOVE_TELE = 10
+} endCmd_t;
 
 extern QueueHandle_t commandQueue;
 extern QueueHandle_t xPosQueue;
 extern QueueHandle_t zPosQueue;
-extern QueueHandle_t endMoveTeleQueue;
+extern QueueHandle_t endQueue;
 
 
 

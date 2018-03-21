@@ -62,7 +62,7 @@ void drive(void* pvParameter){
 			case DRIVE_DISTANCE:
 				prepareForBoundedDrive(appCmdStream);
 				driveDistance(x,v);
-				queue_write(endDriveQueue, 1);
+				queue_write(endQueue, END_DRIVE_DISTANCE);
 				vTaskDelay(pdMS_TO_TICKS(20));
 				break;
 			case DRIVE_JOG:

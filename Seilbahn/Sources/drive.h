@@ -11,7 +11,7 @@
 
 #include "PE_Types.h"
 #include "custom_queue.h"
-#include "queue.h"
+#include "communication.h"
 
 void drive(void*);
 

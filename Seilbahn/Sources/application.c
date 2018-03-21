@@ -85,6 +85,7 @@ void handleInitTele(char* cmdStream) {
 
 void handleDriveDistance(char* cmdStream) {
 	//Wenn driveDistance oder driveToEnd werden 4 Bytes in die driveQueue geschrieben
+	queue_write(driveQueue, DRIVE_DISTANCE); // CMD Byte
 	queue_write(driveQueue, cmdStream[0]); // Distance 2 Bytes
 	queue_write(driveQueue, cmdStream[1]);
 	queue_write(driveQueue, cmdStream[2]); // speed
@@ -93,12 +94,14 @@ void handleDriveDistance(char* cmdStream) {
 
 void handleDriveJog(char* cmdStream) {
 	//Wenn driveJog werden 2 Bytes in die driveQueue geschrieben
+	queue_write(driveQueue, DRIVE_JOG); // CMD Byte
 	queue_write(driveQueue, cmdStream[0]); // speed
 	queue_write(driveQueue, cmdStream[1]); // direction
 }
 
 void handleDriveToEnd(char* cmdStream) {
 	//Wenn driveDistance oder driveToEnd werden 4 Bytes in die driveQueue geschrieben
+	queue_write(driveQueue, DRIVE_TO_END); // CMD Byte
 	queue_write(driveQueue, cmdStream[0]); // predicted distance 2 Bytes
 	queue_write(driveQueue, cmdStream[1]);
 	queue_write(driveQueue, cmdStream[2]); // speed

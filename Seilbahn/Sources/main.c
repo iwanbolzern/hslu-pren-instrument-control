@@ -47,9 +47,8 @@ QueueHandle_t commandQueue;
 QueueHandle_t xPosQueue;
 QueueHandle_t zPosQueue;
 
-QueueHandle_t endMoveTeleQueue;
 QueueHandle_t magnetCmdQueue;
-QueueHandle_t endDriveQueue;
+QueueHandle_t endQueue;
 
 
 
@@ -73,9 +72,8 @@ int main(void)
 	xPosQueue =  queue_create(MAXQUEUESIZE);
 	zPosQueue =  queue_create(MAXQUEUESIZE);
 	commandQueue = queue_create(MAXQUEUESIZE);
-	endMoveTeleQueue = queue_create(MAXQUEUESIZE);
 	magnetCmdQueue = queue_create(MAXQUEUESIZE);
-	endDriveQueue = queue_create(MAXQUEUESIZE);
+	endQueue = queue_create(MAXQUEUESIZE);
 
 
 
