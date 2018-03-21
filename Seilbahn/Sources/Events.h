@@ -54,6 +54,7 @@
 #include "BitIoLdd4.h"
 #include "Magnet2.h"
 #include "BitIoLdd5.h"
+#include "end_Switch.h"
 #include "custom_queue.h"
 #include "queue.h"
 
@@ -245,6 +246,26 @@ void AS1_OnBlockReceived(LDD_TUserData *UserDataPtr);
 */
 /* ===================================================================*/
 void AS1_OnBlockSent(LDD_TUserData *UserDataPtr);
+
+/*
+** ===================================================================
+**     Event       :  end_Switch_OnPortEvent (module Events)
+**
+**     Component   :  end_Switch [GPIO_LDD]
+*/
+/*!
+**     @brief
+**         Called if defined event on any pin of the port occured.
+**         OnPortEvent event and GPIO interrupt must be enabled. See
+**         SetEventMask() and GetEventMask() methods. This event is
+**         enabled if [Interrupt service/event] is Enabled and disabled
+**         if [Interrupt service/event] is Disabled.
+**     @param
+**         UserDataPtr     - Pointer to RTOS device
+**                           data structure pointer.
+*/
+/* ===================================================================*/
+void end_Switch_OnPortEvent(LDD_TUserData *UserDataPtr);
 
 /* END Events */
 

@@ -45,6 +45,7 @@ direction_t direction;
 char directionTelescope;
 LDD_TDeviceData *MyPPG1Ptr;
 int counterFlag;
+int endSwitch_pressed = 0;
 int driveCounter;
 QueueHandle_t zPosQueue;
 QueueHandle_t xPosQueue;
@@ -224,7 +225,7 @@ void GPIO1_OnPortEvent(LDD_TUserData *UserDataPtr)
 
 
 	else{
-		driveCounter-= 1;
+		driveCounter += 1;
 		if(driveCounter%8 == 0){
 			queue_writeFromISR(xPosQueue,-1);
 		}
@@ -320,6 +321,29 @@ void AS1_OnBlockSent(LDD_TUserData *UserDataPtr)
 
 
 
+
+/*
+** ===================================================================
+**     Event       :  end_Switch_OnPortEvent (module Events)
+**
+**     Component   :  end_Switch [GPIO_LDD]
+*/
+/*!
+**     @brief
+**         Called if defined event on any pin of the port occured.
+**         OnPortEvent event and GPIO interrupt must be enabled. See
+**         SetEventMask() and GetEventMask() methods. This event is
+**         enabled if [Interrupt service/event] is Enabled and disabled
+**         if [Interrupt service/event] is Disabled.
+**     @param
+**         UserDataPtr     - Pointer to RTOS device
+**                           data structure pointer.
+*/
+/* ===================================================================*/
+void end_Switch_OnPortEvent(LDD_TUserData *UserDataPtr)
+{
+  /* Write your code here ... */
+}
 
 /* END Events */
 

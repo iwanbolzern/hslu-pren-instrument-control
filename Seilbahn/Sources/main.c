@@ -29,6 +29,7 @@
 #include "BitIoLdd4.h"
 #include "Magnet2.h"
 #include "BitIoLdd5.h"
+#include "end_Switch.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
@@ -48,6 +49,7 @@ QueueHandle_t zPosQueue;
 
 QueueHandle_t endMoveTeleQueue;
 QueueHandle_t magnetCmdQueue;
+QueueHandle_t endDriveQueue;
 
 
 
@@ -73,7 +75,7 @@ int main(void)
 	commandQueue = queue_create(MAXQUEUESIZE);
 	endMoveTeleQueue = queue_create(MAXQUEUESIZE);
 	magnetCmdQueue = queue_create(MAXQUEUESIZE);
-
+	endDriveQueue = queue_create(MAXQUEUESIZE);
 
 
 

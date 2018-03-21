@@ -22,6 +22,7 @@ enum direction {
 
 extern QueueHandle_t driveQueue;
 extern QueueHandle_t xPosQueue;
+extern QueueHandle_t endDriveQueue;
 extern int driveCounter;
 extern direction_t direction;
 

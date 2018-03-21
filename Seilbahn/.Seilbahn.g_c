@@ -19,7 +19,7 @@
         <Line>PE_Const</Line>
         <Line>IO_Map</Line>
       </GenSharedModules>
-      <ShrdHeaderAge0>1282566277</ShrdHeaderAge0>
+      <ShrdHeaderAge0>1282776378</ShrdHeaderAge0>
       <ShrdCodeAge0>-1</ShrdCodeAge0>
       <ShrdAsemblAge0>-1</ShrdAsemblAge0>
       <ShrdHeaderAge1>1282441032</ShrdHeaderAge1>
@@ -31,7 +31,7 @@
       <ShrdHeaderAge3>1282441032</ShrdHeaderAge3>
       <ShrdCodeAge3>-1</ShrdCodeAge3>
       <ShrdAsemblAge3>-1</ShrdAsemblAge3>
-      <GenExtraFiles lines_count="64">
+      <GenExtraFiles lines_count="65">
         <Line>Generated_Code\MCUC1config.h</Line>
         <Line>Generated_Code\UTIL1config.h</Line>
         <Line>Generated_Code\FRTOS1config.h</Line>
@@ -87,6 +87,7 @@
         <Line>Documentation\doxygen\BitIoLdd3_component.txt</Line>
         <Line>Documentation\doxygen\BitIoLdd4_component.txt</Line>
         <Line>Documentation\doxygen\BitIoLdd5_component.txt</Line>
+        <Line>Documentation\doxygen\end_Switch_component.txt</Line>
         <Line>Documentation\doxygen\Seilbahn_project.txt</Line>
         <Line>Documentation\doxygen\RoutingReport_component.txt</Line>
         <Line>Documentation\doxygen\pex.doxyfile</Line>
@@ -97,8 +98,8 @@
         <Line>Project_Settings\Startup_Code\startup.c</Line>
         <Line>Generated_Code\Vectors.c</Line>
       </GenExtraFiles>
-      <GenExtraFileSrcDir62>lib\Kinetis\startup\</GenExtraFileSrcDir62>
-      <GenExtraFileSrcDir58>Repositories\lib\doxygen\</GenExtraFileSrcDir58>
+      <GenExtraFileSrcDir63>lib\Kinetis\startup\</GenExtraFileSrcDir63>
+      <GenExtraFileSrcDir59>Repositories\lib\doxygen\</GenExtraFileSrcDir59>
       <XtraAge0>1282441032</XtraAge0>
       <XtraAge1>1282441032</XtraAge1>
       <XtraAge2>1282441032</XtraAge2>
@@ -140,16 +141,17 @@
       <XtraAge42>1282441032</XtraAge42>
       <XtraAge44>1282441032</XtraAge44>
       <XtraAge45>1282441032</XtraAge45>
-      <XtraAge59>1282566277</XtraAge59>
-      <XtraAge60>1282566277</XtraAge60>
-      <XtraAge62>1282115384</XtraAge62>
-      <XtraAge63>1282566277</XtraAge63>
-      <GenExtraFileType63>4</GenExtraFileType63>
-      <GenExtraFileType62>5</GenExtraFileType62>
+      <XtraAge60>1282776378</XtraAge60>
+      <XtraAge61>1282776378</XtraAge61>
+      <XtraAge63>1282115384</XtraAge63>
+      <XtraAge64>1282776378</XtraAge64>
+      <GenExtraFileType64>4</GenExtraFileType64>
+      <GenExtraFileType63>5</GenExtraFileType63>
+      <GenExtraFileType62>4</GenExtraFileType62>
       <GenExtraFileType61>4</GenExtraFileType61>
       <GenExtraFileType60>4</GenExtraFileType60>
-      <GenExtraFileType59>4</GenExtraFileType59>
-      <GenExtraFileType58>5</GenExtraFileType58>
+      <GenExtraFileType59>5</GenExtraFileType59>
+      <GenExtraFileType58>4</GenExtraFileType58>
       <GenExtraFileType57>4</GenExtraFileType57>
       <GenExtraFileType56>4</GenExtraFileType56>
       <GenExtraFileType55>4</GenExtraFileType55>
@@ -464,7 +466,8 @@
       <GenEventModules lines_count="1">
         <Line>Events</Line>
       </GenEventModules>
-      <GenMethodsInEvents lines_count="11">
+      <GenMethodsInEvents lines_count="12">
+        <Line>end_Switch_OnPortEvent</Line>
         <Line>GPIO1_OnPortEvent</Line>
         <Line>PPG1_OnEnd</Line>
         <Line>AS1_OnBlockReceived</Line>
@@ -477,7 +480,7 @@
         <Line>Cpu_OnSupervisorCall</Line>
         <Line>Cpu_OnPendableService</Line>
       </GenMethodsInEvents>
-      <GenAllModules lines_count="27">
+      <GenAllModules lines_count="28">
         <Line>AS1</Line>
         <Line>Bit1</Line>
         <Line>BitIoLdd1</Line>
@@ -487,6 +490,7 @@
         <Line>BitIoLdd5</Line>
         <Line>Cpu</Line>
         <Line>CS1</Line>
+        <Line>end_Switch</Line>
         <Line>Events</Line>
         <Line>FRTOS1</Line>
         <Line>GPIO1</Line>
@@ -507,7 +511,7 @@
         <Line>UTIL1</Line>
       </GenAllModules>
       <GenExternModules lines_count="0" />
-      <GenBeanModules lines_count="21">
+      <GenBeanModules lines_count="22">
         <Line>FRTOS1</Line>
         <Line>MCUC1</Line>
         <Line>UTIL1</Line>
@@ -529,11 +533,12 @@
         <Line>BitIoLdd4</Line>
         <Line>Magnet2</Line>
         <Line>BitIoLdd5</Line>
+        <Line>end_Switch</Line>
       </GenBeanModules>
     </GenFiles>
     <SignalListFile>Documentation\Seilbahn_SIGNALS.txt</SignalListFile>
     <DestinationCompiler>GNUC</DestinationCompiler>
-    <ProjectModificationStamp>16</ProjectModificationStamp>
+    <ProjectModificationStamp>18</ProjectModificationStamp>
   </Options>
   <CpuID_1>
     <Generated>true</Generated>
@@ -541,8 +546,8 @@
     <GenComponentVersion>01.003</GenComponentVersion>
     <GenDriverVersion>01.04</GenDriverVersion>
     <GenEventModule>Events</GenEventModule>
-    <HeaderAge>1282446625</HeaderAge>
-    <CodeAge>1282566277</CodeAge>
+    <HeaderAge>1282776378</HeaderAge>
+    <CodeAge>1282776378</CodeAge>
     <AsemblAge>-1</AsemblAge>
     <GenNumMethods>11</GenNumMethods>
     <SetClockConfiguration>false</SetClockConfiguration>
@@ -4322,8 +4327,8 @@
     <GenComponentVersion>01.128</GenComponentVersion>
     <GenDriverVersion>01.08</GenDriverVersion>
     <GenEventModule>Events</GenEventModule>
-    <HeaderAge>1282441032</HeaderAge>
-    <CodeAge>1282441032</CodeAge>
+    <HeaderAge>1282776378</HeaderAge>
+    <CodeAge>1282776378</CodeAge>
     <AsemblAge>-1</AsemblAge>
     <GenNumMethods>27</GenNumMethods>
     <Init>true</Init>
@@ -4461,7 +4466,7 @@
       <MethodType>internal_method</MethodType>
       <ModuleType>Code</ModuleType>
       <LineBeg>452</LineBeg>
-      <LineEnd>474</LineEnd>
+      <LineEnd>476</LineEnd>
     </MethodPos>
     <GenExtraFilesCount>1</GenExtraFilesCount>
     <ExtraFile0>Documentation\doxygen\GPIO1_component.txt</ExtraFile0>
@@ -5476,6 +5481,156 @@
       <ExtraFile0>Documentation\doxygen\BitIoLdd5_component.txt</ExtraFile0>
     </InhrCompID_24>
   </ComponentID_23>
+  <ComponentID_25>
+    <Generated>true</Generated>
+    <GenCompName>end_Switch</GenCompName>
+    <GenComponentVersion>01.128</GenComponentVersion>
+    <GenDriverVersion>01.08</GenDriverVersion>
+    <GenEventModule>Events</GenEventModule>
+    <HeaderAge>1282776378</HeaderAge>
+    <CodeAge>1282776378</CodeAge>
+    <AsemblAge>-1</AsemblAge>
+    <GenNumMethods>27</GenNumMethods>
+    <Init>true</Init>
+    <Deinit>false</Deinit>
+    <SetEventMask>false</SetEventMask>
+    <GetEventMask>false</GetEventMask>
+    <SetPortEventCondition>false</SetPortEventCondition>
+    <GetPortEventStatus>false</GetPortEventStatus>
+    <SetFieldEventCondition>false</SetFieldEventCondition>
+    <GetFieldEventStatus>false</GetFieldEventStatus>
+    <SetPortValue>false</SetPortValue>
+    <GetPortValue>false</GetPortValue>
+    <GetPortOutputValue>false</GetPortOutputValue>
+    <ClearPortBits>false</ClearPortBits>
+    <SetPortBits>false</SetPortBits>
+    <TogglePortBits>false</TogglePortBits>
+    <SetPortInputDirection>false</SetPortInputDirection>
+    <SetPortOutputDirection>false</SetPortOutputDirection>
+    <SetFieldValue>true</SetFieldValue>
+    <GetFieldValue>true</GetFieldValue>
+    <GetFieldOutputValue>false</GetFieldOutputValue>
+    <ClearFieldBits>true</ClearFieldBits>
+    <SetFieldBits>true</SetFieldBits>
+    <ToggleFieldBits>true</ToggleFieldBits>
+    <SetFieldInputDirection>false</SetFieldInputDirection>
+    <SetFieldOutputDirection>false</SetFieldOutputDirection>
+    <SetOperationMode>false</SetOperationMode>
+    <GetDriverState>false</GetDriverState>
+    <ConnectPin>false</ConnectPin>
+    <GenNumEvents>2</GenNumEvents>
+    <OnPortEvent_Selected>3</OnPortEvent_Selected>
+    <OnPortEvent_Name>end_Switch_OnPortEvent</OnPortEvent_Name>
+    <OnPortEvent_Priority>interrupts disabled</OnPortEvent_Priority>
+    <OnFieldEvent_Selected>1</OnFieldEvent_Selected>
+    <OnFieldEvent_Name>end_Switch_OnFieldEvent</OnFieldEvent_Name>
+    <OnFieldEvent_Priority>interrupts disabled</OnFieldEvent_Priority>
+    <ISR_PortInterruptISRHandle />
+    <GenSmartUserChangesDetected_Header>false</GenSmartUserChangesDetected_Header>
+    <GenSmartUserChangesDetected_Code>false</GenSmartUserChangesDetected_Code>
+    <GenSmartUserChangesDetected_Asembl>false</GenSmartUserChangesDetected_Asembl>
+    <GenMethodPos>14</GenMethodPos>
+    <MethodPos>
+      <MethodPos0>Init</MethodPos0>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>155</LineBeg>
+      <LineEnd>175</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos1>SetFieldValue</MethodPos1>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>176</LineBeg>
+      <LineEnd>201</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos2>GetFieldValue</MethodPos2>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>202</LineBeg>
+      <LineEnd>227</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos3>ClearFieldBits</MethodPos3>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>228</LineBeg>
+      <LineEnd>256</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos4>SetFieldBits</MethodPos4>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>257</LineBeg>
+      <LineEnd>285</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos5>ToggleFieldBits</MethodPos5>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>286</LineBeg>
+      <LineEnd>314</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos6>Interrupt</MethodPos6>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>315</LineBeg>
+      <LineEnd>327</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos7>Init</MethodPos7>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>108</LineBeg>
+      <LineEnd>169</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos8>SetFieldValue</MethodPos8>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>170</LineBeg>
+      <LineEnd>215</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos9>GetFieldValue</MethodPos9>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>216</LineBeg>
+      <LineEnd>259</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos10>ClearFieldBits</MethodPos10>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>260</LineBeg>
+      <LineEnd>302</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos11>SetFieldBits</MethodPos11>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>303</LineBeg>
+      <LineEnd>345</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos12>ToggleFieldBits</MethodPos12>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>346</LineBeg>
+      <LineEnd>388</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos13>Interrupt</MethodPos13>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>389</LineBeg>
+      <LineEnd>413</LineEnd>
+    </MethodPos>
+    <GenExtraFilesCount>1</GenExtraFilesCount>
+    <ExtraFile0>Documentation\doxygen\end_Switch_component.txt</ExtraFile0>
+  </ComponentID_25>
   <UsedSrcFiles>
     <SrcFile0>Drivers\freeRTOS\Source\include\queue.h=1282364169</SrcFile0>
     <SrcFile1>Drivers\Common\UtilityNumFloatToStr.Inc=1282364176</SrcFile1>
