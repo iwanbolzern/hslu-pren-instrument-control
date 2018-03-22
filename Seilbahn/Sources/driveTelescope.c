@@ -1,20 +1,11 @@
-/*
- * driveTelescope.c
- *
- *  Created on: 11.03.2018
- *      Author: El_Matador
- */
-
 #include "driveTelescope.h"
 #include "PPG1.h"
 #include "Bit1.h"
 #include "PE_Error.h"
+#include "endSwitch_tele.h"
 
-#include "Cpu.h"
-#include "Events.h"
-#include "FRTOS1.h"
-#include "MCUC1.h"
-#include "UTIL1.h"
+#include "custom_queue.h"
+#include "communication.h"
 
 #define PI 3.141592654
 #define d 21 //[mm]
@@ -22,80 +13,56 @@
 #define ONE_REVOLUTION 200
 #define TICKS_PER_MM ONE_REVOLUTION/Umfang // [mm]
 
-typedef enum teleDirection {
-	teleDirection_RETRACT = 0,
-	teleDirection_EXTEND = 1
-} teleDirection_t;
+// external vars
+QueueHandle_t driveTelescopeQueue;
 
-enum speedmode {
-	MODE_HYPERSLOW = 1,
-	MODE_ULTRASLOW,
-	MODE_VERYSLOW,
-	MODE_SLOW,
-	MODE_MEDIUM,
-	MODE_FAST,
-	MODE_VERYFAST,
-	MODE_ULTRAFAST,
-	MODE_HYPERFAST
-};
-
-int nTicks;
-int counterTelescope;
-LDD_TDeviceData *MyPPG1Ptr;
-char directionTelescope;
-extern bool zEndSwitch_pressed;
-
+// internal vars
+static LDD_TDeviceData* myPPG1Ptr;
+static LDD_TDeviceData* zEndSwitchPtr;
+static long remainingTicks;
+static long counterTelescope;
+static char directionTelescope;
+static bool zEndSwitch_pressed;
 
 void setDirectionTelescope(char direction) {
 	Bit1_PutVal(direction);	//PTC13
 }
 
 int getTicksToGo(int distance) {
-	//calculate Ticks to go
-	return distance * TICKS_PER_MM;
+	return distance * TICKS_PER_MM; //calculate Ticks to go
 }
 
 void tele_handleInitTele(void) {
 	setDirectionTelescope(teleDirection_RETRACT);
 
-	if (PPG1_Enable(MyPPG1Ptr) == ERR_OK) {			// Error handling
+	if (PPG1_Enable(myPPG1Ptr) == ERR_OK) {			// Error handling
 //		PPG1_SelectPeriod(MyPPG1Ptr, MODE_ULTRASLOW);
 	}
 
 	while (!zEndSwitch_pressed) {					// einfahren bis Endschalter erreicht
 		vTaskDelay(pdMS_TO_TICKS(5));
 	}
-	PPG1_Disable(MyPPG1Ptr);
+	PPG1_Disable(myPPG1Ptr);
+	counterTelescope = 0;			// counter zurückstellen
 }
 
 void tele_handleDriveTele(int distance, char direction) {
-	nTicks = getTicksToGo(distance);
-	counterTelescope = 0;			// counter zurückstellen
+	remainingTicks = getTicksToGo(distance);
 	setDirectionTelescope(directionTelescope);
 
-
-	if (PPG1_Enable(MyPPG1Ptr)== ERR_OK) {			// Error handling
+	if (PPG1_Enable(myPPG1Ptr) == ERR_OK) {			// Error handling
 //		PPG1_SelectPeriod(MyPPG1Ptr, MODE_MEDIUM);
-
 	}
-	else {
-		// error handling
-	}
-	while (nTicks > 0) {
 
-					vTaskDelay(pdMS_TO_TICKS(5));			//200Hz
-				}
-	// STOP Pulsgenerator
-				PPG1_Disable(MyPPG1Ptr);
+	while (remainingTicks > 0) {
+		vTaskDelay(pdMS_TO_TICKS(5));			//200Hz
+	}
+	PPG1_Disable(myPPG1Ptr); // STOP Pulsgenerator
 }
 
-LDD_TDeviceData* zEndSwitchPtr;
 void driveTelescope(void * pvParameter) {
 	zEndSwitchPtr = endSwitch_tele_Init(NULL);
-	MyPPG1Ptr = NULL;
-	MyPPG1Ptr = PPG1_Init(NULL);//  unter properties "enable in init. code" ankreuzen falls etwas nicht funktioniert
-
-	// Fehlerhandling falls initialisierung fehlschlägt
+	myPPG1Ptr = PPG1_Init(NULL);//  unter properties "enable in init. code" ankreuzen falls etwas nicht funktioniert
 
 	for (;;) {
 		while (queue_isEmpty(driveTelescopeQueue)) {
@@ -117,4 +84,24 @@ void driveTelescope(void * pvParameter) {
 			}
 		}
 	}
+}
+
+void tele_tickReceived(void) {
+	remainingTicks--;
+	if (directionTelescope == teleDirection_RETRACT) {
+		counterTelescope--;
+		if ((counterTelescope % 3) == 0)
+			queue_writeFromISR(zPosQueue, 0xff);
+	} else {
+		counterTelescope++;
+		if ((counterTelescope % 3) == 0)
+			queue_writeFromISR(zPosQueue, 0x01);
+	}
+
+	 if(remainingTicks <= 0)
+		queue_writeFromISR(endQueue, endCmd_END_MOVE_TELE);
+}
+
+void tele_endSwitchReceived(void) {
+	zEndSwitch_pressed = TRUE;
 }

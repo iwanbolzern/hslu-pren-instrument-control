@@ -1,21 +1,11 @@
-/*
- * application.c
- *
- *  Created on: 11.03.2018
- *      Author: El_Matador
- */
-
 #include "application.h"
 
-typedef enum imCmd {
-	imCmd_INIT_TELE = 1,
-	imCmd_DRIVE_DISTANCE = 2,
-	imCmd_DRIVE_JOG = 3,
-	imCmd_DRIVE_TO_END = 4,
-	imCmd_MOVE_TELE = 5,
-	imCmd_ENABLE_MAGNET = 6,
-	imCmd_DISABLE_MAGNET = 7
-} imCmd_t;
+#include <stdlib.h>
+
+#include "custom_queue.h"
+#include "magnet.h"
+#include "drive.h"
+#include "driveTelescope.h"
 
 char* getCmdStream(char size);
 
@@ -27,6 +17,9 @@ void handleDriveToEnd(char*);
 void handleMoveTele(char*);
 void handleEnableMagnet(char*);
 void handleDisableMagnet(char*);
+
+// external vars
+QueueHandle_t commandQueue;
 
 void application(void* pvParameter) {
 	for (;;) {

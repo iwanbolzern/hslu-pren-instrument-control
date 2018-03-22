@@ -8,23 +8,34 @@
 #ifndef SOURCES_DRIVETELESCOPE_H_
 #define SOURCES_DRIVETELESCOPE_H_
 
-
-#include "custom_queue.h"
-#include "communication.h"
-#include "PE_Types.h"
+#include "FRTOS1.h"
 
 void driveTelescope(void*);
+void tele_tickReceived(void);
+void tele_endSwitchReceived(void);
 
 typedef enum telescopeCmd {
 	telescopeCmd_INIT_TELE = 0,
 	telescopeCmd_DRIVE_TELE = 1
 } telesopceCmd_t;
 
+typedef enum teleDirection {
+	teleDirection_RETRACT = 0,
+	teleDirection_EXTEND = 1
+} teleDirection_t;
+
+enum speedmode {
+	MODE_HYPERSLOW = 1,
+	MODE_ULTRASLOW,
+	MODE_VERYSLOW,
+	MODE_SLOW,
+	MODE_MEDIUM,
+	MODE_FAST,
+	MODE_VERYFAST,
+	MODE_ULTRAFAST,
+	MODE_HYPERFAST
+};
+
 extern QueueHandle_t driveTelescopeQueue;
-extern QueueHandle_t zPosQueue;
-extern QueueHandle_t endQueue;
-extern int counterTelescope;
-extern int nTicks;
-extern int counterFlag;
 
 #endif /* SOURCES_DRIVETELESCOPE_H_ */

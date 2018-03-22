@@ -1,73 +1,28 @@
-#include "application.h"
-#include "drive.h"
-#include "driveTelescope.h"
-#include "Communication.h"
-#include "custom_queue.h"
-#include "magnet.h"
-
-#include "Cpu.h"
-#include "Events.h"
 #include "FRTOS1.h"
-#include "MCUC1.h"
-#include "UTIL1.h"
-#include "AS1.h"
-#include "RxBuf.h"
-#include "CS1.h"
-#include "PPG1.h"
-//#include "PPG1.h"			nur noch im driveTelescope.c vorhanden
-#include "PWM1.h"
-#include "PwmLdd1.h"
-#include "GPIO1.h"
-#include "IN1.h"
-#include "BitIoLdd1.h"
-#include "IN2.h"
-#include "BitIoLdd2.h"
-#include "TU1.h"
-#include "Bit1.h"
-#include "BitIoLdd3.h"
-#include "Magnet1.h"
-#include "BitIoLdd4.h"
-#include "Magnet2.h"
-#include "BitIoLdd5.h"
-#include "end_Switch.h"
-#include "endSwitch_tele.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
 #include "IO_Map.h"
 /* User includes (#include below this line is not maintained by Processor Expert) */
+#include "application.h"
+#include "drive.h"
+#include "driveTelescope.h"
+#include "communication.h"
+#include "custom_queue.h"
+#include "magnet.h"
 
 #define MAXQUEUESIZE 1000
-
-
-
-QueueHandle_t driveQueue;
-QueueHandle_t driveTelescopeQueue;
-QueueHandle_t commandQueue;
-QueueHandle_t xPosQueue;
-QueueHandle_t zPosQueue;
-
-QueueHandle_t magnetCmdQueue;
-QueueHandle_t endQueue;
-
-
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
 /*lint -restore Enable MISRA rule (6.3) checking. */
 {
-	/* Write your local variable definition here */
-
 	/*** Processor Expert internal initialization. DON'T REMOVE THIS CODE!!! ***/
 	PE_low_level_init();
 	/*** End of Processor Expert internal initialization.                    ***/
 
 	/* Write your code here */
-	/* For example: for(;;) { } */
-
-
-
 	driveQueue =  queue_create(MAXQUEUESIZE);
 	driveTelescopeQueue =  queue_create(MAXQUEUESIZE);
 	xPosQueue =  queue_create(MAXQUEUESIZE);
@@ -75,8 +30,6 @@ int main(void)
 	commandQueue = queue_create(MAXQUEUESIZE);
 	magnetCmdQueue = queue_create(MAXQUEUESIZE);
 	endQueue = queue_create(MAXQUEUESIZE);
-
-
 
 	if (FRTOS1_xTaskCreate(
 			application, /* pointer to the task */

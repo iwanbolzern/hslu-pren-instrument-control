@@ -1,19 +1,19 @@
-/*
- * communication.c
- *
- *  Created on: 11.03.2018
- *      Author: El_Matador
- */
-
+#include "communication.h"
 #include "AS1.h"
 #include "RxBuf.h"
-#include "communication.h"
 #include "custom_queue.h"
 
 
 void sendPositionUpdate(char, char);
 
-UART_Desc deviceData;
+// external vars
+QueueHandle_t commandQueue;
+QueueHandle_t xPosQueue;
+QueueHandle_t zPosQueue;
+QueueHandle_t endQueue;
+
+// internal vars
+static UART_Desc deviceData;
 
 static void SendChar(unsigned char ch, UART_Desc *desc) {
 	desc->isSent = FALSE; /* this will be set to 1 once the block has been sent */

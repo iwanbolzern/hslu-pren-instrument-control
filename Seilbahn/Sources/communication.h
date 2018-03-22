@@ -8,14 +8,10 @@
 #ifndef SOURCES_COMMUNICATION_H_
 #define SOURCES_COMMUNICATION_H_
 
-
+#include "FRTOS1.h"
 #include "PE_Types.h"
-#include "PE_LDD.h"
-
-
 
 void communication(void*);
-
 
 typedef struct {
   LDD_TDeviceData *handle; /* LDD device handle */
@@ -35,7 +31,5 @@ extern QueueHandle_t commandQueue;
 extern QueueHandle_t xPosQueue;
 extern QueueHandle_t zPosQueue;
 extern QueueHandle_t endQueue;
-
-
 
 #endif /* SOURCES_COMMUNICATION_H_ */

@@ -1,19 +1,15 @@
-/*
- * drive.c
- *
- *  Created on: 11.03.2018
- *      Author: El_Matador
- */
-
 #include "drive.h"
 #include "PWM1.h"
 #include "IN1.h"
 #include "IN2.h"
 #include "stdlib.h"
-#include "FreeRTOS.h"
+
 #include "GPIO1.h"
 #include "end_Switch.h"
 #include "timers.h"
+
+#include "custom_queue.h"
+#include "communication.h"
 
 int calculateTicksToDrive(int);
 int calculateSpeed(int);
@@ -25,24 +21,29 @@ void driveJog();
 void prepareForBoundedDrive(char*);
 void prepareForUnboundedDrive(char*);
 
-LDD_TDeviceData* MyGPIOPtr;
-LDD_TDeviceData* MyEndSwitchPtr;
-direction_t direction;
+// external vars
+QueueHandle_t driveQueue;
 
-extern int xEndSwitch_pressed;
-int driveCounter = 0;
-unsigned int distance;
-unsigned int speedFromIm;
-unsigned int x = 30;
-unsigned int v = 100;
-unsigned int internTicks;
-unsigned int internSpeed;
+// internal vars
+static LDD_TDeviceData* myGPIOPtr;
+static LDD_TDeviceData* myEndSwitchPtr;
+
+static int driveCounter;
+static direction_t direction;
+static int xEndSwitch_pressed;
+static int driveCounter = 0;
+static unsigned int distance;
+static unsigned int speedFromIm;
+static unsigned int x = 30;
+static unsigned int v = 100;
+static unsigned int internTicks;
+static unsigned int internSpeed;
 const int MIN_SPEED = 0xffff;
 const int STOP = 0xffff;
 
 void drive(void* pvParameter){
-	MyGPIOPtr = GPIO1_Init(NULL);
-	MyEndSwitchPtr = end_Switch_Init(NULL);
+	myGPIOPtr = GPIO1_Init(NULL);
+	myEndSwitchPtr = end_Switch_Init(NULL);
 	PWM1_SetRatio16(STOP);
 	PWM1_Enable();
 	for(;;){
@@ -125,7 +126,7 @@ void driveDistance(unsigned int x, unsigned int v) {
 }
 
 void driveToEnd(){
-int speedWasSet = 0;
+	int speedWasSet = 0;
 	while(!xEndSwitch_pressed){
 		if (!speedWasSet) {
 			PWM1_SetRatio16(internSpeed);
@@ -173,4 +174,23 @@ void prepareForUnboundedDrive(char* appCmdStream){
 	direction = appCmdStream[1];
 	setDirection(direction);
 	driveCounter = 0;
+}
+
+void drive_tickReceived(void) {
+	if(direction == 0) {
+		driveCounter += 1;
+		if(driveCounter % 8 == 0) {
+			queue_writeFromISR(xPosQueue, 1);
+		}
+	}
+	else {
+		driveCounter += 1;
+		if(driveCounter % 8 == 0) {
+			queue_writeFromISR(xPosQueue, -1);
+		}
+	}
+}
+
+void drive_endSwitchReceived(void) {
+	xEndSwitch_pressed = TRUE;
 }

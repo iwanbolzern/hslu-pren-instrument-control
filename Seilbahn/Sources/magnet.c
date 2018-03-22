@@ -1,8 +1,14 @@
 #include "magnet.h"
+#include "Magnet1.h"
+#include "Magnet2.h"
+#include "custom_queue.h"
 
 void disableMagnet(void);
 void enforceMagnet(void);
 void releaseMagnet(void);
+
+// external vars
+QueueHandle_t magnetCmdQueue;
 
 void magnetHandler(void* pvParameter) {
 	for(;;) {

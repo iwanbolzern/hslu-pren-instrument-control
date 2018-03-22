@@ -56,7 +56,6 @@
 #include "BitIoLdd5.h"
 #include "end_Switch.h"
 #include "endSwitch_tele.h"
-#include "custom_queue.h"
 #include "queue.h"
 
 
@@ -64,9 +63,6 @@
 extern "C" {
 #endif 
 
-extern LDD_TDeviceData *MyPPG1Ptr;
-extern QueueHandle_t zPosQueue;
-extern QueueHandle_t endMoveTeleQueue;
 /*
 ** ===================================================================
 **     Event       :  Cpu_OnNMIINT (module Events)

@@ -29,7 +29,6 @@
 #include "Cpu.h"
 #include "Events.h"
 #include "PE_Types.h"
-#include "drive.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -37,20 +36,10 @@ extern "C" {
 
 
 /* User includes (#include below this line is not maintained by Processor Expert) */
+#include "drive.h"
+#include "driveTelescope.h"
 #include "communication.h"			// TODO
 
-int counterTelescope;
-int nTicks;
-direction_t direction;
-char directionTelescope;
-LDD_TDeviceData *MyPPG1Ptr;
-int counterFlag;
-bool xEndSwitch_pressed = FALSE;
-bool zEndSwitch_pressed = FALSE;
-int driveCounter;
-QueueHandle_t zPosQueue;
-QueueHandle_t xPosQueue;
-QueueHandle_t endQueue;
 /*
 ** ===================================================================
 **     Event       :  Cpu_OnNMIINT (module Events)
@@ -214,25 +203,7 @@ void Cpu_OnPendableService(void)
 /* ===================================================================*/
 void GPIO1_OnPortEvent(LDD_TUserData *UserDataPtr)
 {
-
-	if(direction == 0){
-		driveCounter += 1;
-		if(driveCounter%8 == 0){
-			queue_writeFromISR(xPosQueue,1);
-
-		}
-
-	}
-
-
-	else{
-		driveCounter += 1;
-		if(driveCounter%8 == 0){
-			queue_writeFromISR(xPosQueue,-1);
-		}
-
-	}
-
+	drive_tickReceived();
 }
 
 /*
@@ -255,20 +226,7 @@ void GPIO1_OnPortEvent(LDD_TUserData *UserDataPtr)
 /* ===================================================================*/
 void PPG1_OnEnd(LDD_TUserData *UserDataPtr)
 {
-	counterTelescope++;
-	nTicks--;
-	if ((counterTelescope % 3) == 0){
-		if (directionTelescope == 0) {
-			queue_writeFromISR(zPosQueue, 0xff);	// 0xff --> -1 (einfahren)TODO: Ask IWAN
-		} else {
-			queue_writeFromISR(zPosQueue, 0x01);	// 0x01 --> 1 (ausfahren)
-		}
-	}
-
-	if(nTicks == 0){
-		queue_writeFromISR(endQueue,endCmd_END_MOVE_TELE);
-	}
-
+	tele_tickReceived();
 }
 
 /*
@@ -342,7 +300,7 @@ void AS1_OnBlockSent(LDD_TUserData *UserDataPtr)
 /* ===================================================================*/
 void end_Switch_OnPortEvent(LDD_TUserData *UserDataPtr)
 {
-	xEndSwitch_pressed = TRUE;
+	drive_endSwitchReceived();
 }
 
 /*
@@ -365,7 +323,7 @@ void end_Switch_OnPortEvent(LDD_TUserData *UserDataPtr)
 /* ===================================================================*/
 void endSwitch_tele_OnPortEvent(LDD_TUserData *UserDataPtr)
 {
-	zEndSwitch_pressed = TRUE;
+	tele_endSwitchReceived();
 }
 
 /* END Events */
