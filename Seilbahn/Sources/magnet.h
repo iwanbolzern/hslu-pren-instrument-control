@@ -6,10 +6,10 @@
 #include "Magnet2.h"
 #include "custom_queue.h"
 
-typedef enum magnet_cmd {
-	DISABLE = 0,
-	ENFORCE = 1,
-	RELEASE = 2
+typedef enum magnetCmd {
+	magnetCmd_DISABLE = 0,
+	magnetCmd_ENFORCE = 1,
+	magnetCmd_RELEASE = 2
 } magnetCmd_t;
 
 extern QueueHandle_t magnetCmdQueue;

@@ -15,6 +15,11 @@
 
 void driveTelescope(void*);
 
+typedef enum telescopeCmd {
+	telescopeCmd_INIT_TELE = 0,
+	telescopeCmd_DRIVE_TELE = 1
+} telesopceCmd_t;
+
 extern QueueHandle_t driveTelescopeQueue;
 extern QueueHandle_t zPosQueue;
 extern QueueHandle_t endMoveTeleQueue;

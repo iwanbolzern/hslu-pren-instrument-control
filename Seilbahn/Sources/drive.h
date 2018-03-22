@@ -15,10 +15,18 @@
 
 void drive(void*);
 
-typedef enum direction direction_t;
-enum direction {
-	FORWARD = 0, REVERSE = 1, FAST_STOP = 2
-};
+typedef enum driveCmd {
+	driveCmd_DRIVE_DISTANCE = 2,
+	driveCmd_DRIVE_JOG = 3,
+	driveCmd_DRIVE_TO_END = 4,
+} driveCmd_t;
+
+typedef enum direction {
+	FORWARD = 0,
+	REVERSE = 1,
+	FAST_STOP = 2
+} direction_t;
+
 
 extern QueueHandle_t driveQueue;
 extern QueueHandle_t xPosQueue;

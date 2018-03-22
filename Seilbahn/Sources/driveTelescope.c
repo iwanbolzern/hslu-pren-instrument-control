@@ -95,10 +95,10 @@ void driveTelescope(void * pvParameter) {
 		case SET_UP:
 
 			switch (queue_read(driveTelescopeQueue)) {
-			case 0x01:
+			case telescopeCmd_INIT_TELE:
 				state = INIT_TELE;
 				break;
-			case 0x05:
+			case telescopeCmd_DRIVE_TELE:
 
 
 
@@ -109,17 +109,6 @@ void driveTelescope(void * pvParameter) {
 
 				directionTelescope = queue_read(driveTelescopeQueue);
 				state = MOVE_TELE;
-				break;
-
-			case 0x06:
-				magnet = queue_read(driveTelescopeQueue);
-				// enable Magnet				muss noch komponente einrichten 2 x Bit IO TODO
-				state = IDLE;
-				break;
-
-			case 0x07:
-				// diseable Magnet
-				state = IDLE;
 				break;
 			}
 

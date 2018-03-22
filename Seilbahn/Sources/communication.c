@@ -36,15 +36,16 @@ static void Init(void) {
 	} /* initial kick off for receiving data */
 }
 
-void handleEndQueue() {
+bool handleEndQueue() {
 	if(!queue_isEmpty(endQueue)) {
 		char endCmd = queue_read(endQueue);
 		SendChar(0x01, &deviceData);
 		SendChar(endCmd, &deviceData);
 	}
+	return !queue_isEmpty(endQueue);
 }
 
-void handlePostionQueue(void) {
+bool handlePostionQueue(void) {
 	if(!queue_isEmpty(xPosQueue) || !queue_isEmpty(zPosQueue)) {
 		char x, z = 0;
 		if(!queue_isEmpty(xPosQueue))
@@ -53,6 +54,7 @@ void handlePostionQueue(void) {
 			z = queue_isEmpty(zPosQueue);
 		sendPositionUpdate(x, z);
 	}
+	return !queue_isEmpty(xPosQueue) || !queue_isEmpty(zPosQueue);
 }
 
 void sendPositionUpdate(char x, char z) {
@@ -71,14 +73,16 @@ void communication(void* pvParameter) {
 	for (;;) {
 		// handle input stream
 		while (RxBuf_NofElements() != 0) {
-			char msg;
+			char msg = NULL;
 			(void) RxBuf_Get(&msg);
 			queue_write(commandQueue, msg);
 		}
 
-		handlePostionQueue();
+		bool moreWork = handlePostionQueue();
+		moreWork |= handleEndQueue();
 
-		handleEndQueue();
+		if(!moreWork)
+			vTaskDelay(pdMS_TO_TICKS(10));
 	}
 }
 

@@ -40,14 +40,6 @@ unsigned int internSpeed;
 const int MIN_SPEED = 0xffff;
 const int STOP = 0xffff;
 
-
-
-typedef enum appCmd {
-	DRIVE_DISTANCE = 2,
-	DRIVE_JOG = 3,
-	DRIVE_TO_END = 4,
-} appCmd_t;
-
 void drive(void* pvParameter){
 	MyGPIOPtr = GPIO1_Init(NULL);
 	MyEndSwitchPtr = end_Switch_Init(NULL);
@@ -59,21 +51,21 @@ void drive(void* pvParameter){
 			char* appCmdStream = getAppCmdStream(appCmd);				//Anhand dem zweiten Byte in der commandQueue kann die Anzahl folgender Bytes bestimmt werden
 
 			switch(appCmd){
-			case DRIVE_DISTANCE:
+			case driveCmd_DRIVE_DISTANCE:
 				prepareForBoundedDrive(appCmdStream);
 				driveDistance(x,v);
-				queue_write(endQueue, END_DRIVE_DISTANCE);
+				queue_write(endQueue, endCmd_END_DRIVE_DISTANCE);
 				vTaskDelay(pdMS_TO_TICKS(20));
 				break;
-			case DRIVE_JOG:
+			case driveCmd_DRIVE_JOG:
 				prepareForUnboundedDrive(appCmdStream);
 				driveJog();
 				vTaskDelay(pdMS_TO_TICKS(20));
 				break;
-			case DRIVE_TO_END:
+			case driveCmd_DRIVE_TO_END:
 				prepareForBoundedDrive(appCmdStream);
 				driveToEnd();
-				queue_write(endQueue, END_RUN);
+				queue_write(endQueue, endCmd_END_RUN);
 				vTaskDelay(pdMS_TO_TICKS(20));
 				break;
 			}

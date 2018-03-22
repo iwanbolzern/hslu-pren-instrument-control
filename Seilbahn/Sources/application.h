@@ -15,6 +15,8 @@
 
 #include "custom_queue.h"
 #include "magnet.h"
+#include "drive.h"
+#include "driveTelescope.h"
 
 void application(void*);
 

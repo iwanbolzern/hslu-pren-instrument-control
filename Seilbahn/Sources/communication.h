@@ -25,10 +25,10 @@ typedef struct {
 } UART_Desc;
 
 typedef enum endCmd_ {
-	END_INIT_TELE = 8,
-	END_DRIVE_DISTANCE = 9,
-	END_MOVE_TELE = 10,
-	END_RUN = 12
+	endCmd_END_INIT_TELE = 8,
+	endCmd_END_DRIVE_DISTANCE = 9,
+	endCmd_END_MOVE_TELE = 10,
+	endCmd_END_RUN = 12
 } endCmd_t;
 
 extern QueueHandle_t commandQueue;

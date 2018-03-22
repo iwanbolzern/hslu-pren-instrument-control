@@ -9,13 +9,13 @@ void magnetHandler(void* pvParameter) {
 		if(!queue_isEmpty(magnetCmdQueue)) {
 			char cmd = queue_read(magnetCmdQueue);
 			switch(cmd) {
-				case DISABLE:
+				case magnetCmd_DISABLE:
 					disableMagnet();
 					break;
-				case ENFORCE:
+				case magnetCmd_ENFORCE:
 					enforceMagnet();
 					break;
-				case RELEASE:
+				case magnetCmd_RELEASE:
 					releaseMagnet();
 					break;
 				default:
