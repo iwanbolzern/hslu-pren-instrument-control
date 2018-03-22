@@ -29,7 +29,7 @@ LDD_TDeviceData* MyGPIOPtr;
 LDD_TDeviceData* MyEndSwitchPtr;
 direction_t direction;
 
-extern int endSwitch_pressed;
+extern int xEndSwitch_pressed;
 int driveCounter = 0;
 unsigned int distance;
 unsigned int speedFromIm;
@@ -126,7 +126,7 @@ void driveDistance(unsigned int x, unsigned int v) {
 
 void driveToEnd(){
 int speedWasSet = 0;
-	while(!endSwitch_pressed){
+	while(!xEndSwitch_pressed){
 		if (!speedWasSet) {
 			PWM1_SetRatio16(internSpeed);
 			speedWasSet = 1;

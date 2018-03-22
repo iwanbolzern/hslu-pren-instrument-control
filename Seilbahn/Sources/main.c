@@ -30,6 +30,7 @@
 #include "Magnet2.h"
 #include "BitIoLdd5.h"
 #include "end_Switch.h"
+#include "endSwitch_tele.h"
 /* Including shared modules, which are used for whole project */
 #include "PE_Types.h"
 #include "PE_Error.h"

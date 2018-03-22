@@ -75,6 +75,7 @@
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\UTIL1.c</PathName>
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\Vectors.c</PathName>
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\croutine.c</PathName>
+      <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\endSwitch_tele.c</PathName>
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\end_Switch.c</PathName>
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\event_groups.c</PathName>
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\heap_1.c</PathName>
@@ -137,6 +138,7 @@
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\UTIL1config.h</PathName>
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\croutine.h</PathName>
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\deprecated_definitions.h</PathName>
+      <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\endSwitch_tele.h</PathName>
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\end_Switch.h</PathName>
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\event_groups.h</PathName>
       <PathName>C:\Projekte\PREN\instrument-control\Seilbahn\Generated_Code\freertos_tasks_c_additions.h</PathName>

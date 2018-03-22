@@ -19,7 +19,7 @@
         <Line>PE_Const</Line>
         <Line>IO_Map</Line>
       </GenSharedModules>
-      <ShrdHeaderAge0>1282817187</ShrdHeaderAge0>
+      <ShrdHeaderAge0>1282822341</ShrdHeaderAge0>
       <ShrdCodeAge0>-1</ShrdCodeAge0>
       <ShrdAsemblAge0>-1</ShrdAsemblAge0>
       <ShrdHeaderAge1>1282817187</ShrdHeaderAge1>
@@ -31,7 +31,7 @@
       <ShrdHeaderAge3>1282817187</ShrdHeaderAge3>
       <ShrdCodeAge3>-1</ShrdCodeAge3>
       <ShrdAsemblAge3>-1</ShrdAsemblAge3>
-      <GenExtraFiles lines_count="65">
+      <GenExtraFiles lines_count="66">
         <Line>Generated_Code\MCUC1config.h</Line>
         <Line>Generated_Code\UTIL1config.h</Line>
         <Line>Generated_Code\FRTOS1config.h</Line>
@@ -88,6 +88,7 @@
         <Line>Documentation\doxygen\BitIoLdd4_component.txt</Line>
         <Line>Documentation\doxygen\BitIoLdd5_component.txt</Line>
         <Line>Documentation\doxygen\end_Switch_component.txt</Line>
+        <Line>Documentation\doxygen\endSwitch_tele_component.txt</Line>
         <Line>Documentation\doxygen\Seilbahn_project.txt</Line>
         <Line>Documentation\doxygen\RoutingReport_component.txt</Line>
         <Line>Documentation\doxygen\pex.doxyfile</Line>
@@ -98,8 +99,8 @@
         <Line>Project_Settings\Startup_Code\startup.c</Line>
         <Line>Generated_Code\Vectors.c</Line>
       </GenExtraFiles>
-      <GenExtraFileSrcDir63>lib\Kinetis\startup\</GenExtraFileSrcDir63>
-      <GenExtraFileSrcDir59>Repositories\lib\doxygen\</GenExtraFileSrcDir59>
+      <GenExtraFileSrcDir64>lib\Kinetis\startup\</GenExtraFileSrcDir64>
+      <GenExtraFileSrcDir60>Repositories\lib\doxygen\</GenExtraFileSrcDir60>
       <XtraAge0>1282817187</XtraAge0>
       <XtraAge1>1282817187</XtraAge1>
       <XtraAge2>1282817187</XtraAge2>
@@ -141,16 +142,17 @@
       <XtraAge42>1282817187</XtraAge42>
       <XtraAge44>1282817187</XtraAge44>
       <XtraAge45>1282817187</XtraAge45>
-      <XtraAge60>1282817187</XtraAge60>
-      <XtraAge61>1282817187</XtraAge61>
-      <XtraAge63>1282816751</XtraAge63>
-      <XtraAge64>1282817187</XtraAge64>
-      <GenExtraFileType64>4</GenExtraFileType64>
-      <GenExtraFileType63>5</GenExtraFileType63>
+      <XtraAge61>1282822341</XtraAge61>
+      <XtraAge62>1282822341</XtraAge62>
+      <XtraAge64>1282816751</XtraAge64>
+      <XtraAge65>1282822341</XtraAge65>
+      <GenExtraFileType65>4</GenExtraFileType65>
+      <GenExtraFileType64>5</GenExtraFileType64>
+      <GenExtraFileType63>4</GenExtraFileType63>
       <GenExtraFileType62>4</GenExtraFileType62>
       <GenExtraFileType61>4</GenExtraFileType61>
-      <GenExtraFileType60>4</GenExtraFileType60>
-      <GenExtraFileType59>5</GenExtraFileType59>
+      <GenExtraFileType60>5</GenExtraFileType60>
+      <GenExtraFileType59>4</GenExtraFileType59>
       <GenExtraFileType58>4</GenExtraFileType58>
       <GenExtraFileType57>4</GenExtraFileType57>
       <GenExtraFileType56>4</GenExtraFileType56>
@@ -466,7 +468,8 @@
       <GenEventModules lines_count="1">
         <Line>Events</Line>
       </GenEventModules>
-      <GenMethodsInEvents lines_count="12">
+      <GenMethodsInEvents lines_count="13">
+        <Line>endSwitch_tele_OnPortEvent</Line>
         <Line>end_Switch_OnPortEvent</Line>
         <Line>GPIO1_OnPortEvent</Line>
         <Line>PPG1_OnEnd</Line>
@@ -480,7 +483,7 @@
         <Line>Cpu_OnSupervisorCall</Line>
         <Line>Cpu_OnPendableService</Line>
       </GenMethodsInEvents>
-      <GenAllModules lines_count="28">
+      <GenAllModules lines_count="29">
         <Line>AS1</Line>
         <Line>Bit1</Line>
         <Line>BitIoLdd1</Line>
@@ -491,6 +494,7 @@
         <Line>Cpu</Line>
         <Line>CS1</Line>
         <Line>end_Switch</Line>
+        <Line>endSwitch_tele</Line>
         <Line>Events</Line>
         <Line>FRTOS1</Line>
         <Line>GPIO1</Line>
@@ -511,7 +515,7 @@
         <Line>UTIL1</Line>
       </GenAllModules>
       <GenExternModules lines_count="0" />
-      <GenBeanModules lines_count="22">
+      <GenBeanModules lines_count="23">
         <Line>FRTOS1</Line>
         <Line>MCUC1</Line>
         <Line>UTIL1</Line>
@@ -534,11 +538,12 @@
         <Line>Magnet2</Line>
         <Line>BitIoLdd5</Line>
         <Line>end_Switch</Line>
+        <Line>endSwitch_tele</Line>
       </GenBeanModules>
     </GenFiles>
     <SignalListFile>Documentation\Seilbahn_SIGNALS.txt</SignalListFile>
     <DestinationCompiler>GNUC</DestinationCompiler>
-    <ProjectModificationStamp>18</ProjectModificationStamp>
+    <ProjectModificationStamp>19</ProjectModificationStamp>
   </Options>
   <CpuID_1>
     <Generated>true</Generated>
@@ -547,7 +552,7 @@
     <GenDriverVersion>01.04</GenDriverVersion>
     <GenEventModule>Events</GenEventModule>
     <HeaderAge>1282817187</HeaderAge>
-    <CodeAge>1282817187</CodeAge>
+    <CodeAge>1282822341</CodeAge>
     <AsemblAge>-1</AsemblAge>
     <GenNumMethods>11</GenNumMethods>
     <SetClockConfiguration>false</SetClockConfiguration>
@@ -5631,6 +5636,156 @@
     <GenExtraFilesCount>1</GenExtraFilesCount>
     <ExtraFile0>Documentation\doxygen\end_Switch_component.txt</ExtraFile0>
   </ComponentID_25>
+  <ComponentID_26>
+    <Generated>true</Generated>
+    <GenCompName>endSwitch_tele</GenCompName>
+    <GenComponentVersion>01.128</GenComponentVersion>
+    <GenDriverVersion>01.08</GenDriverVersion>
+    <GenEventModule>Events</GenEventModule>
+    <HeaderAge>1282822341</HeaderAge>
+    <CodeAge>1282822341</CodeAge>
+    <AsemblAge>-1</AsemblAge>
+    <GenNumMethods>27</GenNumMethods>
+    <Init>true</Init>
+    <Deinit>false</Deinit>
+    <SetEventMask>false</SetEventMask>
+    <GetEventMask>false</GetEventMask>
+    <SetPortEventCondition>false</SetPortEventCondition>
+    <GetPortEventStatus>false</GetPortEventStatus>
+    <SetFieldEventCondition>false</SetFieldEventCondition>
+    <GetFieldEventStatus>false</GetFieldEventStatus>
+    <SetPortValue>false</SetPortValue>
+    <GetPortValue>false</GetPortValue>
+    <GetPortOutputValue>false</GetPortOutputValue>
+    <ClearPortBits>false</ClearPortBits>
+    <SetPortBits>false</SetPortBits>
+    <TogglePortBits>false</TogglePortBits>
+    <SetPortInputDirection>false</SetPortInputDirection>
+    <SetPortOutputDirection>false</SetPortOutputDirection>
+    <SetFieldValue>true</SetFieldValue>
+    <GetFieldValue>true</GetFieldValue>
+    <GetFieldOutputValue>false</GetFieldOutputValue>
+    <ClearFieldBits>true</ClearFieldBits>
+    <SetFieldBits>true</SetFieldBits>
+    <ToggleFieldBits>true</ToggleFieldBits>
+    <SetFieldInputDirection>false</SetFieldInputDirection>
+    <SetFieldOutputDirection>false</SetFieldOutputDirection>
+    <SetOperationMode>false</SetOperationMode>
+    <GetDriverState>false</GetDriverState>
+    <ConnectPin>false</ConnectPin>
+    <GenNumEvents>2</GenNumEvents>
+    <OnPortEvent_Selected>3</OnPortEvent_Selected>
+    <OnPortEvent_Name>endSwitch_tele_OnPortEvent</OnPortEvent_Name>
+    <OnPortEvent_Priority>interrupts disabled</OnPortEvent_Priority>
+    <OnFieldEvent_Selected>1</OnFieldEvent_Selected>
+    <OnFieldEvent_Name>endSwitch_tele_OnFieldEvent</OnFieldEvent_Name>
+    <OnFieldEvent_Priority>interrupts disabled</OnFieldEvent_Priority>
+    <ISR_PortInterruptISRHandle />
+    <GenSmartUserChangesDetected_Header>false</GenSmartUserChangesDetected_Header>
+    <GenSmartUserChangesDetected_Code>false</GenSmartUserChangesDetected_Code>
+    <GenSmartUserChangesDetected_Asembl>false</GenSmartUserChangesDetected_Asembl>
+    <GenMethodPos>14</GenMethodPos>
+    <MethodPos>
+      <MethodPos0>Init</MethodPos0>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>155</LineBeg>
+      <LineEnd>175</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos1>SetFieldValue</MethodPos1>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>176</LineBeg>
+      <LineEnd>201</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos2>GetFieldValue</MethodPos2>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>202</LineBeg>
+      <LineEnd>227</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos3>ClearFieldBits</MethodPos3>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>228</LineBeg>
+      <LineEnd>256</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos4>SetFieldBits</MethodPos4>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>257</LineBeg>
+      <LineEnd>285</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos5>ToggleFieldBits</MethodPos5>
+      <MethodType>method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>286</LineBeg>
+      <LineEnd>314</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos6>Interrupt</MethodPos6>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Header</ModuleType>
+      <LineBeg>315</LineBeg>
+      <LineEnd>327</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos7>Init</MethodPos7>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>108</LineBeg>
+      <LineEnd>173</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos8>SetFieldValue</MethodPos8>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>174</LineBeg>
+      <LineEnd>219</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos9>GetFieldValue</MethodPos9>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>220</LineBeg>
+      <LineEnd>260</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos10>ClearFieldBits</MethodPos10>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>261</LineBeg>
+      <LineEnd>303</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos11>SetFieldBits</MethodPos11>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>304</LineBeg>
+      <LineEnd>346</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos12>ToggleFieldBits</MethodPos12>
+      <MethodType>method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>347</LineBeg>
+      <LineEnd>389</LineEnd>
+    </MethodPos>
+    <MethodPos>
+      <MethodPos13>Interrupt</MethodPos13>
+      <MethodType>internal_method</MethodType>
+      <ModuleType>Code</ModuleType>
+      <LineBeg>390</LineBeg>
+      <LineEnd>414</LineEnd>
+    </MethodPos>
+    <GenExtraFilesCount>1</GenExtraFilesCount>
+    <ExtraFile0>Documentation\doxygen\endSwitch_tele_component.txt</ExtraFile0>
+  </ComponentID_26>
   <UsedSrcFiles>
     <SrcFile0>Drivers\freeRTOS\Source\include\queue.h=1282817115</SrcFile0>
     <SrcFile1>Drivers\Common\UtilityNumFloatToStr.Inc=1282817122</SrcFile1>

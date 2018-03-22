@@ -44,6 +44,7 @@ int nTicks;
 int counterTelescope;
 LDD_TDeviceData *MyPPG1Ptr;
 char directionTelescope;
+extern bool zEndSwitch_pressed;
 
 int runden(float x) {
 	if (x > 0)
@@ -60,6 +61,8 @@ int getTicksToGo(int distance) {
 	//calculate Ticks to go
 	return distance * TICKS_PER_MM;
 }
+
+LDD_TDeviceData* zEndSwitchPtr;
 void driveTelescope(void * pvParameter) {
 	int param1;
 	int param2;
@@ -67,6 +70,7 @@ void driveTelescope(void * pvParameter) {
 	int counter_old ;
 	int tickCounter;
 	int distance;
+	zEndSwitchPtr = endSwitch_tele_Init(NULL);
 	MyPPG1Ptr = NULL;
 	MyPPG1Ptr = PPG1_Init(NULL);//  unter properties "enable in init. code" ankreuzen falls etwas nicht funktioniert
 
@@ -115,10 +119,10 @@ void driveTelescope(void * pvParameter) {
 
 			// drive Slowly (Einfahren)
 
-			/*	while (!endschalter) {					// einfahren bis Endschalter erreicht
-			 vTaskDelay(pdMS_TO_TICKS(5));
-			 }
-			 */
+			while (!zEndSwitch_pressed) {					// einfahren bis Endschalter erreicht
+				vTaskDelay(pdMS_TO_TICKS(5));
+			}
+
 			PPG1_Disable(MyPPG1Ptr);
 			state = IDLE;
 			break;
