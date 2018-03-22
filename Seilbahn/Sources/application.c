@@ -58,7 +58,7 @@ void application(void* pvParameter) {
 					break;
 			}
 
-			free(cmdStream);
+			vPortFree(cmdStream);
 		} else {
 			vTaskDelay(pdMS_TO_TICKS(10));
 		}
@@ -71,7 +71,7 @@ char* getCmdStream(char size) {
 		vTaskDelay(pdMS_TO_TICKS(10));
 	}
 
-	char* cmdStream = malloc(sizeof(char) * size);
+	char* cmdStream = pvPortMalloc(sizeof(char) * size);
 	for(int i = 0; i < size; i++)
 		cmdStream[i] = queue_read(commandQueue);
 
