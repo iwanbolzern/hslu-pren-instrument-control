@@ -110,7 +110,7 @@ void handleDriveToEnd(char* cmdStream) {
 
 void handleMoveTele(char* cmdStream) {
 	//Wenn MoveTele werden 3 Bytes in die driveTelescopeQueue geschrieben
-	queue_write(driveTelescopeQueue, telescopeCmd_INIT_TELE);
+	queue_write(driveTelescopeQueue, telescopeCmd_DRIVE_TELE);
 	queue_write(driveTelescopeQueue, cmdStream[0]); // drive distance 2 Bytes
 	queue_write(driveTelescopeQueue, cmdStream[1]);
 	queue_write(driveTelescopeQueue, cmdStream[2]); // direction
