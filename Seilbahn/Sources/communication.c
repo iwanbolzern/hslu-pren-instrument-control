@@ -51,19 +51,16 @@ bool handlePostionQueue(void) {
 		if(!queue_isEmpty(xPosQueue))
 			x = queue_read(xPosQueue);
 		if(!queue_isEmpty(zPosQueue))
-			z = queue_isEmpty(zPosQueue);
+			z = queue_read(zPosQueue);
 		sendPositionUpdate(x, z);
 	}
 	return !queue_isEmpty(xPosQueue) || !queue_isEmpty(zPosQueue);
 }
 
 void sendPositionUpdate(char x, char z) {
-	SendChar(0x00, &deviceData);
-	SendChar(0x05, &deviceData);
+	SendChar(0x03, &deviceData);
 	SendChar(0x0b, &deviceData);
-	SendChar(0x00, &deviceData);
 	SendChar(x, &deviceData);
-	SendChar(0x00, &deviceData);
 	SendChar(z, &deviceData);
 }
 

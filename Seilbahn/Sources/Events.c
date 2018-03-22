@@ -49,7 +49,7 @@ int endSwitch_pressed = 0;
 int driveCounter;
 QueueHandle_t zPosQueue;
 QueueHandle_t xPosQueue;
-QueueHandle_t endMoveTeleQueue;
+QueueHandle_t endQueue;
 /*
 ** ===================================================================
 **     Event       :  Cpu_OnNMIINT (module Events)
@@ -257,7 +257,6 @@ void PPG1_OnEnd(LDD_TUserData *UserDataPtr)
 	counterTelescope++;
 	nTicks--;
 	if ((counterTelescope % 3) == 0){
-
 		if (directionTelescope == 0) {
 			queue_writeFromISR(zPosQueue, 0xff);	// 0xff --> -1 (einfahren)TODO: Ask IWAN
 		} else {
@@ -266,7 +265,7 @@ void PPG1_OnEnd(LDD_TUserData *UserDataPtr)
 	}
 
 	if(nTicks == 0){
-		queue_writeFromISR(endMoveTeleQueue,0x01);
+		queue_writeFromISR(endQueue,endCmd_END_MOVE_TELE);
 	}
 
 }

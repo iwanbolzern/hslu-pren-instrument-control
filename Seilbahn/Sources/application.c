@@ -58,7 +58,7 @@ void application(void* pvParameter) {
 					break;
 			}
 
-			vPortFree(cmdStream);
+			vPortFree(--cmdStream);
 		} else {
 			vTaskDelay(pdMS_TO_TICKS(10));
 		}

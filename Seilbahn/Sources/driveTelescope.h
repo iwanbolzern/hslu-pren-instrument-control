@@ -10,7 +10,7 @@
 
 
 #include "custom_queue.h"
-#include "queue.h"
+#include "communication.h"
 #include "PE_Types.h"
 
 void driveTelescope(void*);
@@ -22,7 +22,7 @@ typedef enum telescopeCmd {
 
 extern QueueHandle_t driveTelescopeQueue;
 extern QueueHandle_t zPosQueue;
-extern QueueHandle_t endMoveTeleQueue;
+extern QueueHandle_t endQueue;
 extern int counterTelescope;
 extern int nTicks;
 extern int counterFlag;
