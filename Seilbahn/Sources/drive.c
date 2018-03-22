@@ -69,7 +69,7 @@ void drive(void* pvParameter){
 				vTaskDelay(pdMS_TO_TICKS(20));
 				break;
 			}
-			free(appCmdStream);
+			vPortFree(appCmdStream);
 		}
 		else{
 			vTaskDelay(pdMS_TO_TICKS(20));
@@ -142,18 +142,15 @@ void driveJog(){
 
 char* getAppCmdStream(char appCmd) {
 	// wait until queue has all bytes
-	int size = 0;
-	if(appCmd == 3){
+	int size = 4;
+	if(appCmd == driveCmd_DRIVE_JOG)
 		size = 2;
-	}
-	else{
-		size = 4;
-	}
+
 	while(queue_size(driveQueue) < size) {
 		vTaskDelay(pdMS_TO_TICKS(10));
 	}
 
-	char* cmdStream = malloc(sizeof(char) * size);
+	char* cmdStream = pvPortMalloc(sizeof(char) * size);
 	for(int i = 0; i < size; i++)
 		cmdStream[i] = queue_read(driveQueue);
 
