@@ -15,9 +15,9 @@ int calculateTicksToDrive(int);
 int calculateSpeed(int);
 void setDirection(direction_t);
 char* getAppCmdStream(char);
-void driveDistance();
-void driveToEnd();
-void driveJog();
+void driveDistance(void);
+void driveToEnd(void);
+void driveJog(void);
 void prepareForBoundedDrive(char*);
 void prepareForUnboundedDrive(char*);
 void decelerate(void);
@@ -45,7 +45,6 @@ void drive(void* pvParameter){
 	myEndSwitchPtr = end_Switch_Init(NULL);
 	PWM1_SetRatio16(MAX_SPEED);
 	PWM1_Enable();
-
 
 	for(;;){
 		if(!queue_isEmpty(driveQueue)){							//Sind Inhalte in der commandQueue werden diese gelesen
@@ -104,7 +103,7 @@ void setDirection(direction_t d) {
 	}
 }
 
-const int ticksToStop = 100;
+int ticksToStop = 500;
 void accelerate(void) {
 	int accFac = 1000;
 	int speed = 0;
@@ -126,7 +125,7 @@ void decelerate(void) {
 	}
 }
 
-void driveDistance() {
+void driveDistance(void) {
 	accelerate();
 
 	while (driveCounter < internTicks - ticksToStop) {
@@ -138,7 +137,7 @@ void driveDistance() {
 	PWM1_SetRatio16(STOP);
 }
 
-void driveToEnd(){
+void driveToEnd(void){
 	int speedWasSet = 0;
 	while(!xEndSwitch_pressed){
 		if (!speedWasSet) {

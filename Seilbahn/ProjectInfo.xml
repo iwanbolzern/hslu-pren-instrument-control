@@ -51,6 +51,7 @@
   <FILES>
     <GeneratedCs>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\AS1.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\ASerialLdd1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Bit1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd2.c</PathName>
@@ -103,6 +104,7 @@
     </GeneratedCs>
     <GeneratedHs>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\AS1.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\ASerialLdd1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Bit1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd2.h</PathName>

@@ -231,57 +231,6 @@ void PPG1_OnEnd(LDD_TUserData *UserDataPtr)
 
 /*
 ** ===================================================================
-**     Event       :  AS1_OnBlockReceived (module Events)
-**
-**     Component   :  AS1 [Serial_LDD]
-*/
-/*!
-**     @brief
-**         This event is called when the requested number of data is
-**         moved to the input buffer.
-**     @param
-**         UserDataPtr     - Pointer to the user or
-**                           RTOS specific data. This pointer is passed
-**                           as the parameter of Init method.
-*/
-/* ===================================================================*/
-void AS1_OnBlockReceived(LDD_TUserData *UserDataPtr)
-{
-	UART_Desc *ptr = (UART_Desc*) UserDataPtr;
-
-	(void) ptr->rxPutFct(ptr->rxChar); /* but received character into buffer */
-	(void) AS1_ReceiveBlock(ptr->handle, (LDD_TData *) &ptr->rxChar,
-			sizeof(ptr->rxChar));
-}
-
-/*
-** ===================================================================
-**     Event       :  AS1_OnBlockSent (module Events)
-**
-**     Component   :  AS1 [Serial_LDD]
-*/
-/*!
-**     @brief
-**         This event is called after the last character from the
-**         output buffer is moved to the transmitter. 
-**     @param
-**         UserDataPtr     - Pointer to the user or
-**                           RTOS specific data. This pointer is passed
-**                           as the parameter of Init method.
-*/
-/* ===================================================================*/
-void AS1_OnBlockSent(LDD_TUserData *UserDataPtr)
-{
-	UART_Desc *ptr = (UART_Desc*) UserDataPtr;
-
-	ptr->isSent = TRUE; /* set flag so sender knows we have finished */
-}
-
-
-
-
-/*
-** ===================================================================
 **     Event       :  end_Switch_OnPortEvent (module Events)
 **
 **     Component   :  end_Switch [GPIO_LDD]
@@ -324,6 +273,97 @@ void end_Switch_OnPortEvent(LDD_TUserData *UserDataPtr)
 void endSwitch_tele_OnPortEvent(LDD_TUserData *UserDataPtr)
 {
 	tele_endSwitchReceived();
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnError (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called when a channel error (not the error
+**         returned by a given method) occurs. The errors can be read
+**         using <GetError> method.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnError(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnRxChar (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after a correct character is received.
+**         The event is available only when the <Interrupt
+**         service/event> property is enabled and either the <Receiver>
+**         property is enabled or the <SCI output mode> property (if
+**         supported) is set to Single-wire mode.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnRxChar(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnTxChar (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after a character is transmitted.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnTxChar(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnFullRxBuf (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called when the input buffer is full;
+**         i.e. after reception of the last character 
+**         that was successfully placed into input buffer.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnFullRxBuf(void)
+{
+  /* Write your code here ... */
+}
+
+/*
+** ===================================================================
+**     Event       :  AS1_OnFreeTxBuf (module Events)
+**
+**     Component   :  AS1 [AsynchroSerial]
+**     Description :
+**         This event is called after the last character in output
+**         buffer is transmitted.
+**     Parameters  : None
+**     Returns     : Nothing
+** ===================================================================
+*/
+void AS1_OnFreeTxBuf(void)
+{
+  /* Write your code here ... */
 }
 
 /* END Events */

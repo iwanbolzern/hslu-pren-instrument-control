@@ -2,6 +2,7 @@
 #include "MCUC1.h"
 #include "UTIL1.h"
 #include "AS1.h"
+#include "ASerialLdd1.h"
 #include "RxBuf.h"
 #include "CS1.h"
 #include "PPG1.h"
@@ -73,7 +74,7 @@ int main(void)
 			(signed portCHAR *)"Drive Task", /* task name for kernel awareness debugging */
 			configMINIMAL_STACK_SIZE, /* task stack size */
 			(void*)NULL, /* optional task startup argument */
-			tskIDLE_PRIORITY+1, /* initial priority */
+			tskIDLE_PRIORITY+2, /* initial priority */
 			(xTaskHandle*)NULL /* optional task handle to create */
 	) != pdPASS) {
 		for (;;) {
@@ -85,7 +86,7 @@ int main(void)
 			(signed portCHAR *)"Kommunikations Task", /* task name for kernel awareness debugging */
 			configMINIMAL_STACK_SIZE, /* task stack size */
 			(void*)NULL, /* optional task startup argument */
-			tskIDLE_PRIORITY+2, /* initial priority */
+			tskIDLE_PRIORITY+1, /* initial priority */
 			(xTaskHandle*)NULL /* optional task handle to create */
 	) != pdPASS) {
 		for (;;) {
