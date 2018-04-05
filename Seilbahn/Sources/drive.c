@@ -15,11 +15,13 @@ int calculateTicksToDrive(int);
 int calculateSpeed(int);
 void setDirection(direction_t);
 char* getAppCmdStream(char);
-void driveDistance(unsigned int, unsigned int);
+void driveDistance();
 void driveToEnd();
 void driveJog();
 void prepareForBoundedDrive(char*);
 void prepareForUnboundedDrive(char*);
+void decelerate(void);
+void accelerate(void);
 
 // external vars
 QueueHandle_t driveQueue;
@@ -33,19 +35,18 @@ static direction_t direction;
 static int xEndSwitch_pressed;
 static int driveCounter = 0;
 static unsigned int distance;
-static unsigned int speedFromIm;
-static unsigned int x = 30;
-static unsigned int v = 100;
 static unsigned int internTicks;
-static unsigned int internSpeed;
-const int MIN_SPEED = 0xffff;
-const int STOP = 0xffff;
+static int internSpeed;
+const int MAX_SPEED = 0xffff;
+const unsigned int STOP = 0;
 
 void drive(void* pvParameter){
 	myGPIOPtr = GPIO1_Init(NULL);
 	myEndSwitchPtr = end_Switch_Init(NULL);
-	PWM1_SetRatio16(STOP);
+	PWM1_SetRatio16(MAX_SPEED);
 	PWM1_Enable();
+
+
 	for(;;){
 		if(!queue_isEmpty(driveQueue)){							//Sind Inhalte in der commandQueue werden diese gelesen
 			char appCmd = queue_read(driveQueue);
@@ -54,7 +55,7 @@ void drive(void* pvParameter){
 			switch(appCmd){
 			case driveCmd_DRIVE_DISTANCE:
 				prepareForBoundedDrive(appCmdStream);
-				driveDistance(x,v);
+				driveDistance();
 				queue_write(endQueue, endCmd_END_DRIVE_DISTANCE);
 				vTaskDelay(pdMS_TO_TICKS(20));
 				break;
@@ -84,7 +85,7 @@ int calculateTicksToDrive(int distance) {
 }
 
 int calculateSpeed(int speed){
-	return ((speed * MIN_SPEED)/100);
+	return MAX_SPEED / 100 * speed;
 }
 
 void setDirection(direction_t d) {
@@ -103,26 +104,38 @@ void setDirection(direction_t d) {
 	}
 }
 
-void driveDistance(unsigned int x, unsigned int v) {
-	int speedWasSet = 0;
-	while (driveCounter < internTicks) {
-		while (driveCounter < ((internTicks * x)/100)) {
-			if (!speedWasSet) {
-				PWM1_SetRatio16((internSpeed * v)/100);
-				speedWasSet = 1;
-			}
-		}
-		x = x + 10;
-		v = v + 15;
-		if (((internSpeed * v)/100) < ((MIN_SPEED * 90)/100)) {
-			driveDistance(x, v);
-		}
+const int ticksToStop = 100;
+void accelerate(void) {
+	int accFac = 1000;
+	int speed = 0;
+	while (speed < internSpeed && driveCounter < internTicks - ticksToStop) {
+		speed = speed + accFac <= internSpeed ? speed + accFac : internSpeed;
+		int error = PWM1_SetRatio16(speed & 0xFFFF);
+		vTaskDelay(pdMS_TO_TICKS(10));
 	}
+	internSpeed = speed;
+}
+
+void decelerate(void) {
+	int decFac = 10000;
+	int speed = internSpeed;
+	while (speed > 0 && driveCounter < internTicks) {
+		speed = speed - decFac >= 0 ? speed - decFac : 0;
+		int error = PWM1_SetRatio16(speed & 0xFFFF);
+		vTaskDelay(pdMS_TO_TICKS(10));
+	}
+}
+
+void driveDistance() {
+	accelerate();
+
+	while (driveCounter < internTicks - ticksToStop) {
+		vTaskDelay(pdMS_TO_TICKS(10));
+	}
+
+	decelerate();
+
 	PWM1_SetRatio16(STOP);
-// Fast Stop initialisierung
-//	setDirection(REVERSE);
-//	PWM1_SetRatio16(0xffff * 0.3);
-//	setDirection(FAST_STOP);
 }
 
 void driveToEnd(){
@@ -159,9 +172,11 @@ char* getAppCmdStream(char appCmd) {
 }
 
 void prepareForBoundedDrive(char* appCmdStream){
-	distance = (appCmdStream[0]+appCmdStream[1]);
-	speedFromIm = appCmdStream[2];
-	internSpeed = calculateSpeed(speedFromIm);
+	distance = appCmdStream[0];
+	distance <<= 8;
+	distance += appCmdStream[1];
+
+	internSpeed = calculateSpeed(appCmdStream[2]);
 	internTicks = calculateTicksToDrive(distance);
 	direction = appCmdStream[3];
 	setDirection(direction);
@@ -169,15 +184,14 @@ void prepareForBoundedDrive(char* appCmdStream){
 }
 
 void prepareForUnboundedDrive(char* appCmdStream){
-	speedFromIm = appCmdStream[0];
-	internSpeed = calculateSpeed(speedFromIm);
+	internSpeed = calculateSpeed(appCmdStream[0]);
 	direction = appCmdStream[1];
 	setDirection(direction);
 	driveCounter = 0;
 }
 
 void drive_tickReceived(void) {
-	if(direction == 0) {
+	if(direction == FORWARD) {
 		driveCounter += 1;
 		if(driveCounter % 8 == 0) {
 			queue_writeFromISR(xPosQueue, 1);
@@ -186,7 +200,7 @@ void drive_tickReceived(void) {
 	else {
 		driveCounter += 1;
 		if(driveCounter % 8 == 0) {
-			queue_writeFromISR(xPosQueue, -1);
+			queue_writeFromISR(xPosQueue, 0xFF);
 		}
 	}
 }

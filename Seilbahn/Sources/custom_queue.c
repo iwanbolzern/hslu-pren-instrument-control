@@ -9,13 +9,15 @@ QueueHandle_t queue_create(int maxElements) {
 }
 
 void queue_write(QueueHandle_t queue, char value) {
-	if(xQueueSend(queue, &value, (TickType_t) 0) != pdTRUE)
-		exit(-1); // no more space in the queue
+	if(xQueueSend(queue, &value, (TickType_t) 0) != pdTRUE) {
+		//exit(-1); // no more space in the queue
+	}
 }
 
 void queue_writeFromISR(QueueHandle_t queue, char value) {
-	if(xQueueSendFromISR(queue, &value, NULL) != pdTRUE)
-		exit(-1); // no more space in the queue
+	if(xQueueSendFromISR(queue, &value, NULL) != pdTRUE) {
+		//exit(-1); // no more space in the queue
+	}
 }
 
 // returns NULL if no value is in the queue

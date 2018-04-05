@@ -75,7 +75,9 @@ void communication(void* pvParameter) {
 			queue_write(commandQueue, msg);
 		}
 
-		bool moreWork = handlePostionQueue();
+		bool moreWork = TRUE;
+		while(moreWork = handlePostionQueue()) { };
+
 		moreWork |= handleEndQueue();
 
 		if(!moreWork)

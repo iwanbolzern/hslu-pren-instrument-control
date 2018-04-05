@@ -145,7 +145,7 @@
       <XtraAge61>1282838858</XtraAge61>
       <XtraAge62>1282838858</XtraAge62>
       <XtraAge64>1282115384</XtraAge64>
-      <XtraAge65>1282838858</XtraAge65>
+      <XtraAge65>1283688806</XtraAge65>
       <GenExtraFileType65>4</GenExtraFileType65>
       <GenExtraFileType64>5</GenExtraFileType64>
       <GenExtraFileType63>4</GenExtraFileType63>
@@ -543,7 +543,7 @@
     </GenFiles>
     <SignalListFile>Documentation\Seilbahn_SIGNALS.txt</SignalListFile>
     <DestinationCompiler>GNUC</DestinationCompiler>
-    <ProjectModificationStamp>19</ProjectModificationStamp>
+    <ProjectModificationStamp>21</ProjectModificationStamp>
   </Options>
   <CpuID_1>
     <Generated>true</Generated>
@@ -5642,8 +5642,8 @@
     <GenComponentVersion>01.128</GenComponentVersion>
     <GenDriverVersion>01.08</GenDriverVersion>
     <GenEventModule>Events</GenEventModule>
-    <HeaderAge>1282838858</HeaderAge>
-    <CodeAge>1282838858</CodeAge>
+    <HeaderAge>1283688806</HeaderAge>
+    <CodeAge>1283688806</CodeAge>
     <AsemblAge>-1</AsemblAge>
     <GenNumMethods>27</GenNumMethods>
     <Init>true</Init>
@@ -5753,35 +5753,35 @@
       <MethodType>method</MethodType>
       <ModuleType>Code</ModuleType>
       <LineBeg>220</LineBeg>
-      <LineEnd>260</LineEnd>
+      <LineEnd>263</LineEnd>
     </MethodPos>
     <MethodPos>
       <MethodPos10>ClearFieldBits</MethodPos10>
       <MethodType>method</MethodType>
       <ModuleType>Code</ModuleType>
-      <LineBeg>261</LineBeg>
-      <LineEnd>303</LineEnd>
+      <LineBeg>264</LineBeg>
+      <LineEnd>306</LineEnd>
     </MethodPos>
     <MethodPos>
       <MethodPos11>SetFieldBits</MethodPos11>
       <MethodType>method</MethodType>
       <ModuleType>Code</ModuleType>
-      <LineBeg>304</LineBeg>
-      <LineEnd>346</LineEnd>
+      <LineBeg>307</LineBeg>
+      <LineEnd>349</LineEnd>
     </MethodPos>
     <MethodPos>
       <MethodPos12>ToggleFieldBits</MethodPos12>
       <MethodType>method</MethodType>
       <ModuleType>Code</ModuleType>
-      <LineBeg>347</LineBeg>
-      <LineEnd>389</LineEnd>
+      <LineBeg>350</LineBeg>
+      <LineEnd>392</LineEnd>
     </MethodPos>
     <MethodPos>
       <MethodPos13>Interrupt</MethodPos13>
       <MethodType>internal_method</MethodType>
       <ModuleType>Code</ModuleType>
-      <LineBeg>390</LineBeg>
-      <LineEnd>414</LineEnd>
+      <LineBeg>393</LineBeg>
+      <LineEnd>417</LineEnd>
     </MethodPos>
     <GenExtraFilesCount>1</GenExtraFilesCount>
     <ExtraFile0>Documentation\doxygen\endSwitch_tele_component.txt</ExtraFile0>

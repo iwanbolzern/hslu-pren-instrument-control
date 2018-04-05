@@ -1,5 +1,30 @@
 #include "FRTOS1.h"
+#include "MCUC1.h"
+#include "UTIL1.h"
+#include "AS1.h"
+#include "RxBuf.h"
+#include "CS1.h"
+#include "PPG1.h"
+#include "PWM1.h"
+#include "PwmLdd1.h"
+#include "GPIO1.h"
+#include "IN1.h"
+#include "BitIoLdd1.h"
+#include "IN2.h"
+#include "BitIoLdd2.h"
+#include "TU1.h"
+#include "Bit1.h"
+#include "BitIoLdd3.h"
+#include "Magnet1.h"
+#include "BitIoLdd4.h"
+#include "Magnet2.h"
+#include "BitIoLdd5.h"
+#include "end_Switch.h"
+#include "endSwitch_tele.h"
 /* Including shared modules, which are used for whole project */
+#include "Cpu.h"
+#include "Events.h"
+#include "FRTOS1.h"
 #include "PE_Types.h"
 #include "PE_Error.h"
 #include "PE_Const.h"
@@ -12,7 +37,7 @@
 #include "custom_queue.h"
 #include "magnet.h"
 
-#define MAXQUEUESIZE 1000
+#define MAXQUEUESIZE 2000
 
 /*lint -save  -e970 Disable MISRA rule (6.3) checking. */
 int main(void)
@@ -23,13 +48,13 @@ int main(void)
 	/*** End of Processor Expert internal initialization.                    ***/
 
 	/* Write your code here */
-	driveQueue =  queue_create(MAXQUEUESIZE);
-	driveTelescopeQueue =  queue_create(MAXQUEUESIZE);
-	xPosQueue =  queue_create(MAXQUEUESIZE);
-	zPosQueue =  queue_create(MAXQUEUESIZE);
-	commandQueue = queue_create(MAXQUEUESIZE);
-	magnetCmdQueue = queue_create(MAXQUEUESIZE);
-	endQueue = queue_create(MAXQUEUESIZE);
+	driveQueue =  queue_create(100);
+	driveTelescopeQueue =  queue_create(100);
+	xPosQueue =  queue_create(3000);
+	zPosQueue =  queue_create(3000);
+	commandQueue = queue_create(1000);
+	magnetCmdQueue = queue_create(100);
+	endQueue = queue_create(100);
 
 	if (FRTOS1_xTaskCreate(
 			application, /* pointer to the task */
@@ -60,7 +85,7 @@ int main(void)
 			(signed portCHAR *)"Kommunikations Task", /* task name for kernel awareness debugging */
 			configMINIMAL_STACK_SIZE, /* task stack size */
 			(void*)NULL, /* optional task startup argument */
-			tskIDLE_PRIORITY+1, /* initial priority */
+			tskIDLE_PRIORITY+2, /* initial priority */
 			(xTaskHandle*)NULL /* optional task handle to create */
 	) != pdPASS) {
 		for (;;) {
