@@ -43,7 +43,8 @@ const unsigned int STOP = 0;
 void drive(void* pvParameter){
 	myGPIOPtr = GPIO1_Init(NULL);
 	myEndSwitchPtr = end_Switch_Init(NULL);
-	PWM1_SetRatio16(MAX_SPEED);
+	setDirection(FORWARD);
+	PWM1_SetRatio16(STOP);
 	PWM1_Enable();
 
 	for(;;) {
