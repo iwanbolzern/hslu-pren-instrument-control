@@ -41,9 +41,11 @@ void sendPositionUpdate(char x, char z) {
 }
 
 void communication(void* pvParameter) {
+	AS1_ClearRxBuf();
+
 	for (;;) {
 		// handle input stream
-		while (AS1_GetCharsInRxBuf() >= 0) {
+		while (AS1_GetCharsInRxBuf() > 0) {
 			char msg;
 			AS1_RecvChar(&msg);
 			queue_write(commandQueue, msg);

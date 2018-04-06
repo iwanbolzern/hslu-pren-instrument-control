@@ -96,7 +96,7 @@ void setDirection(direction_t d) {
 	}
 }
 
-int ticksToStop = 500;
+int ticksToStop = 1000;
 void accelerate(void) {
 	int accFac = 1000;
 	int speed = 0;
@@ -109,7 +109,7 @@ void accelerate(void) {
 }
 
 void decelerate(void) {
-	int decFac = 10000;
+	int decFac = 1000;
 	int speed = internSpeed;
 	while (speed > 0 && driveCounter < internTicks) {
 		speed = speed - decFac >= 0 ? speed - decFac : 0;
@@ -122,7 +122,6 @@ void driveDistance(void) {
 	accelerate();
 
 	while (driveCounter < internTicks - ticksToStop) {
-		vTaskDelay(pdMS_TO_TICKS(10));
 	}
 
 	decelerate();

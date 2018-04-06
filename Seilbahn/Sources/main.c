@@ -98,7 +98,7 @@ int main(void)
 			(signed portCHAR *)"Teleskop Task", /* task name for kernel awareness debugging */
 			configMINIMAL_STACK_SIZE, /* task stack size */
 			(void*)NULL, /* optional task startup argument */
-			tskIDLE_PRIORITY+1, /* initial priority */
+			tskIDLE_PRIORITY + 2, /* initial priority */
 			(xTaskHandle*)NULL /* optional task handle to create */
 	) != pdPASS) {
 		for (;;) {
