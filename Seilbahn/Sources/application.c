@@ -23,50 +23,42 @@ QueueHandle_t commandQueue;
 
 void application(void* pvParameter) {
 	for (;;) {
-		if (!queue_isEmpty(commandQueue)) {	//Sind Inhalte in der commandQueue werden diese gelesen
-			char cmdSize = queue_read(commandQueue);
-			char* cmdStream = getCmdStream(cmdSize);
+		char cmdSize = queue_readInfinity(commandQueue);
+		char* cmdStream = getCmdStream(cmdSize);
 
-			switch(cmdStream[0]) { // you need ++ to skip command byte
-				case imCmd_INIT_TELE:
-					handleInitTele(++cmdStream);
-					break;
-				case imCmd_DRIVE_DISTANCE:
-					handleDriveDistance(++cmdStream);
-					break;
-				case imCmd_DRIVE_JOG:
-					handleDriveJog(++cmdStream);
-					break;
-				case imCmd_DRIVE_TO_END:
-					handleDriveToEnd(++cmdStream);
-					break;
-				case imCmd_MOVE_TELE:
-					handleMoveTele(++cmdStream);
-					break;
-				case imCmd_ENABLE_MAGNET:
-					handleEnableMagnet(++cmdStream);
-					break;
-				case imCmd_DISABLE_MAGNET:
-					handleDisableMagnet(++cmdStream);
-					break;
-			}
-
-			vPortFree(--cmdStream);
-		} else {
-			vTaskDelay(pdMS_TO_TICKS(10));
+		switch(cmdStream[0]) { // you need ++ to skip command byte
+			case imCmd_INIT_TELE:
+				handleInitTele(++cmdStream);
+				break;
+			case imCmd_DRIVE_DISTANCE:
+				handleDriveDistance(++cmdStream);
+				break;
+			case imCmd_DRIVE_JOG:
+				handleDriveJog(++cmdStream);
+				break;
+			case imCmd_DRIVE_TO_END:
+				handleDriveToEnd(++cmdStream);
+				break;
+			case imCmd_MOVE_TELE:
+				handleMoveTele(++cmdStream);
+				break;
+			case imCmd_ENABLE_MAGNET:
+				handleEnableMagnet(++cmdStream);
+				break;
+			case imCmd_DISABLE_MAGNET:
+				handleDisableMagnet(++cmdStream);
+				break;
 		}
+
+		vPortFree(--cmdStream);
 	}
 }
 
 char* getCmdStream(char size) {
-	// wait until queue has all bytes
-	while(queue_size(commandQueue) < size) {
-		vTaskDelay(pdMS_TO_TICKS(10));
-	}
-
 	char* cmdStream = pvPortMalloc(sizeof(char) * size);
-	for(int i = 0; i < size; i++)
-		cmdStream[i] = queue_read(commandQueue);
+	for(int i = 0; i < size; i++) {
+		cmdStream[i] = queue_readInfinity(commandQueue);
+	}
 
 	return cmdStream;
 }

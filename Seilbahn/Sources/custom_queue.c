@@ -20,6 +20,14 @@ void queue_writeFromISR(QueueHandle_t queue, char value) {
 	}
 }
 
+// waits infinity to receive something
+char queue_readInfinity(QueueHandle_t queue) {
+	char value;
+	if(xQueueReceive(queue, &value, portMAX_DELAY) == pdTRUE)
+		return value;
+	return -1;
+}
+
 // returns NULL if no value is in the queue
 // example usage to wait until something is available char test; while((test = queue_read(queue)) == -1) { }
 char queue_read(QueueHandle_t queue) {

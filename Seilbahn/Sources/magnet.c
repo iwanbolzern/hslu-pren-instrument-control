@@ -12,24 +12,20 @@ QueueHandle_t magnetCmdQueue;
 
 void magnetHandler(void* pvParameter) {
 	for(;;) {
-		if(!queue_isEmpty(magnetCmdQueue)) {
-			char cmd = queue_read(magnetCmdQueue);
-			switch(cmd) {
-				case magnetCmd_DISABLE:
-					disableMagnet();
-					break;
-				case magnetCmd_ENFORCE:
-					enforceMagnet();
-					break;
-				case magnetCmd_RELEASE:
-					releaseMagnet();
-					break;
-				default:
-					// no idea how to make exception handling in c
-					break;
-			}
-		} else {
-			vTaskDelay(pdMS_TO_TICKS(20));
+		char cmd = queue_readInfinity(magnetCmdQueue);
+		switch(cmd) {
+			case magnetCmd_DISABLE:
+				disableMagnet();
+				break;
+			case magnetCmd_ENFORCE:
+				enforceMagnet();
+				break;
+			case magnetCmd_RELEASE:
+				releaseMagnet();
+				break;
+			default:
+				// no idea how to make exception handling in c
+				break;
 		}
 	}
 }

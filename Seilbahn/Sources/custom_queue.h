@@ -10,6 +10,8 @@ void queue_write(QueueHandle_t queue, char value);
 
 void queue_writeFromISR(QueueHandle_t queue, char value);
 
+char queue_readInfinity(QueueHandle_t queue);
+
 // returns NULL if no value is in the queue
 // example usage to wait until something is available char test; while((test = queue_read(queue)) == NULL) { }
 char queue_read(QueueHandle_t queue);

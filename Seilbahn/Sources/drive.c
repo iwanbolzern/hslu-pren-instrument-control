@@ -46,35 +46,30 @@ void drive(void* pvParameter){
 	PWM1_SetRatio16(MAX_SPEED);
 	PWM1_Enable();
 
-	for(;;){
-		if(!queue_isEmpty(driveQueue)){							//Sind Inhalte in der commandQueue werden diese gelesen
-			char appCmd = queue_read(driveQueue);
-			char* appCmdStream = getAppCmdStream(appCmd);				//Anhand dem zweiten Byte in der commandQueue kann die Anzahl folgender Bytes bestimmt werden
+	for(;;) {
+		char appCmd = queue_readInfinity(driveQueue);
+		char* appCmdStream = getAppCmdStream(appCmd);				//Anhand dem zweiten Byte in der commandQueue kann die Anzahl folgender Bytes bestimmt werden
 
-			switch(appCmd){
-			case driveCmd_DRIVE_DISTANCE:
-				prepareForBoundedDrive(appCmdStream);
-				driveDistance();
-				queue_write(endQueue, endCmd_END_DRIVE_DISTANCE);
-				vTaskDelay(pdMS_TO_TICKS(20));
-				break;
-			case driveCmd_DRIVE_JOG:
-				prepareForUnboundedDrive(appCmdStream);
-				driveJog();
-				vTaskDelay(pdMS_TO_TICKS(20));
-				break;
-			case driveCmd_DRIVE_TO_END:
-				prepareForBoundedDrive(appCmdStream);
-				driveToEnd();
-				queue_write(endQueue, endCmd_END_RUN);
-				vTaskDelay(pdMS_TO_TICKS(20));
-				break;
-			}
-			vPortFree(appCmdStream);
-		}
-		else{
+		switch(appCmd) {
+		case driveCmd_DRIVE_DISTANCE:
+			prepareForBoundedDrive(appCmdStream);
+			driveDistance();
+			queue_write(endQueue, endCmd_END_DRIVE_DISTANCE);
 			vTaskDelay(pdMS_TO_TICKS(20));
+			break;
+		case driveCmd_DRIVE_JOG:
+			prepareForUnboundedDrive(appCmdStream);
+			driveJog();
+			vTaskDelay(pdMS_TO_TICKS(20));
+			break;
+		case driveCmd_DRIVE_TO_END:
+			prepareForBoundedDrive(appCmdStream);
+			driveToEnd();
+			queue_write(endQueue, endCmd_END_RUN);
+			vTaskDelay(pdMS_TO_TICKS(20));
+			break;
 		}
+		vPortFree(appCmdStream);
 	}
 }
 
@@ -139,7 +134,7 @@ void driveDistance(void) {
 
 void driveToEnd(void){
 	int speedWasSet = 0;
-	while(!xEndSwitch_pressed){
+	while(!xEndSwitch_pressed) {
 		if (!speedWasSet) {
 			PWM1_SetRatio16(internSpeed);
 			speedWasSet = 1;
@@ -156,21 +151,19 @@ void driveJog(){
 char* getAppCmdStream(char appCmd) {
 	// wait until queue has all bytes
 	int size = 4;
-	if(appCmd == driveCmd_DRIVE_JOG)
+	if(appCmd == driveCmd_DRIVE_JOG) {
 		size = 2;
-
-	while(queue_size(driveQueue) < size) {
-		vTaskDelay(pdMS_TO_TICKS(10));
 	}
 
 	char* cmdStream = pvPortMalloc(sizeof(char) * size);
-	for(int i = 0; i < size; i++)
-		cmdStream[i] = queue_read(driveQueue);
+	for(int i = 0; i < size; i++) {
+		cmdStream[i] = queue_readInfinity(driveQueue);
+	}
 
 	return cmdStream;
 }
 
-void prepareForBoundedDrive(char* appCmdStream){
+void prepareForBoundedDrive(char* appCmdStream) {
 	distance = appCmdStream[0];
 	distance <<= 8;
 	distance += appCmdStream[1];
@@ -182,7 +175,7 @@ void prepareForBoundedDrive(char* appCmdStream){
 	driveCounter = 0;
 }
 
-void prepareForUnboundedDrive(char* appCmdStream){
+void prepareForUnboundedDrive(char* appCmdStream) {
 	internSpeed = calculateSpeed(appCmdStream[0]);
 	direction = appCmdStream[1];
 	setDirection(direction);

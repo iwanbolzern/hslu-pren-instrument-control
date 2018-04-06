@@ -65,20 +65,17 @@ void driveTelescope(void * pvParameter) {
 	myPPG1Ptr = PPG1_Init(NULL);//  unter properties "enable in init. code" ankreuzen falls etwas nicht funktioniert
 
 	for (;;) {
-		while (queue_isEmpty(driveTelescopeQueue)) {
-			vTaskDelay(pdMS_TO_TICKS(20));			// 50Hz
-		}
-		char cmd = queue_read(driveTelescopeQueue);
+		char cmd = queue_readInfinity(driveTelescopeQueue);
 
 		switch(cmd)  {
 			case telescopeCmd_INIT_TELE:
 				tele_handleInitTele();
 				break;
 			case telescopeCmd_DRIVE_TELE: {
-				int distance = queue_read(driveTelescopeQueue);
+				int distance = queue_readInfinity(driveTelescopeQueue);
 				distance <<= 8;
-				distance += queue_read(driveTelescopeQueue);
-				directionTelescope = queue_read(driveTelescopeQueue);
+				distance += queue_readInfinity(driveTelescopeQueue);
+				directionTelescope = queue_readInfinity(driveTelescopeQueue);
 				tele_handleDriveTele(distance, directionTelescope);
 				break;
 			}
