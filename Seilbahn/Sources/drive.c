@@ -55,18 +55,15 @@ void drive(void* pvParameter){
 			prepareForBoundedDrive(appCmdStream);
 			driveDistance();
 			queue_write(endQueue, endCmd_END_DRIVE_DISTANCE);
-			vTaskDelay(pdMS_TO_TICKS(20));
 			break;
 		case driveCmd_DRIVE_JOG:
 			prepareForUnboundedDrive(appCmdStream);
 			driveJog();
-			vTaskDelay(pdMS_TO_TICKS(20));
 			break;
 		case driveCmd_DRIVE_TO_END:
 			prepareForBoundedDrive(appCmdStream);
 			driveToEnd();
 			queue_write(endQueue, endCmd_END_RUN);
-			vTaskDelay(pdMS_TO_TICKS(20));
 			break;
 		}
 		vPortFree(appCmdStream);
