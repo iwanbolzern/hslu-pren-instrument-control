@@ -3,7 +3,7 @@
   <Header>
     <Name>Seilbahn</Name>
     <SavedBy>El_Matador</SavedBy>
-    <ModificationStamp>24</ModificationStamp>
+    <ModificationStamp>30</ModificationStamp>
     <Date>2018-03-11</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.2.RT7_b1550-0615</PEversion>
@@ -10574,24 +10574,24 @@
         <InitValue>100 ms</InitValue>
         <Precision>5.0</Precision>
         <PrecInProc>true</PrecInProc>
-        <LowLimit />
-        <HighLimit />
+        <LowLimit>0 ms</LowLimit>
+        <HighLimit>0 ms</HighLimit>
         <List lines_count="15">
           <Line>50 ms</Line>
           <Line>30 ms</Line>
           <Line>15 ms</Line>
+          <Line>12 ms</Line>
+          <Line>8 ms</Line>
           <Line>5 ms</Line>
           <Line>3 ms</Line>
+          <Line>2 ms</Line>
           <Line>1 ms</Line>
-          <Line>0.5 ms</Line>
-          <Line>0.1 ms</Line>
-          <Line>0.05 ms</Line>
-          <Line>6 ms</Line>
-          <Line>7 ms</Line>
-          <Line>8 ms</Line>
-          <Line>9 ms</Line>
-          <Line>11 ms</Line>
-          <Line>12 ms</Line>
+          <Line>31 ms</Line>
+          <Line>32 ms</Line>
+          <Line>33 ms</Line>
+          <Line>34 ms</Line>
+          <Line>35 ms</Line>
+          <Line>36 ms</Line>
         </List>
         <UnitText>ms</UnitText>
         <MinCounterTicks>0</MinCounterTicks>
@@ -10600,7 +10600,7 @@
         <ItemSymbol>DutyTmg</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Value>25 ms</Value>
+        <Value>100 ms</Value>
         <RuntimeSetting>0</RuntimeSetting>
         <ReqDevPrescHigh>-1</ReqDevPrescHigh>
         <ReqDevPrescLow>-1</ReqDevPrescLow>
@@ -10626,7 +10626,7 @@
         <ReqSrcClkPrescSpeedMode5>-1</ReqSrcClkPrescSpeedMode5>
         <ReqSrcClkPrescSpeedMode6>-1</ReqSrcClkPrescSpeedMode6>
         <ReqSrcClkPrescSpeedMode7>-1</ReqSrcClkPrescSpeedMode7>
-        <InitValue>25 ms</InitValue>
+        <InitValue>100 ms</InitValue>
         <Precision>5.0</Precision>
         <PrecInProc>true</PrecInProc>
         <LowLimit />

@@ -51,7 +51,7 @@ void tele_handleDriveTele(int distance, char direction) {
 	setDirectionTelescope(directionTelescope);
 
 	if (PPG1_Enable(myPPG1Ptr) == ERR_OK) {			// Error handling
-//		PPG1_SelectPeriod(MyPPG1Ptr, MODE_MEDIUM);
+		PPG1_SetRatio16(myPPG1Ptr, 0b0111111111111111);
 	}
 
 	while (remainingTicks > 0) {
