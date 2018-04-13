@@ -50,12 +50,10 @@ void tele_handleDriveTele(int distance, char direction) {
 	remainingTicks = getTicksToGo(distance);
 	setDirectionTelescope(directionTelescope);
 
-	if (PPG1_Enable(myPPG1Ptr) == ERR_OK) {			// Error handling
-		PPG1_SetRatio16(myPPG1Ptr, 0b0111111111111111);
-	}
+	PPG1_Enable(myPPG1Ptr);
 
 	while (remainingTicks > 0) {
-		vTaskDelay(pdMS_TO_TICKS(5));			//200Hz
+		vTaskDelay(pdMS_TO_TICKS(10));			//200Hz
 	}
 	PPG1_Disable(myPPG1Ptr); // STOP Pulsgenerator
 }
@@ -63,6 +61,7 @@ void tele_handleDriveTele(int distance, char direction) {
 void driveTelescope(void * pvParameter) {
 	zEndSwitchPtr = endSwitch_tele_Init(NULL);
 	myPPG1Ptr = PPG1_Init(NULL);//  unter properties "enable in init. code" ankreuzen falls etwas nicht funktioniert
+	PPG1_SetRatio16(myPPG1Ptr, 0x7FFF);
 
 	for (;;) {
 		char cmd = queue_readInfinity(driveTelescopeQueue);
@@ -72,9 +71,10 @@ void driveTelescope(void * pvParameter) {
 				tele_handleInitTele();
 				break;
 			case telescopeCmd_DRIVE_TELE: {
-				int distance = queue_readInfinity(driveTelescopeQueue);
-				distance <<= 8;
-				distance += queue_readInfinity(driveTelescopeQueue);
+				int distance = ((queue_readInfinity(driveTelescopeQueue) & 0x00FF) << 8);
+				distance += queue_readInfinity(driveTelescopeQueue) & 0x00FF;
+
+
 				directionTelescope = queue_readInfinity(driveTelescopeQueue);
 				tele_handleDriveTele(distance, directionTelescope);
 				break;
@@ -95,8 +95,9 @@ void tele_tickReceived(void) {
 			queue_writeFromISR(zPosQueue, 0x01);
 	}
 
-	 if(remainingTicks <= 0)
+	 if(remainingTicks <= 0) {
 		queue_writeFromISR(endQueue, endCmd_END_MOVE_TELE);
+	 }
 }
 
 void tele_endSwitchReceived(void) {
