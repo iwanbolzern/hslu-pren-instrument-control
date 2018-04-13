@@ -21,5 +21,6 @@ typedef enum direction {
 
 
 extern QueueHandle_t driveQueue;
+extern xTaskHandle driveTask;
 
 #endif /* SOURCES_DRIVE_H_ */

@@ -3,11 +3,14 @@
 #include "UTIL1.h"
 #include "AS1.h"
 #include "ASerialLdd1.h"
+#include "TU2.h"
 #include "RxBuf.h"
 #include "CS1.h"
 #include "PPG1.h"
 #include "PWM1.h"
 #include "PwmLdd1.h"
+#include "PWM2.h"
+#include "PwmLdd2.h"
 #include "GPIO1.h"
 #include "IN1.h"
 #include "BitIoLdd1.h"
@@ -75,7 +78,7 @@ int main(void)
 			configMINIMAL_STACK_SIZE, /* task stack size */
 			(void*)NULL, /* optional task startup argument */
 			tskIDLE_PRIORITY+2, /* initial priority */
-			(xTaskHandle*)NULL /* optional task handle to create */
+			&driveTask /* optional task handle to create */
 	) != pdPASS) {
 		for (;;) {
 		}; /* Out of heap memory? */

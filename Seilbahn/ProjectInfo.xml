@@ -71,7 +71,9 @@
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PE_LDD.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PPG1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PWM1.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PWM2.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PwmLdd1.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PwmLdd2.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\RTT1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\RTT_Syscalls_GCC.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\RxBuf.c</PathName>
@@ -83,6 +85,7 @@
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\SYS1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TMOUT1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TU1.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TU2.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\UTIL1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Vectors.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\WAIT1.c</PathName>
@@ -146,7 +149,9 @@
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PE_Types.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PPG1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PWM1.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PWM2.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PwmLdd1.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\PwmLdd2.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\RTT1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\RTT1config.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\RxBuf.h</PathName>
@@ -163,6 +168,7 @@
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TMOUT1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TMOUT1config.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TU1.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TU2.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\UTIL1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\UTIL1config.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\WAIT1.h</PathName>
