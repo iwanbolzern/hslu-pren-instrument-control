@@ -22,6 +22,7 @@ void driveJog(void);
 void prepareForBoundedDrive(char*);
 void prepareForUnboundedDrive(char*);
 void decelerate(void);
+void decelerateEndSwitch(void);
 void accelerate(void);
 
 // external vars
@@ -102,7 +103,7 @@ void setDirection(char d) {
 	}
 }
 
-int ticksToStop = 600;
+unsigned int ticksToStop = 100;
 void accelerate(void) {
 	int accFac = 1000;
 	while (currentSpeed < internSpeed && driveCounter < internTicks - ticksToStop && !xEndSwitch_pressed) {
@@ -131,10 +132,24 @@ void decelerate(void) {
 	}
 }
 
+void decelerateEndSwitch(void) {
+	int decFac = 1000;
+	while (!xEndSwitch_pressed) {
+		currentSpeed = currentSpeed - decFac >= 0 ? currentSpeed - decFac : 0x2fff;
+		if(direction == FORWARD) {
+			int error = PWM1_SetRatio16(currentSpeed & 0xFFFF);
+		}
+		else {
+			int error = PWM2_SetRatio16(currentSpeed & 0xFFFF);
+		}
+		vTaskDelay(pdMS_TO_TICKS(20));
+	}
+}
+
 void driveDistance(void) {
 	accelerate();
 
-	while(driveCounter < internTicks - ticksToStop) {
+	while(driveCounter < internTicks - ticksToStop && !xEndSwitch_pressed) {
 		ulTaskNotifyTake(pdTRUE, /* Clear the notification value before exiting. */
 	                 portMAX_DELAY ); /* Block indefinitely. */
 	}
@@ -152,7 +167,10 @@ void driveToEnd(void) {
 	ulTaskNotifyTake(pdTRUE, /* Clear the notification value before exiting. */
 		                 portMAX_DELAY ); /* Block indefinitely. */
 
-	decelerate();
+	decelerateEndSwitch();
+	currentSpeed = 0;
+	PWM1_SetRatio16(STOP);
+	PWM2_SetRatio16(STOP);
 }
 
 void driveJog() {
@@ -177,35 +195,34 @@ char* getAppCmdStream(char appCmd) {
 
 void prepareForBoundedDrive(char* appCmdStream) {
 	unsigned int distance = ((appCmdStream[0] & 0x00FF) << 8) + (appCmdStream[1] & 0x00FF);
-	internTicks = calculateTicksToDrive(distance);
+	internTicks = distance;
 
 	internSpeed = calculateSpeed(appCmdStream[2]);
+	ticksToStop = appCmdStream[2] * 4;
 	setDirection(appCmdStream[3]);
 	driveCounter = 0;
+
+	xEndSwitch_pressed = FALSE;
 }
 
 void prepareForUnboundedDrive(char* appCmdStream) {
 	internSpeed = calculateSpeed(appCmdStream[0]);
 	setDirection(appCmdStream[1]);
 	driveCounter = 0;
+
+	xEndSwitch_pressed = FALSE;
 }
 
 void drive_tickReceived(void) {
 	driveCounter += 1;
 	if(direction == FORWARD) {
-		if(driveCounter % 9 == 0) {
-			queue_writeFromISR(xPosQueue, 1);
-			if(driveCounter % (18 * 9) == 0) {
-				queue_writeFromISR(xPosQueue, 1);
-			}
+		if(driveCounter % 8 == 0) {
+			queue_writeFromISR(xPosQueue, 8);
 		}
 	}
 	else {
-		if(driveCounter % 9 == 0) {
-			queue_writeFromISR(xPosQueue, -1);
-			if(driveCounter % (18 * 9) == 0) {
-				queue_writeFromISR(xPosQueue, -1);
-			}
+		if(driveCounter % 8 == 0) {
+			queue_writeFromISR(xPosQueue, -8);
 		}
 	}
 
@@ -222,4 +239,9 @@ void drive_endSwitchReceived(void) {
 	currentSpeed = 0;
 	PWM1_SetRatio16(STOP);
 	PWM2_SetRatio16(STOP);
+
+	if (currentCmd == driveCmd_DRIVE_TO_END) {
+		BaseType_t xHigherPriorityTaskWoken = pdFALSE;
+		vTaskNotifyGiveFromISR(driveTask, &xHigherPriorityTaskWoken);
+	}
 }

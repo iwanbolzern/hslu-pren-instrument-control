@@ -20,8 +20,8 @@ typedef enum telescopeCmd {
 } telesopceCmd_t;
 
 typedef enum teleDirection {
-	teleDirection_RETRACT = 0,
-	teleDirection_EXTEND = 1
+	teleDirection_RETRACT = 1,
+	teleDirection_EXTEND = 0
 } teleDirection_t;
 
 enum speedmode {

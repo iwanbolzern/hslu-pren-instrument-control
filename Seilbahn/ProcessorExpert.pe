@@ -3,7 +3,7 @@
   <Header>
     <Name>Seilbahn</Name>
     <SavedBy>El_Matador</SavedBy>
-    <ModificationStamp>34</ModificationStamp>
+    <ModificationStamp>37</ModificationStamp>
     <Date>2018-03-11</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.2.RT7_b1550-0615</PEversion>
@@ -10545,61 +10545,6 @@
         <ItemSymbol>PeriodTmg</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Value>10 ms</Value>
-        <RuntimeSetting>0</RuntimeSetting>
-        <ReqDevPrescHigh>-1</ReqDevPrescHigh>
-        <ReqDevPrescLow>-1</ReqDevPrescLow>
-        <ReqDevPrescSlow>-1</ReqDevPrescSlow>
-        <ReqDevPrescSpeedMode3>-1</ReqDevPrescSpeedMode3>
-        <ReqDevPrescSpeedMode4>-1</ReqDevPrescSpeedMode4>
-        <ReqDevPrescSpeedMode5>-1</ReqDevPrescSpeedMode5>
-        <ReqDevPrescSpeedMode6>-1</ReqDevPrescSpeedMode6>
-        <ReqDevPrescSpeedMode7>-1</ReqDevPrescSpeedMode7>
-        <ReqExtCompPrescHigh>-1</ReqExtCompPrescHigh>
-        <ReqExtCompPrescLow>-1</ReqExtCompPrescLow>
-        <ReqExtCompPrescSlow>-1</ReqExtCompPrescSlow>
-        <ReqExtCompPrescSpeedMode3>-1</ReqExtCompPrescSpeedMode3>
-        <ReqExtCompPrescSpeedMode4>-1</ReqExtCompPrescSpeedMode4>
-        <ReqExtCompPrescSpeedMode5>-1</ReqExtCompPrescSpeedMode5>
-        <ReqExtCompPrescSpeedMode6>-1</ReqExtCompPrescSpeedMode6>
-        <ReqExtCompPrescSpeedMode7>-1</ReqExtCompPrescSpeedMode7>
-        <ReqSrcClkPrescHigh>-1</ReqSrcClkPrescHigh>
-        <ReqSrcClkPrescLow>-1</ReqSrcClkPrescLow>
-        <ReqSrcClkPrescSlow>-1</ReqSrcClkPrescSlow>
-        <ReqSrcClkPrescSpeedMode3>-1</ReqSrcClkPrescSpeedMode3>
-        <ReqSrcClkPrescSpeedMode4>-1</ReqSrcClkPrescSpeedMode4>
-        <ReqSrcClkPrescSpeedMode5>-1</ReqSrcClkPrescSpeedMode5>
-        <ReqSrcClkPrescSpeedMode6>-1</ReqSrcClkPrescSpeedMode6>
-        <ReqSrcClkPrescSpeedMode7>-1</ReqSrcClkPrescSpeedMode7>
-        <InitValue>10 ms</InitValue>
-        <Precision>5.0</Precision>
-        <PrecInProc>true</PrecInProc>
-        <LowLimit>0 ms</LowLimit>
-        <HighLimit>0 ms</HighLimit>
-        <List lines_count="15">
-          <Line>50 ms</Line>
-          <Line>30 ms</Line>
-          <Line>15 ms</Line>
-          <Line>12 ms</Line>
-          <Line>8 ms</Line>
-          <Line>5 ms</Line>
-          <Line>3 ms</Line>
-          <Line>2 ms</Line>
-          <Line>1 ms</Line>
-          <Line>31 ms</Line>
-          <Line>32 ms</Line>
-          <Line>33 ms</Line>
-          <Line>34 ms</Line>
-          <Line>35 ms</Line>
-          <Line>36 ms</Line>
-        </List>
-        <UnitText>ms</UnitText>
-        <MinCounterTicks>0</MinCounterTicks>
-      </ItemState>
-      <ItemState>
-        <ItemSymbol>DutyTmg</ItemSymbol>
-        <ReadOnly>false</ReadOnly>
-        <UserReadOnly>false</UserReadOnly>
         <Value>5 ms</Value>
         <RuntimeSetting>0</RuntimeSetting>
         <ReqDevPrescHigh>-1</ReqDevPrescHigh>
@@ -10629,10 +10574,65 @@
         <InitValue>5 ms</InitValue>
         <Precision>5.0</Precision>
         <PrecInProc>true</PrecInProc>
+        <LowLimit>0 ms</LowLimit>
+        <HighLimit>0 ms</HighLimit>
+        <List lines_count="15">
+          <Line>50 ms</Line>
+          <Line>30 ms</Line>
+          <Line>15 ms</Line>
+          <Line>12 ms</Line>
+          <Line>8 ms</Line>
+          <Line>5 ms</Line>
+          <Line>3 ms</Line>
+          <Line>2 ms</Line>
+          <Line>1 ms</Line>
+          <Line>31 ms</Line>
+          <Line>32 ms</Line>
+          <Line>33 ms</Line>
+          <Line>34 ms</Line>
+          <Line>35 ms</Line>
+          <Line>36 ms</Line>
+        </List>
+        <UnitText>ms</UnitText>
+        <MinCounterTicks>0</MinCounterTicks>
+      </ItemState>
+      <ItemState>
+        <ItemSymbol>DutyTmg</ItemSymbol>
+        <ReadOnly>false</ReadOnly>
+        <UserReadOnly>false</UserReadOnly>
+        <Value>100 µs</Value>
+        <RuntimeSetting>0</RuntimeSetting>
+        <ReqDevPrescHigh>-1</ReqDevPrescHigh>
+        <ReqDevPrescLow>-1</ReqDevPrescLow>
+        <ReqDevPrescSlow>-1</ReqDevPrescSlow>
+        <ReqDevPrescSpeedMode3>-1</ReqDevPrescSpeedMode3>
+        <ReqDevPrescSpeedMode4>-1</ReqDevPrescSpeedMode4>
+        <ReqDevPrescSpeedMode5>-1</ReqDevPrescSpeedMode5>
+        <ReqDevPrescSpeedMode6>-1</ReqDevPrescSpeedMode6>
+        <ReqDevPrescSpeedMode7>-1</ReqDevPrescSpeedMode7>
+        <ReqExtCompPrescHigh>-1</ReqExtCompPrescHigh>
+        <ReqExtCompPrescLow>-1</ReqExtCompPrescLow>
+        <ReqExtCompPrescSlow>-1</ReqExtCompPrescSlow>
+        <ReqExtCompPrescSpeedMode3>-1</ReqExtCompPrescSpeedMode3>
+        <ReqExtCompPrescSpeedMode4>-1</ReqExtCompPrescSpeedMode4>
+        <ReqExtCompPrescSpeedMode5>-1</ReqExtCompPrescSpeedMode5>
+        <ReqExtCompPrescSpeedMode6>-1</ReqExtCompPrescSpeedMode6>
+        <ReqExtCompPrescSpeedMode7>-1</ReqExtCompPrescSpeedMode7>
+        <ReqSrcClkPrescHigh>-1</ReqSrcClkPrescHigh>
+        <ReqSrcClkPrescLow>-1</ReqSrcClkPrescLow>
+        <ReqSrcClkPrescSlow>-1</ReqSrcClkPrescSlow>
+        <ReqSrcClkPrescSpeedMode3>-1</ReqSrcClkPrescSpeedMode3>
+        <ReqSrcClkPrescSpeedMode4>-1</ReqSrcClkPrescSpeedMode4>
+        <ReqSrcClkPrescSpeedMode5>-1</ReqSrcClkPrescSpeedMode5>
+        <ReqSrcClkPrescSpeedMode6>-1</ReqSrcClkPrescSpeedMode6>
+        <ReqSrcClkPrescSpeedMode7>-1</ReqSrcClkPrescSpeedMode7>
+        <InitValue>100 us</InitValue>
+        <Precision>5.0</Precision>
+        <PrecInProc>true</PrecInProc>
         <LowLimit />
         <HighLimit />
         <List lines_count="0" />
-        <UnitText>ms</UnitText>
+        <UnitText>us</UnitText>
         <MinCounterTicks>0</MinCounterTicks>
       </ItemState>
       <ItemState>
@@ -19678,7 +19678,7 @@
       <ItemState>
         <ItemSymbol>AllocatedPinsMaskProp</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>128</Value>
+        <Value>16384</Value>
         <Base>HEX</Base>
         <Index>-1</Index>
       </ItemState>
@@ -19755,14 +19755,14 @@
       <ItemState>
         <ItemSymbol>FieldMaskProp0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>128</Value>
+        <Value>16384</Value>
         <Base>HEX</Base>
         <Index>-1</Index>
       </ItemState>
       <ItemState>
         <ItemSymbol>FieldStartBit0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>7</Value>
+        <Value>14</Value>
         <Base>DEC</Base>
       </ItemState>
       <ItemState>
@@ -19782,7 +19782,7 @@
         <ItemSymbol>Pin0_0</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Value>PTA7/TPM0_CH4</Value>
+        <Value>PTA14/SPI0_PCS0/UART0_TX/I2S0_RX_BCLK/I2S0_TXD0</Value>
         <SharedPrphMode>false</SharedPrphMode>
       </ItemState>
       <ItemState>
@@ -19801,7 +19801,7 @@
       <ItemState>
         <ItemSymbol>PinIndexProp0_0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>7</Value>
+        <Value>14</Value>
         <Base>DEC</Base>
         <Index>-1</Index>
       </ItemState>
@@ -19815,7 +19815,7 @@
       <ItemState>
         <ItemSymbol>PinMaskProp0_0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>128</Value>
+        <Value>16384</Value>
         <Base>HEX</Base>
         <Index>-1</Index>
       </ItemState>
@@ -19840,8 +19840,8 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Index>4</Index>
-        <EnumSymbVal>Falling</EnumSymbVal>
+        <Index>3</Index>
+        <EnumSymbVal>Rising</EnumSymbVal>
       </ItemState>
       <ItemState>
         <ItemSymbol>LockInitSupport0_0</ItemSymbol>
