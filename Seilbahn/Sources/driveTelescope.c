@@ -8,7 +8,7 @@
 #include "communication.h"
 
 #define PI 3.141592654
-#define d 21 //[mm]
+#define d 19 //[mm]
 #define Umfang (d * PI);	//[mm]
 #define ONE_REVOLUTION 200
 #define TICKS_PER_MM ONE_REVOLUTION/Umfang // [mm]
@@ -25,7 +25,11 @@ static char directionTelescope;
 static bool zEndSwitch_pressed;
 
 void setDirectionTelescope(char direction) {
-	Bit1_PutVal(direction);	//PTC13
+	if(direction == teleDirection_RETRACT) {
+		Bit1_PutVal(TRUE);	//PTC13
+	} else {
+		Bit1_PutVal(FALSE);	//PTC13
+	}
 }
 
 int getTicksToGo(int distance) {
@@ -48,8 +52,8 @@ void tele_handleInitTele(void) {
 
 void tele_handleDriveTele(int distance, char direction) {
 	zEndSwitch_pressed = FALSE;
-	remainingTicks = distance;
-	setDirectionTelescope(directionTelescope);
+	remainingTicks = getTicksToGo(distance);
+	setDirectionTelescope(direction);
 
 	PPG1_Enable(myPPG1Ptr);
 
@@ -70,6 +74,7 @@ void driveTelescope(void * pvParameter) {
 		switch(cmd)  {
 			case telescopeCmd_INIT_TELE:
 				tele_handleInitTele();
+				queue_write(endQueue, endCmd_END_INIT_TELE);
 				break;
 			case telescopeCmd_DRIVE_TELE: {
 				int distance = ((queue_readInfinity(driveTelescopeQueue) & 0x00FF) << 8);
@@ -78,6 +83,7 @@ void driveTelescope(void * pvParameter) {
 
 				directionTelescope = queue_readInfinity(driveTelescopeQueue);
 				tele_handleDriveTele(distance, directionTelescope);
+				queue_write(endQueue, endCmd_END_MOVE_TELE);
 				break;
 			}
 		}

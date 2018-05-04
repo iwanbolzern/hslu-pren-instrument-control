@@ -3,7 +3,7 @@
   <Header>
     <Name>Seilbahn</Name>
     <SavedBy>El_Matador</SavedBy>
-    <ModificationStamp>37</ModificationStamp>
+    <ModificationStamp>38</ModificationStamp>
     <Date>2018-03-11</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.2.RT7_b1550-0615</PEversion>
@@ -19093,7 +19093,7 @@
       <ItemState>
         <ItemSymbol>AllocatedPinsMaskProp</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>64</Value>
+        <Value>16384</Value>
         <Base>HEX</Base>
         <Index>-1</Index>
       </ItemState>
@@ -19170,14 +19170,14 @@
       <ItemState>
         <ItemSymbol>FieldMaskProp0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>64</Value>
+        <Value>16384</Value>
         <Base>HEX</Base>
         <Index>-1</Index>
       </ItemState>
       <ItemState>
         <ItemSymbol>FieldStartBit0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>6</Value>
+        <Value>14</Value>
         <Base>DEC</Base>
       </ItemState>
       <ItemState>
@@ -19197,7 +19197,7 @@
         <ItemSymbol>Pin0_0</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Value>PTA6/TPM0_CH3</Value>
+        <Value>PTA14/SPI0_PCS0/UART0_TX/I2S0_RX_BCLK/I2S0_TXD0</Value>
         <SharedPrphMode>false</SharedPrphMode>
       </ItemState>
       <ItemState>
@@ -19216,7 +19216,7 @@
       <ItemState>
         <ItemSymbol>PinIndexProp0_0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>6</Value>
+        <Value>14</Value>
         <Base>DEC</Base>
         <Index>-1</Index>
       </ItemState>
@@ -19230,7 +19230,7 @@
       <ItemState>
         <ItemSymbol>PinMaskProp0_0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>64</Value>
+        <Value>16384</Value>
         <Base>HEX</Base>
         <Index>-1</Index>
       </ItemState>
@@ -19678,7 +19678,7 @@
       <ItemState>
         <ItemSymbol>AllocatedPinsMaskProp</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>16384</Value>
+        <Value>64</Value>
         <Base>HEX</Base>
         <Index>-1</Index>
       </ItemState>
@@ -19755,14 +19755,14 @@
       <ItemState>
         <ItemSymbol>FieldMaskProp0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>16384</Value>
+        <Value>64</Value>
         <Base>HEX</Base>
         <Index>-1</Index>
       </ItemState>
       <ItemState>
         <ItemSymbol>FieldStartBit0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>14</Value>
+        <Value>6</Value>
         <Base>DEC</Base>
       </ItemState>
       <ItemState>
@@ -19782,7 +19782,7 @@
         <ItemSymbol>Pin0_0</ItemSymbol>
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
-        <Value>PTA14/SPI0_PCS0/UART0_TX/I2S0_RX_BCLK/I2S0_TXD0</Value>
+        <Value>PTA6/TPM0_CH3</Value>
         <SharedPrphMode>false</SharedPrphMode>
       </ItemState>
       <ItemState>
@@ -19801,7 +19801,7 @@
       <ItemState>
         <ItemSymbol>PinIndexProp0_0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>14</Value>
+        <Value>6</Value>
         <Base>DEC</Base>
         <Index>-1</Index>
       </ItemState>
@@ -19815,7 +19815,7 @@
       <ItemState>
         <ItemSymbol>PinMaskProp0_0</ItemSymbol>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Value>16384</Value>
+        <Value>64</Value>
         <Base>HEX</Base>
         <Index>-1</Index>
       </ItemState>

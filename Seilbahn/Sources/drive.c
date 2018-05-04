@@ -91,10 +91,10 @@ int calculateSpeed(char speed){
 
 void setDirection(char d) {
 	if (d == FORWARD) {
-		PWM2_SetRatio16(STOP);
+		PWM1_SetRatio16(STOP);
 		direction = FORWARD;
 	} else if (d == REVERSE) {
-		PWM1_SetRatio16(STOP);
+		PWM2_SetRatio16(STOP);
 		direction = REVERSE;
 	} else if (d == FAST_STOP) {
 		PWM1_SetRatio16(STOP);
@@ -109,10 +109,10 @@ void accelerate(void) {
 	while (currentSpeed < internSpeed && driveCounter < internTicks - ticksToStop && !xEndSwitch_pressed) {
 		currentSpeed = currentSpeed + accFac <= internSpeed ? currentSpeed + accFac : internSpeed;
 		if(direction == FORWARD) {
-			int error = PWM1_SetRatio16(currentSpeed & 0xFFFF);
+			int error = PWM2_SetRatio16(currentSpeed & 0xFFFF);
 		}
 		else {
-			int error = PWM2_SetRatio16(currentSpeed & 0xFFFF);
+			int error = PWM1_SetRatio16(currentSpeed & 0xFFFF);
 		}
 		vTaskDelay(pdMS_TO_TICKS(30));
 	}
@@ -123,10 +123,10 @@ void decelerate(void) {
 	while (((currentSpeed > 0 && driveCounter < internTicks) || driveCounter < internTicks) && !xEndSwitch_pressed) {
 		currentSpeed = currentSpeed - decFac >= 0 ? currentSpeed - decFac : 0x2fff;
 		if(direction == FORWARD) {
-			int error = PWM1_SetRatio16(currentSpeed & 0xFFFF);
+			int error = PWM2_SetRatio16(currentSpeed & 0xFFFF);
 		}
 		else {
-			int error = PWM2_SetRatio16(currentSpeed & 0xFFFF);
+			int error = PWM1_SetRatio16(currentSpeed & 0xFFFF);
 		}
 		vTaskDelay(pdMS_TO_TICKS(20));
 	}
@@ -137,10 +137,10 @@ void decelerateEndSwitch(void) {
 	while (!xEndSwitch_pressed) {
 		currentSpeed = currentSpeed - decFac >= 0 ? currentSpeed - decFac : 0x2fff;
 		if(direction == FORWARD) {
-			int error = PWM1_SetRatio16(currentSpeed & 0xFFFF);
+			int error = PWM2_SetRatio16(currentSpeed & 0xFFFF);
 		}
 		else {
-			int error = PWM2_SetRatio16(currentSpeed & 0xFFFF);
+			int error = PWM1_SetRatio16(currentSpeed & 0xFFFF);
 		}
 		vTaskDelay(pdMS_TO_TICKS(20));
 	}
@@ -175,7 +175,12 @@ void driveToEnd(void) {
 
 void driveJog() {
 	currentSpeed = internSpeed;
-	PWM1_SetRatio16(internSpeed);
+	if(direction == FORWARD) {
+		int error = PWM2_SetRatio16(internSpeed & 0xFFFF);
+	}
+	else {
+		int error = PWM1_SetRatio16(internSpeed & 0xFFFF);
+	}
 }
 
 char* getAppCmdStream(char appCmd) {
