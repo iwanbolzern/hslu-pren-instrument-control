@@ -94,17 +94,21 @@ void tele_tickReceived(void) {
 	remainingTicks--;
 	if (directionTelescope == teleDirection_RETRACT) {
 		counterTelescope--;
-		if ((counterTelescope % 3) == 0)
-			queue_writeFromISR(zPosQueue, -3);
 	} else {
 		counterTelescope++;
-		if ((counterTelescope % 3) == 0)
-			queue_writeFromISR(zPosQueue, 3);
 	}
 
-	 if(remainingTicks <= 0) {
+	if ((counterTelescope % 10) == 0) {
+		if(counterTelescope > 0)
+			queue_writeFromISR(zPosQueue, 3);
+		else
+			queue_writeFromISR(zPosQueue, -3);
+		counterTelescope = 0;
+	}
+
+	if(remainingTicks <= 0) {
 		queue_writeFromISR(endQueue, endCmd_END_MOVE_TELE);
-	 }
+	}
 }
 
 void tele_endSwitchReceived(void) {

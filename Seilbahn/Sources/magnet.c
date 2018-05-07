@@ -36,11 +36,11 @@ void disableMagnet(void) {
 }
 
 void enforceMagnet(void) {
-	Magnet1_PutVal(0);
-	Magnet2_PutVal(1);
+	Magnet1_PutVal(1);
+	Magnet2_PutVal(0);
 }
 
 void releaseMagnet(void) {
-	Magnet1_PutVal(1);
-	Magnet2_PutVal(0);
+	Magnet1_PutVal(0);
+	Magnet2_PutVal(1);
 }

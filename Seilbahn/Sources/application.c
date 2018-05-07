@@ -102,7 +102,7 @@ void handleMoveTele(char* cmdStream) {
 }
 
 void handleEnableMagnet(char* cmdStream) {
-	if(cmdStream[1] == 0)
+	if(cmdStream[0] == 0)
 		queue_write(magnetCmdQueue, magnetCmd_RELEASE);
 	else
 		queue_write(magnetCmdQueue, magnetCmd_ENFORCE);
