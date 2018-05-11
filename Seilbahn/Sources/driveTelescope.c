@@ -1,6 +1,9 @@
 #include "driveTelescope.h"
 #include "PPG1.h"
-#include "Bit1.h"
+#include "DirectionTele.h"
+#include "StepMode_M0.h"
+#include "StepMode_M1.h"
+#include "StepMode_M2.h"
 #include "PE_Error.h"
 #include "endSwitch_tele.h"
 
@@ -26,14 +29,29 @@ static bool zEndSwitch_pressed;
 
 void setDirectionTelescope(char direction) {
 	if(direction == teleDirection_RETRACT) {
-		Bit1_PutVal(TRUE);	//PTC13
+		DirectionTele_PutVal(TRUE);	//PTC13
 	} else {
-		Bit1_PutVal(FALSE);	//PTC13
+		DirectionTele_PutVal(FALSE);	//PTC13
 	}
 }
 
+// M2 	M1 	M0
+// 0 	0 	0 	Full step (2-phase excitation) with 71% current
+// 0 	0 	1 	1/2 step (1-2 phase excitation)
+// 0 	1 	0 	1/4 step (W1-2 phase excitation)
+// 0 	1 	1 	8 microsteps/step
+// 1 	0 	0 	16 microsteps/step
+// 1 	0 	1 	32 microsteps/step
+// 1 	1 	0 	32 microsteps/step
+// 1 	1 	1 	32 microsteps/step
+void setStepMode() {
+	StepMode_M0_PutVal(FALSE);
+	StepMode_M1_PutVal(TRUE);
+	StepMode_M2_PutVal(FALSE);
+}
+
 int getTicksToGo(int distance) {
-	return distance * TICKS_PER_MM; //calculate Ticks to go
+	return distance * 4 * TICKS_PER_MM; //calculate Ticks to go
 }
 
 void tele_handleInitTele(void) {
@@ -67,6 +85,7 @@ void driveTelescope(void * pvParameter) {
 	zEndSwitchPtr = endSwitch_tele_Init(NULL);
 	myPPG1Ptr = PPG1_Init(NULL);//  unter properties "enable in init. code" ankreuzen falls etwas nicht funktioniert
 	PPG1_SetRatio16(myPPG1Ptr, 0x7FFF);
+	setStepMode();
 
 	for (;;) {
 		char cmd = queue_readInfinity(driveTelescopeQueue);
@@ -98,7 +117,7 @@ void tele_tickReceived(void) {
 		counterTelescope++;
 	}
 
-	if ((counterTelescope % 10) == 0) {
+	if ((counterTelescope % 40) == 0) {
 		if(counterTelescope > 0)
 			queue_writeFromISR(zPosQueue, 3);
 		else

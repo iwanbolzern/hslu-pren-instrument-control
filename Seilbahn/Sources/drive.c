@@ -1,8 +1,6 @@
 #include "drive.h"
 #include "PWM1.h"
 #include "PWM2.h"
-#include "IN1.h"
-#include "IN2.h"
 #include "stdlib.h"
 
 #include "GPIO1.h"

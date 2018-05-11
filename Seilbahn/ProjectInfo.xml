@@ -52,19 +52,18 @@
     <GeneratedCs>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\AS1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\ASerialLdd1.c</PathName>
-      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Bit1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd2.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd3.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd4.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd5.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd6.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\CLS1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\CS1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Cpu.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\DirectionTele.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\FRTOS1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\GPIO1.c</PathName>
-      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\IN1.c</PathName>
-      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\IN2.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\MCUC1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Magnet1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Magnet2.c</PathName>
@@ -83,6 +82,9 @@
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\SEGGER_SYSVIEW_Config.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\SEGGER_SYSVIEW_FreeRTOS.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\SYS1.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\StepMode_M0.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\StepMode_M1.c</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\StepMode_M2.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TMOUT1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TU1.c</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TU2.c</PathName>
@@ -120,24 +122,23 @@
     <GeneratedHs>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\AS1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\ASerialLdd1.h</PathName>
-      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Bit1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd2.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd3.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd4.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd5.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\BitIoLdd6.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\CLS1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\CLS1config.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\CS1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\CS1config.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\Cpu.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\DirectionTele.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\FRTOS1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\FRTOS1config.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\FreeRTOS.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\FreeRTOSConfig.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\GPIO1.h</PathName>
-      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\IN1.h</PathName>
-      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\IN2.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\IO_Map.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\MCUC1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\MCUC1config.h</PathName>
@@ -165,6 +166,9 @@
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\SEGGER_SYSVIEW_Int.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\SYS1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\SYS1config.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\StepMode_M0.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\StepMode_M1.h</PathName>
+      <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\StepMode_M2.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TMOUT1.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TMOUT1config.h</PathName>
       <PathName>C:\Projects\pren\instrument-control\Seilbahn\Generated_Code\TU1.h</PathName>
