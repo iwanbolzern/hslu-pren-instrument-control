@@ -119,7 +119,7 @@ void accelerate(void) {
 void decelerate(void) {
 	int decFac = 1000;
 	while (((currentSpeed > 0 && driveCounter < internTicks) || driveCounter < internTicks) && !xEndSwitch_pressed) {
-		currentSpeed = currentSpeed - decFac >= 0 ? currentSpeed - decFac : 0x2fff;
+		currentSpeed = currentSpeed - decFac >= 0 ? currentSpeed - decFac : 0x6666;
 		setSpeed(currentSpeed);
 		vTaskDelay(pdMS_TO_TICKS(20));
 	}
@@ -128,7 +128,7 @@ void decelerate(void) {
 void decelerateEndSwitch(void) {
 	int decFac = 1000;
 	while (!xEndSwitch_pressed) {
-		currentSpeed = currentSpeed - decFac >= 0 ? currentSpeed - decFac : 0x2fff;
+		currentSpeed = currentSpeed - decFac >= 0 ? currentSpeed - decFac : 0x6666;
 		setSpeed(currentSpeed);
 		vTaskDelay(pdMS_TO_TICKS(20));
 	}
@@ -152,10 +152,13 @@ void driveDistance(void) {
 void driveToEnd(void) {
 	accelerate();
 
-	ulTaskNotifyTake(pdTRUE, /* Clear the notification value before exiting. */
-		                 portMAX_DELAY ); /* Block indefinitely. */
+	while(driveCounter < internTicks - ticksToStop && !xEndSwitch_pressed) {
+		ulTaskNotifyTake(pdTRUE, /* Clear the notification value before exiting. */
+							 portMAX_DELAY ); /* Block indefinitely. */
+	}
 
 	decelerateEndSwitch();
+
 	currentSpeed = 0;
 	PWM1_SetRatio16(STOP);
 	PWM2_SetRatio16(STOP);

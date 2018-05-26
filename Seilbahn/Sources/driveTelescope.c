@@ -50,7 +50,7 @@ void setStepMode() {
 	StepMode_M2_PutVal(FALSE);
 }
 
-int getTicksToGo(int distance) {
+int getTicksToGo(unsigned int distance) {
 	return distance * 4 * TICKS_PER_MM; //calculate Ticks to go
 }
 
@@ -68,14 +68,14 @@ void tele_handleInitTele(void) {
 	counterTelescope = 0;			// counter zurückstellen
 }
 
-void tele_handleDriveTele(int distance, char direction) {
+void tele_handleDriveTele(unsigned int distance, char direction) {
 	zEndSwitch_pressed = FALSE;
 	remainingTicks = getTicksToGo(distance);
 	setDirectionTelescope(direction);
 
 	PPG1_Enable(myPPG1Ptr);
 
-	while (remainingTicks > 0) {
+	while (remainingTicks > 0 && !zEndSwitch_pressed) {
 		vTaskDelay(pdMS_TO_TICKS(10));			//200Hz
 	}
 	PPG1_Disable(myPPG1Ptr); // STOP Pulsgenerator
@@ -96,7 +96,7 @@ void driveTelescope(void * pvParameter) {
 				queue_write(endQueue, endCmd_END_INIT_TELE);
 				break;
 			case telescopeCmd_DRIVE_TELE: {
-				int distance = ((queue_readInfinity(driveTelescopeQueue) & 0x00FF) << 8);
+				unsigned int distance = ((queue_readInfinity(driveTelescopeQueue) & 0x00FF) << 8);
 				distance += queue_readInfinity(driveTelescopeQueue) & 0x00FF;
 
 
