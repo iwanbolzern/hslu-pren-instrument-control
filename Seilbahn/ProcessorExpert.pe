@@ -3,7 +3,7 @@
   <Header>
     <Name>Seilbahn</Name>
     <SavedBy>El_Matador</SavedBy>
-    <ModificationStamp>44</ModificationStamp>
+    <ModificationStamp>45</ModificationStamp>
     <Date>2018-03-11</Date>
     <IDE>Eclipse IDE</IDE>
     <PEversion>1.12.2.RT7_b1550-0615</PEversion>
@@ -19255,8 +19255,8 @@
         <ReadOnly>false</ReadOnly>
         <UserReadOnly>false</UserReadOnly>
         <PropertyModelIsAutomatic>false</PropertyModelIsAutomatic>
-        <Index>3</Index>
-        <EnumSymbVal>Rising</EnumSymbVal>
+        <Index>2</Index>
+        <EnumSymbVal>High</EnumSymbVal>
       </ItemState>
       <ItemState>
         <ItemSymbol>LockInitSupport0_0</ItemSymbol>

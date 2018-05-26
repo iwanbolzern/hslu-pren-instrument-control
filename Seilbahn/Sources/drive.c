@@ -104,7 +104,7 @@ void setDirection(char d) {
 	}
 }
 
-unsigned int ticksToStop = 100;
+unsigned int ticksToStop = 600;
 void accelerate(void) {
 	int accFac = 1000;
 	while (currentSpeed < internSpeed &&
@@ -165,7 +165,13 @@ void driveToEnd(void) {
 }
 
 void driveJog() {
-	currentSpeed = internSpeed;
+	int accFac = 2000;
+	while (currentSpeed < internSpeed && !xEndSwitch_pressed) {
+		currentSpeed = currentSpeed + accFac <= internSpeed ? currentSpeed + accFac : internSpeed;
+		setSpeed(currentSpeed);
+		vTaskDelay(pdMS_TO_TICKS(30));
+	}
+
 	setSpeed(currentSpeed);
 }
 
